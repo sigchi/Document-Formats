@@ -1,4 +1,4 @@
-# SIGCHI Formatting Templates #
+# SIGCHI Document Formats #
 
 This repository is the official source for SIGCHI templates for Word
 and LaTeX.  While we encourage people to fix bugs and address issues,
