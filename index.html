@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>SIGCHI Document Formats by sigchi</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>SIGCHI Document Formats</h1>
+        <p>Everything you need to know to publish using LaTeX or Word and then some.</p>
+
+        <p class="view"><a href="https://github.com/sigchi/Document-Formats">View the Project on GitHub <small>sigchi/Document-Formats</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/sigchi/Document-Formats/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/sigchi/Document-Formats/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/sigchi/Document-Formats">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="current-templates" class="anchor" href="#current-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Current Templates</h1>
+
+<h2>
+<a id="latex" class="anchor" href="#latex" aria-hidden="true"><span class="octicon octicon-link"></span></a>LaTeX</h2>
+
+<ul>
+<li><a href="https://github.com/sigchi/Document-Formats/blob/master/Builds/sigchi-latex-proceedings.tar.gz?raw=true">LaTeX Proceedings Format</a></li>
+<li><a href="https://github.com/sigchi/Document-Formats/blob/master/Builds/sigchi-latex-extended-abstracts.tar.gz?raw=true">LaTeX Extended Abstract Format</a></li>
+</ul>
+
+<h2>
+<a id="word" class="anchor" href="#word" aria-hidden="true"><span class="octicon octicon-link"></span></a>Word</h2>
+
+<ul>
+<li><a href="https://github.com/sigchi/Document-Formats/blob/master/Builds/sigchi-word-proceedings.zip?raw=true">Word Proceedings Format</a></li>
+<li><a href="https://github.com/sigchi/Document-Formats/blob/master/Builds/sigchi-word-extended-abstracts.zip?raw=true">Word Extended Abstract Format</a></li>
+</ul>
+
+<h1>
+<a id="gritty-details" class="anchor" href="#gritty-details" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gritty Details</h1>
+
+<p>This repository is the official source for SIGCHI templates for Word
+and LaTeX.  While we encourage people to fix bugs and address issues,
+please note that not all pull requests will be taken for logistic
+reasons.  Please see the open tasks and reference them when making
+or opening such requests.</p>
+
+<p>If you have some supplement for Zotero, End Note, BibDesk, or other
+3rd party software that's not <em>technically</em> part of the template, let
+us know as well, we might host it here too in the <code>Extras</code> directory.</p>
+
+<h2>
+<a id="paper-formats" class="anchor" href="#paper-formats" aria-hidden="true"><span class="octicon octicon-link"></span></a>Paper Formats</h2>
+
+<p>CHI uses two different formats for most submissions:
+<a href="">CHI Proceedings Format</a> and <a href="">Extended Abstract Format</a>. Please
+note that changing the leading, changing the tracking, adding small
+fonts for references, and other sizing tricks are strictly prohibited.</p>
+
+<h3>
+<a id="chi-proceedings-format" class="anchor" href="#chi-proceedings-format" aria-hidden="true"><span class="octicon octicon-link"></span></a>CHI Proceedings Format</h3>
+
+<p>These templates should be used for submitting CHI Papers and CHI
+Notes. </p>
+
+<h3>
+<a id="extended-abstracts-format" class="anchor" href="#extended-abstracts-format" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extended Abstracts Format</h3>
+
+<p>These template should be used for submitting workshops, courses, case
+studies, doctoral consortium, panels, interactivity, SIGs,
+works-in-progress, alt.chi, and the student competitions. </p>
+
+<h2>
+<a id="latex-notes" class="anchor" href="#latex-notes" aria-hidden="true"><span class="octicon octicon-link"></span></a>LaTeX Notes</h2>
+
+<p>Note, there is one directory for <em>both</em> the Proceedings format and the
+Extended Abstract format.  Some files, mostly <code>acm-sigchi.bst</code>, is
+shared between both templates.  Please note to use
+<code>proceedings.tex</code> or <code>extended-abstract.tex</code> depending on
+which one you need. Alternatively, you can just grab a <code>tar.gz</code> build
+for the specific template that you want.</p>
+
+<h3>
+<a id="latex-dependencies" class="anchor" href="#latex-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>LaTeX Dependencies</h3>
+
+<p>These templates use some packages that your LATEX distribution could
+be missing though most modern LaTeX distributions have these packages
+by default. We'd recommend you install the <strong>full</strong> TeX distribution
+from <a href="http://tug.org/texlive/">TeX Live</a> for Unix and Windows or <a href="http://tug.org/mactex/">MacTeX</a> for Mac OSX.  These
+are large packages in the order of several gigabytes, but it will
+simplify things in the long run.  Trust us. </p>
+
+<p>For reference, the specific packages are: <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/hyperref/">hyperref</a>, <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/caption/">caption</a>,
+<a href="http://www.ctan.org/tex-archive/macros/latex/contrib/url/">url</a>, <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/titlesec/">titlesec</a>, and <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/footmisc/">footmisc</a>. You can put these files in the same
+directory as your source TeX file, or download them from CTAN. You can
+also install such packages in your TeX system for better
+portability. Additionally, the [balance] package can better equalize
+the last page (both example files above make use of it: be sure that
+you have that package installed before compiling them).</p>
+
+<h2>
+<a id="acm-classification-keywords" class="anchor" href="#acm-classification-keywords" aria-hidden="true"><span class="octicon octicon-link"></span></a>ACM Classification Keywords</h2>
+
+<p>The category <code>H.5</code> applies to information interfaces and
+presentation. The full list of categories for classifying work with a
+computing component can be found on the <a href="http://www.acm.org/about/class/1998">ACM website</a>.</p>
+
+<h2>
+<a id="digital-accessibility" class="anchor" href="#digital-accessibility" aria-hidden="true"><span class="octicon octicon-link"></span></a>Digital Accessibility</h2>
+
+<p>The SIGCHI and its conferences are asking all authors to work on
+improving the accessibility of their submissions. Please see the
+<a href="http://chi2015.acm.org/authors/guide-to-an-accessible-submission/">Guide to an Accessible Submission</a> for more details.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/sigchi">sigchi</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-896807-8");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
