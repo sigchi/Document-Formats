@@ -107,3 +107,13 @@ sympy-plots-for-*.tex/
 
 # xindy
 *.xdy
+
+# macstuff
+.DS_Store
+
+# emacs
+auto
+
+LaTeX/extended-abstract.pdf
+LaTeX/proceedings.pdf
+LaTeX/sigchi.bst
