@@ -21,6 +21,7 @@ cp ../../LaTeX/proceedings.tex ../tmp/sigchi-latex-all
 cp ../../LaTeX/extended-abstract.tex ../tmp/sigchi-latex-all
 cp ../../LaTeX/sigchi.cls ../tmp/sigchi-latex-all
 cp ../../LaTeX/sigchi-ext.cls ../tmp/sigchi-latex-all
+cp ../../LaTeX/sample.bib ../tmp/sigchi-latex-all
 cp ../../LaTeX/SIGCHI-Reference-Format.bst ../tmp/sigchi-latex-all
 cp ../../LaTeX/figures/cats.png ../tmp/sigchi-latex-all/figures/
 cp ../../LaTeX/figures/map.png ../tmp/sigchi-latex-all/figures/
@@ -33,6 +34,7 @@ mkdir ../tmp/sigchi-latex-proceedings
 mkdir ../tmp/sigchi-latex-proceedings/figures
 cp ../../LaTeX/proceedings.tex ../tmp/sigchi-latex-proceedings
 cp ../../LaTeX/sigchi.cls ../tmp/sigchi-latex-proceedings
+cp ../../LaTeX/sample.bib ../tmp/sigchi-latex-proceedings
 cp ../../LaTeX/SIGCHI-Reference-Format.bst ../tmp/sigchi-latex-proceedings
 cp ../../LaTeX/figures/map.png ../tmp/sigchi-latex-proceedings/figures/
 cp ../../LaTeX/figures/sigchi-logo.png ../tmp/sigchi-latex-proceedings/figures/
@@ -43,6 +45,7 @@ mkdir ../tmp/sigchi-latex-extended-abstracts
 mkdir ../tmp/sigchi-latex-extended-abstracts/figures
 cp ../../LaTeX/extended-abstract.tex ../tmp/sigchi-latex-extended-abstracts
 cp ../../LaTeX/sigchi-ext.cls ../tmp/sigchi-latex-extended-abstracts
+cp ../../LaTeX/sample.bib ../tmp/sigchi-latex-extended-abstracts
 cp ../../LaTeX/SIGCHI-Reference-Format.bst ../tmp/sigchi-latex-extended-abstracts
 cp ../../LaTeX/figures/cats.png ../tmp/sigchi-latex-extended-abstracts/figures/
 cp ../../LaTeX/figures/map.png ../tmp/sigchi-latex-extended-abstracts/figures/
