@@ -10,6 +10,12 @@ If you have some supplement for Zotero, End Note, BibDesk, or other
 3rd party software that's not _technically_ part of the template, let
 us know as well, we might host it here too in the `Extras` directory.
 
+## Important!!! ##
+
+Various SIG CHI conferences may have a slightly tweaked version on
+their conference page. Please make sure to check the individual
+conference's website before using this repository's snapshot.
+
 ## Paper Formats ##
 
 CHI uses two different formats for most submissions:
