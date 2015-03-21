@@ -6,7 +6,6 @@
 % Filename: sigchi-ext.cls
 % 
 % Features:
-%   - inline bibstyle dependency
 %   - simpler design, two 'real' columns, better handling of
 %     footnotes/marginal notes
 %   - adheres to ACM archival format, so you don't need to change your
@@ -17,6 +16,7 @@
 %   - improved PDF bookmarking
 %  
 % CHANGELOG:
+%   2015-03-21   David A. Shamma    Removed bibsty dependency.
 %   2015-01-05   David A. Shamma    Updating for new format and Github repo.
 %   2013-07-22   Paul Baumann       Added example copyright to LaTeX file.
 %   2010-12-01   Luis A. Leiva      A lot of refactorization.
@@ -35,9 +35,9 @@
 \ProvidesClass{sigchi-ext}[2015/1/05, David A. Shamma]
 
 \typeout{CHI Extended Abstracts template}
-\typeout{- original by Manas Tungare}
-\typeout{- refactored by Luis A. Leiva}
 \typeout{- updated by David A. Shamma.}
+\typeout{- refactored by Luis A. Leiva}
+\typeout{- original by Manas Tungare}
 \typeout{}
 \typeout{Available at https://github.com/sigchi.}
 \typeout{}
@@ -312,28 +312,28 @@
 % -----------------------------------------------------------------------------
 % Including bibspacing.sty inline from http://bit.ly/1vlKdb0
 
-\newdimen\bibindent
-\setlength\bibindent{1.5em}
-\newdimen\bibspacing
-\setlength\bibspacing\z@
-\renewenvironment{thebibliography}[1]{%
-  \section*{\refname
-        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
-      \list{\@biblabel{\@arabic\c@enumiv}}%
-           {\settowidth\labelwidth{\@biblabel{#1}}%
-            \leftmargin\labelwidth
-            \advance\leftmargin\labelsep 
-            \itemsep\z@skip    % should this be commented out?
-            \parsep\z@skip     % should this be commented out?
-            \@openbib@code
-            \usecounter{enumiv}%
-            \let\p@enumiv\@empty
-            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
-      \sloppy\clubpenalty4000\widowpenalty4000%
-      \sfcode`\.\@m}
-     {\def\@noitemerr
-       {\@latex@warning{Empty `thebibliography' environment}}%
-      \endlist}
+% \newdimen\bibindent
+% \setlength\bibindent{1.5em}
+% \newdimen\bibspacing
+% \setlength\bibspacing\z@
+% \renewenvironment{thebibliography}[1]{%
+%   \section*{\refname
+%         \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}%
+%       \list{\@biblabel{\@arabic\c@enumiv}}%
+%            {\settowidth\labelwidth{\@biblabel{#1}}%
+%             \leftmargin\labelwidth
+%             \advance\leftmargin\labelsep 
+%             \itemsep\z@skip    % should this be commented out?
+%             \parsep\z@skip     % should this be commented out?
+%             \@openbib@code
+%             \usecounter{enumiv}%
+%             \let\p@enumiv\@empty
+%             \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+%       \sloppy\clubpenalty4000\widowpenalty4000%
+%       \sfcode`\.\@m}
+%      {\def\@noitemerr
+%        {\@latex@warning{Empty `thebibliography' environment}}%
+%       \endlist}
 
 %% https://code.google.com/p/tufte-latex/source/browse/tufte-common.def
 
@@ -411,6 +411,148 @@
   \ifthenelse{\boolean{@tufte@odd@page}}%
     {\RaggedRight}%
     {\RaggedLeft}%
+}
+
+%%
+% Pulling in citation formatting from `sigchi.cls' file.
+
+\parindent 0pt
+\typeout{Using 'Abbrev' bibliography style}
+\newcommand\bibyear[2]{%
+    \unskip\quad\ignorespaces#1\unskip
+    \if#2..\quad \else \quad#2 \fi
+}
+\newcommand{\bibemph}[1]{{\em#1}}
+\newcommand{\bibemphic}[1]{{\em#1\/}}
+\newcommand{\bibsc}[1]{{\sc#1}}
+\def\@normalcite{%
+    \def\@cite##1##2{[##1\if@tempswa , ##2\fi]}%
+}
+\def\@citeNB{%
+    \def\@cite##1##2{##1\if@tempswa , ##2\fi}%
+}
+\def\@citeRB{%
+    \def\@cite##1##2{##1\if@tempswa , ##2\fi]}%
+}
+\def\start@cite#1#2{%
+    \edef\citeauthoryear##1##2##3{%
+        ###1%
+        \ifnum#2=\z@ \else\ ###2\fi
+    }%
+    \ifnum#1=\thr@@
+        \let\@@cite\@citeyear
+    \else
+        \let\@@cite\@citenormal
+    \fi
+    \@ifstar{\@citeNB\@@cite}{\@normalcite\@@cite}%
+}
+\def\cite{\start@cite23}
+\def\citeNP{\cite*}
+\def\citeA{\start@cite10}
+\def\citeANP{\citeA*}
+\def\shortcite{\start@cite23}
+\def\shortciteNP{\shortcite*}
+\def\shortciteA{\start@cite20}
+\def\shortciteANP{\shortciteA*}
+\def\citeyear{\start@cite30}
+\def\citeyearNP{\citeyear*}
+\def\citeN{%
+    \@citeRB
+    \def\citeauthoryear##1##2##3{##1\ [##3%
+        \def\reserved@a{##1}%
+        \def\citeauthoryear####1####2####3{%
+            \def\reserved@b{####1}%
+            \ifx\reserved@a\reserved@b
+                ####3%
+            \else
+                \errmessage{Package acmart Error: author mismatch
+                         in \string\citeN^^J^^J%
+                    See the acmart package documentation for explanation}%
+            \fi
+        }%
+    }%
+    \@ifstar\@citeyear\@citeyear
+}
+\def\shortciteN{%
+    \@citeRB
+    \def\citeauthoryear##1##2##3{##2\ [##3%
+        \def\reserved@a{##2}%
+        \def\citeauthoryear####1####2####3{%
+            \def\reserved@b{####2}%
+            \ifx\reserved@a\reserved@b
+                ####3%
+            \else
+                \errmessage{Package acmart Error: author mismatch
+                         in \string\shortciteN^^J^^J%
+                    See the acmart package documentation for explanation}%
+            \fi
+        }%
+    }%
+    \@ifstar\@citeyear\@citeyear % changed from  "\@ifstart" 12 Jan 2000 gkmt
+}
+
+    \def\@citenormal{%
+    \@ifnextchar [{\@tempswatrue\@citex;}
+                  {\@tempswafalse\@citex[]}% GERRY FIX FOR BABEL 3/20/2009
+}
+\def\@citeyear{%
+    \@ifnextchar [{\@tempswatrue\@citex,}%
+                  {\@tempswafalse\@citex[]}% GERRY FIX FOR BABEL 3/20/2009
+}
+\def\@citex#1[#2]#3{%
+    \let\@citea\@empty
+    \@cite{%
+        \@for\@citeb:=#3\do{%
+            \@citea
+            \def\@citea{#1, }% 	% GERRY FIX FOR BABEL 3/20/2009 -- SO THAT YOU GET [1, 2] IN THE BODY TEXT
+            \edef\@citeb{\expandafter\@iden\@citeb}%
+            \if@filesw
+                \immediate\write\@auxout{\string\citation{\@citeb}}%
+            \fi
+            \@ifundefined{b@\@citeb}{%
+                {\bf ?}%
+                \@warning{%
+                    Citation `\@citeb' on page \thepage\space undefined%
+                }%
+            }%
+            {\csname b@\@citeb\endcsname}%
+        }%
+    }{#2}%
+}
+\let\@biblabel\@gobble
+\newdimen\bibindent
+\bibindent=0em
+\newskip\bibsep % [jdf] allow bib space tweaking
+\bibsep 2pt \@plus 1pt \@minus 1pt % [jdf] initial spacing between ref entries
+\setcounter{enumi}{1}
+\def\thebibliography#1{%
+    \section{%
+       {REFERENCES}
+        \@mkboth{{\refname}}{{\refname}}%
+    }%
+%    \list{[\arabic{enumi}]}{%
+    \list{\arabic{enumi}.}{% DLC
+%        \settowidth\labelwidth{[#1]}%
+        \settowidth\labelwidth{#1.}% DLC
+        \leftmargin\labelwidth
+        \advance\leftmargin\labelsep
+        \advance\leftmargin\bibindent
+        \itemindent -\bibindent
+        \listparindent \itemindent
+        \usecounter{enumi}
+        \itemsep\bibsep% [jdf] standard spacing between references
+    }%
+    \let\newblock\@empty
+    \raggedright  %% 7 JAN 2000 gkmt
+    \sloppy
+    \sfcode`\.=1000\relax
+}
+
+
+\gdef\balancecolumns
+{\vfill\eject
+\global\@colht=\textheight
+\global\ht\@cclv=\textheight
 }
 
 % That's all folks!

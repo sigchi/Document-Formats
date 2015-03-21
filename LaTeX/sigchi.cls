@@ -1,14 +1,62 @@
-% Scooter Morris, July 30, 2014.
-% updated to add DOI text to copyright footer
-% chi & iui 2012 cls
-% Jean-Daniel Fekete, August 28, 2011.
-% llt: re-added flushleft in \terms & \category, added compatibility for the caption package
+% CHI Proceedings Template.
+%
+% FILENAME: sigchi.cls
+%  
+% SOURCE: See https://github.com/sigchi for latest official version.
+%
+% NOTE: If you wish to edit this document, please list edits properly
+% in the CHANGELOG section and not scattered through the code.
+% 
+% CHANGELOG: 
+%
+% 2015-03-21 David A. Shamma Updating for new format and Github
+% repo for CHI 2016.
+%
+% 2014-07-30 Scooter Morris Updated to add DOI text to copyright
+% footer
+%
+% 2011-10-19 DanCo Added \sloppy to reduce overfull lines per Sheridan
+%
+% 2011-08-28 Jean-Daniel Fekete Re-added flushleft in \terms &
+% \category, added compatibility for the caption package
+%
+% 2006 Andrew Duchowski Updated the metafont names to use more
+% modern Berry font naming schemes.
+%
+% 2002-07-30 JS/GM Fix to vertical spacing before Proofs
+%
+% 2002-07-29 Georgia Fixed bug in sub-sub-section numbering in
+% paragraphs
+%
+% 1999-09-11 Gerry Murry Allowance Made to switch default fonts
+% between those systems using METAFONT and those using 'Type 1' or
+% 'Truetype' fonts.  See LINE NUMBER 266 for details.  Also provided
+% for enumerated/annotated Corollaries 'surrounded' by enumerated
+% Theorems (line 838).
+%
+% Modified from ACM_PROC_ARTICLE-SP DOCUMENT STYLE by G.K.M. Tobin
+% August-October 1999.  Adapted from ARTICLE document style by Ken
+% Traub, Olin Shivers also using elements of esub2acm.cls.  Modified
+% from ARTICLE DOCUMENT STYLE -- Released 16 March 1988 for LaTeX
+% version 2.09 by Leslie Lamport, 16 March 1988.
+% 
+% MISC: Major change in January 2000 was to include a "blank line" in
+% between new paragraphs. This involved major changes to the, then,
+% acmproc-sp.cls 1.0SP file, precipitating a 'new' name:
+% "acm_proc_article-sp.cls" V2.01SP.  Footnotes inside table cells
+% using \minipage (Oct. 2002)
+%
+% LICENSE: Public domain: You are free to do whatever you want with
+% this template.  If you improve this in any way, please submit a
+% pull request to the Github repository.
 %
 % ---- Start of example  ----
 %
 % \documentclass{sigchi}
 % \usepackage{times}
-% \pagenumbering{arabic}  % Arabic page numbers for submission.  Remove this line to eliminate page numbers for the camera ready copy
+% \pagenumbering{arabic} % Arabic page numbers for submission.  
+%                        % Remove this line to eliminate page numbers  
+%                        % for the camera ready copy
 % \title{The Title}
 % \numberofauthors{2}
 % \author{
@@ -38,49 +86,22 @@
 % Fixed the format to match the Word template and added a \teaser
 % command to add a teaser image.
 %
-% Allowance made to switch default fonts between those systems using
-% METAFONT and those using 'Type 1' or 'Truetype' fonts.
-% See LINE NUMBER 266 for details.
-% Also provided for enumerated/annotated Corollaries 'surrounded' by
-% enumerated Theorems (line 838).
-% Gerry November 11th. 1999
-% Updated the metafont names to use more modern Berry font naming schemes.
-% Andrew Duchowski.  2006
 %
 % Made the Permission Statement / Conference Info / Copyright Info
 % 'user definable' in the source .tex file OR automatic if
 % not specified.
 % This 'sp' version does NOT produce the permission block.
 %
-% Major change in January 2000 was to include a "blank line" in between
-% new paragraphs. This involved major changes to the, then, acmproc-sp.cls  1.0SP
-% file, precipitating a 'new' name: "acm_proc_article-sp.cls" V2.01SP.
-%
-% Georgia fixed bug in sub-sub-section numbering in paragraphs (July 29th. 2002)
-% JS/GM fix to vertical spacing before Proofs (July 30th. 2002)
-%
-% Footnotes inside table cells using \minipage (Oct. 2002)
-%
 % ---- End of 'updates' ----
 %
-\def\fileversion{V0.19}            % [sm] for ACM's tracking purposes 
-\def\filedate{July, 30, 2014}    % [sm] tracking data
-\def\docdate {Wednesday, July 30th 2014} % [sm] 
+% Some tracking data no longer needed from Scooter Morris
+% \def\fileversion{V0.20}
+% \def\filedate{July, 30, 2014}
+% \def\docdate {Wednesday, July 30th 2014}
 \usepackage{epsfig}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}
-%
-% ACM_PROC_ARTICLE-SP  DOCUMENT STYLE
-% G.K.M. Tobin August-October 1999
-%    adapted from ARTICLE document style by Ken Traub, Olin Shivers
-%    also using elements of esub2acm.cls
-% LATEST REVISION V2.6SP - OCTOBER 2002
-% ARTICLE DOCUMENT STYLE -- Released 16 March 1988
-%    for LaTeX version 2.09
-% Copyright (C) 1988 by Leslie Lamport
-%
-%
 %%% ACM_PROC_ARTICLE-SP is a document style for producing two-column camera-ready pages for
 %%% ACM conferences, according to ACM specifications.  The main features of
 %%% this style are:
@@ -129,15 +150,35 @@
 %%%     dvips -e 0 foo.dvi >foo.ps
 %%%
 
-\typeout{Document Class sigchi' <July 30, 2014>. Updated for chi 2014
-  based on chi2012.cls by William Hudson and Jean-Daniel Fekete.} % DLC
-\typeout{Document Class `chi2011' <October 19, 2010>. Tweaked by Manas Tungare.} % DLC
+\typeout{}
+
+\typeout{Document Class SIGCHI}
+
+\typeout{Available at https://github.com/sigchi.}
+
+\typeout{}
+
+\typeout{- <March 21, 2105> Updated by David A. Shamma for CHI 2016.}
+
+\typeout{- <July 30, 2014> Updated for for 2014 by William Hudson and
+  Jean-Daniel Fekete.}
+
+\typeout{- <October 19, 2010> Updated for 2011 by Manas Tungare.}
+
 \typeout{Shamelessly copied from}
-\typeout{`chiproceedings' <7th Sep. '00>. Modified by Jan O. Borchers}        % DLC
-\typeout{`acm_proc_article-sp' <2nd. October '02>.  Modified by G.K.M. Tobin} % DLC
-\typeout{`acmconf' <22 May 89>. Hacked 4/91 by shivers@cs.cmu.edu, 4/93 by theobald@cs.mcgill.ca}
+
+\typeout{- <September 7, 2000> Modified by Jan O. Borchers from
+  `chiproceedings'}
+
+\typeout{- <October 2, 2002> Modified by G.K.M. Tobin from
+  `acm_proc_article-sp'}
+
+\typeout{- <May 22, 1989> Hacked from `acmconf' 4/91 by
+  shivers@cs.cmu.edu, 4/93 by theobald@cs.mcgill.ca}
+
 \typeout{Excerpts were taken from (Journal Style) 'esub2acm.cls'.}
-% \typeout{****** Bugs/comments/suggestions to Manas Tungare -- manas@tungare.name ******} %DLC
+
+\typeout{}
 
 \oddsidemargin 1.9cm            % [jdf] stick to CHI Formating Guidelines
 \evensidemargin 1.9cm           % [jdf] idem
@@ -220,7 +261,7 @@
 %\partopsep 2pt plus 1pt minus 1pt% Extra vertical space, in addition to
                                  % \parskip and \topsep, added when user
                                  % leaves blank line before environment.
-\partopsep 0pt                                                              % 00-09-07 job
+\partopsep 0pt                   % 00-09-07 job
 
 \doublehyphendemerits=9999        % No consecutive line hyphens
 \brokenpenalty=9999               % No broken words across pages
