@@ -1573,7 +1573,43 @@ This text field is large enough to hold the appropriate release statement assumi
 }
 \clubpenalty=10000 
 \widowpenalty = 10000
-% End of sigchi.cls - version 0.01	
+
+%% 
+% For the CCSXML 2012 Categories
+
+\let\@concepts\@empty
+% Support for CCSXML file
+\RequirePackage{comment}
+\excludecomment{CCSXML}
+
+% New concepts scheme
+%
+% The first argument is the significance, the
+% second is the concept(s)
+%
+\newcommand\ccsdesc[2][100]{%
+  \ccsdesc@parse#1~#2~}
+%
+% The parser of the expression Significance~General~Specific
+%
+\def\ccsdesc@parse#1~#2~#3~{%
+  \expandafter\ifx\csname CCS@#2\endcsname\relax
+    \expandafter\gdef\csname CCS@#2\endcsname{\textbullet\textbf{#2} $\to$ }%
+  \g@addto@macro{\@concepts}{\csname CCS@#2\endcsname}\fi
+  \expandafter\g@addto@macro\expandafter{\csname CCS@#2\endcsname}{%
+    \ifnum#1>499\textbf{#3; }\else
+    \ifnum#1>299\textit{#3; }\else
+    #3; \fi\fi}}
+
+\newcommand\printccsdesc{%
+  \ifx\@concepts\@empty\else
+  \if@twocolumn
+    \section*{CCS Concepts}
+    \@concepts
+    \else \small
+    \quotation{\@concepts}%
+    \fi
+    \fi}
 
 
 %% DanCo, 10/19/11: Added this to reduce overfull lines per Sheridan
@@ -1587,8 +1623,3 @@ This text field is large enough to hold the appropriate release statement assumi
 %% http://www.economics.utoronto.ca/osborne/latex/PMAKEUP.HTM
 
 \sloppy
-
-%%% Local Variables: 
-%%% mode: latex
-%%% TeX-master: "survey"
-%%% End: 
