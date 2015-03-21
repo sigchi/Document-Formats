@@ -40,7 +40,16 @@
 % from ARTICLE DOCUMENT STYLE -- Released 16 March 1988 for LaTeX
 % version 2.09 by Leslie Lamport, 16 March 1988.
 % 
-% MISC: Major change in January 2000 was to include a "blank line" in
+% MISC: 
+%
+% Fixed the format to match the Word template and added a \teaser
+% command to add a teaser image.
+%
+% Made the Permission Statement / Conference Info / Copyright Info
+% 'user definable' in the source .tex file OR automatic if not
+% specified.  This 'sp' version does NOT produce the permission block.
+%
+% Major change in January 2000 was to include a "blank line" in
 % between new paragraphs. This involved major changes to the, then,
 % acmproc-sp.cls 1.0SP file, precipitating a 'new' name:
 % "acm_proc_article-sp.cls" V2.01SP.  Footnotes inside table cells
@@ -81,23 +90,11 @@
 %
 % ---- End of example  ----
 %
-% ---- Start of 'updates'  ----
-%
-% Fixed the format to match the Word template and added a \teaser
-% command to add a teaser image.
-%
-%
-% Made the Permission Statement / Conference Info / Copyright Info
-% 'user definable' in the source .tex file OR automatic if
-% not specified.
-% This 'sp' version does NOT produce the permission block.
-%
-% ---- End of 'updates' ----
-%
-% Some tracking data no longer needed from Scooter Morris
-% \def\fileversion{V0.20}
-% \def\filedate{July, 30, 2014}
-% \def\docdate {Wednesday, July 30th 2014}
+% For the ACM Tracking Purposes
+\def\fileversion{V0.20}
+\def\filedate{March 21, 2015}
+\def\docdate {\filedate}
+% Packages
 \usepackage{epsfig}
 \usepackage{amssymb}
 \usepackage{amsmath}
