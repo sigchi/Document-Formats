@@ -1,5 +1,5 @@
 # Simple Makefile for ACM SIGCHI LaTeX template
-# Public domain, (c) 2015 by Florian Echtler
+# Public domain, 2015 by Florian Echtler
 
 # initial target files
 all: extended-abstract.pdf proceedings.pdf
