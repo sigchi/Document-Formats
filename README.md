@@ -18,10 +18,10 @@ conference's website before using this repository's snapshot.
 
 ## Paper Formats ##
 
-CHI uses two different formats for most submissions:
-[CHI Proceedings Format]() and [Extended Abstract Format](). Please
-note that changing the leading, changing the tracking, adding small
-fonts for references, and other sizing tricks are strictly prohibited.
+CHI uses two different formats for most submissions: *CHI Proceedings
+Format* and *Extended Abstract Format*. Please note that changing the
+leading, changing the tracking, adding small fonts for references, and
+other sizing tricks are strictly prohibited.
 
 ### CHI Proceedings Format ###
 
