@@ -45,14 +45,23 @@
 \setlength{\pdfpagewidth}{\pprw}
 \setlength{\pdfpageheight}{\pprh}
 
+% Paper metadata (use plain text, for PDF inclusion and later
+% re-using, if desired)
+\def\plaintitle{SIGCHI Conference Proceedings Format}
+\def\plainauthor{First Author, Second Author, Third Author,
+  Fourth Author, Fifth Author, Sixth Author}
+\def\plainkeywords{Authors' choice; of terms; separated; by
+  semicolons; include commas, within terms only; required.}
+\def\plaingeneralterms{Documentation, Standardization}
+
 % Make sure hyperref comes last of your loaded packages, to give it a
 % fighting chance of not being over-written, since its job is to
 % redefine many LaTeX commands.
 \definecolor{linkColor}{RGB}{6,125,233}
 \hypersetup{%
-  pdftitle={SIGCHI Conference Proceedings Format},
-  pdfauthor={LaTeX},
-  pdfkeywords={SIGCHI, proceedings, archival format},
+  pdftitle={\plaintitle},
+  pdfauthor={\plainauthor},
+  pdfkeywords={\plainkeywords},
   bookmarksnumbered,
   pdfstartview={FitH},
   colorlinks,
@@ -69,7 +78,7 @@
 % End of preamble. Here it comes the document.
 \begin{document}
 
-\title{SIGCHI Conference Proceedings Format}
+\title{\plaintitle}
 
 \numberofauthors{3}
 \author{%
@@ -104,8 +113,7 @@
   \url{http://acm.org/about/class/1998/} for the full list of ACM
   classifiers. This section is required.}{}{}
 
-\keywords{Authors' choice; of terms; separated; by semi\-colons;
-  commas, within terms only; this section is required.}
+\keywords{\plainkeywords}
 
 \section{Introduction}
 
