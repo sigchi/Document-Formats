@@ -12,20 +12,20 @@
 %% EXAMPLE END -- HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP -- (July 22, 2013 - Paul Baumann)
 
 % Arabic page numbers for submission.  Remove this line to eliminate
-% page numbers for the camera ready copy 
+% page numbers for the camera ready copy
 % \pagenumbering{arabic}
 
 % Load basic packages
 \usepackage{balance}  % to better equalize the last page
 \usepackage{graphics} % for EPS, load graphicx instead 
-%\usepackage[T1]{fontenc}
 \usepackage{txfonts}
-\usepackage{mathptmx}    %Times New Roman with maths support; comment if you want LaTeX's default font
+\usepackage{mathptmx} % Comment if you want LaTeX's default font
 \usepackage[pdftex]{hyperref}
-% \usepackage{url}      % llt: nicely formatted URLs
 \usepackage{color}
-\usepackage{textcomp}
 \usepackage{booktabs}
+\usepackage{textcomp}
+% Some optional stuff you might like/need.
+\usepackage{microtype}  % Improved Tracking and Kerning
 \usepackage{ccicons}
 
 % Paper metadata (use plain text, for PDF inclusion and later
@@ -39,13 +39,14 @@
   semicolons; include commas, within terms only; required.}
 \def\plaingeneralterms{Documentation, Standardization}
 
-%enable character protrusion and font expansion to have great looking documents
-\usepackage{microtype}
-
 % llt: Define a global style for URLs, rather that the default one
 \makeatletter
 \def\url@leostyle{%
-  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\bf\ttfamily}}}
+  \@ifundefined{selectfont}{
+    \def\UrlFont{\sf}
+  }{
+    \def\UrlFont{\small\bf\ttfamily}
+  }}
 \makeatother
 \urlstyle{leo}
 
@@ -64,6 +65,7 @@
 \definecolor{linkColor}{RGB}{6,125,233}
 \hypersetup{%
   pdftitle={\plaintitle},
+% Use \plainauthor for final version.
 %  pdfauthor={\plainauthor},
   pdfauthor={\emptyauthor},
   pdfkeywords={\plainkeywords},
@@ -477,7 +479,7 @@ abbreviated name of the conference (e.g., for Interact 2003
 proceedings, use Proc.\ Interact 2003). Do not include the location of
 the conference or the exact date; do include the page numbers if
 available. See the examples of citations at the end of this document
-and in the accompanying \texttt{BibTeX} document.
+and in the accompanying Bib\TeX\ document.
 
 References \textit{must be the same font size as other body
   text}. References should be in alphabetical order by last name of
