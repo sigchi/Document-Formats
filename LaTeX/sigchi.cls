@@ -1197,6 +1197,7 @@
   \else
     \def\@svsechd{#4{\hskip #1\relax #5}}%
   \fi
+  \par\nobreak
   \vskip -6pt  % [jdf] less space between section as in the Word template
   \@xsect{#3}\parskip=6pt} % [jdf] paragraph skip shorter
 
@@ -1232,6 +1233,7 @@
             \endgroup
         \endgroup
         \csname #1mark\endcsname{#7}%
+        \par\nobreak
         \vskip -6pt  % [jdf] less space between section as in the Word template
       \addcontentsline{toc}{#1}{%
             \ifnum #2>\c@secnumdepth \else
