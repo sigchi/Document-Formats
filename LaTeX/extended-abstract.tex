@@ -28,6 +28,17 @@
 % DOI string from ACM form confirmation}
 %% EXAMPLE END
 
+% Paper metadata (use plain text, for PDF inclusion and later
+% re-using, if desired).  Use \emtpyauthor when submitting for review
+% so you remain anonymous.
+\def\plaintitle{SIGCHI Extended Abstracts Sample File: Note Initial
+  Caps} \def\plainauthor{First Author, Second Author, Third Author,
+  Fourth Author, Fifth Author, Sixth Author}
+\def\emptyauthor{}
+\def\plainkeywords{Authors' choice; of terms; separated; by
+  semicolons; include commas, within terms only; required.}
+\def\plaingeneralterms{Documentation, Standardization}
+
 \title{SIGCHI Extended Abstracts Sample File: \underline{N}ote
   \underline{I}nitial \underline{C}aps}
 
@@ -67,19 +78,24 @@
     \affaddr{Cape Town, South Africa}\\
     \email{author7@umbhaliu.ac.za} } }
 
-% Paper metadata (use plain text, for PDF inclusion and later
-% re-using, if desired)
-\def\plaintitle{SIGCHI Extended Abstracts Sample File: Note Initial
-  Caps} \def\plainauthor{First Author, Second Author, Third Author,
-  Fourth Author, Fifth Author, Sixth Author}
-\def\plainkeywords{Authors' choice; of terms; separated; by
-  semicolons; include commas, within terms only; required.}
-\def\plaingeneralterms{Documentation, Standardization}
-
-%% Set up our PDF with metadata
+% Make sure hyperref comes last of your loaded packages, to give it a
+% fighting chance of not being over-written, since its job is to
+% redefine many LaTeX commands.
+\definecolor{linkColor}{RGB}{6,125,233}
 \hypersetup{%
-  pdftitle={\plaintitle}, pdfauthor={\plainauthor},
-  pdfkeywords={\plainkeywords}, }
+  pdftitle={\plaintitle},
+%  pdfauthor={\plainauthor},
+  pdfauthor={\emptyauthor},
+  pdfkeywords={\plainkeywords},
+  bookmarksnumbered,
+  pdfstartview={FitH},
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=linkColor,
+  breaklinks=true,
+}
 
 % \reversemarginpar%
 

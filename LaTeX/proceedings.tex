@@ -27,7 +27,17 @@
 \usepackage{textcomp}
 \usepackage{booktabs}
 \usepackage{ccicons}
-\usepackage{todonotes}
+
+% Paper metadata (use plain text, for PDF inclusion and later
+% re-using, if desired).  Use \emtpyauthor when submitting for review
+% so you remain anonymous.
+\def\plaintitle{SIGCHI Conference Proceedings Format}
+\def\plainauthor{First Author, Second Author, Third Author,
+  Fourth Author, Fifth Author, Sixth Author}
+\def\emptyauthor{}
+\def\plainkeywords{Authors' choice; of terms; separated; by
+  semicolons; include commas, within terms only; required.}
+\def\plaingeneralterms{Documentation, Standardization}
 
 % llt: Define a global style for URLs, rather that the default one
 \makeatletter
@@ -45,22 +55,14 @@
 \setlength{\pdfpagewidth}{\pprw}
 \setlength{\pdfpageheight}{\pprh}
 
-% Paper metadata (use plain text, for PDF inclusion and later
-% re-using, if desired)
-\def\plaintitle{SIGCHI Conference Proceedings Format}
-\def\plainauthor{First Author, Second Author, Third Author,
-  Fourth Author, Fifth Author, Sixth Author}
-\def\plainkeywords{Authors' choice; of terms; separated; by
-  semicolons; include commas, within terms only; required.}
-\def\plaingeneralterms{Documentation, Standardization}
-
 % Make sure hyperref comes last of your loaded packages, to give it a
 % fighting chance of not being over-written, since its job is to
 % redefine many LaTeX commands.
 \definecolor{linkColor}{RGB}{6,125,233}
 \hypersetup{%
   pdftitle={\plaintitle},
-  pdfauthor={\plainauthor},
+%  pdfauthor={\plainauthor},
+  pdfauthor={\emptyauthor},
   pdfkeywords={\plainkeywords},
   bookmarksnumbered,
   pdfstartview={FitH},
