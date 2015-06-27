@@ -17,7 +17,7 @@ all: extended-abstract.pdf proceedings.pdf
 	pdflatex $<
 
 clean:
-	-rm *.aux *.log *.bbl *.blg *.out
+	-rm *.aux *.log *.bbl *.blg *.out *.synctex.gz
 
 veryclean: clean
 	-rm *.pdf
