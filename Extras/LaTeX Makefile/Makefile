@@ -1,5 +1,7 @@
 # Simple Makefile for ACM SIGCHI LaTeX template
 # Public domain, 2015 by Florian Echtler
+#
+# To use, copy to top-level LaTeX folder and run 'make'.
 
 # initial target files
 all: extended-abstract.pdf proceedings.pdf
