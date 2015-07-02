@@ -181,7 +181,7 @@
 \evensidemargin 1.9cm           % [jdf] idem
 \advance\oddsidemargin by -1in  % Correct for LaTeX gratuitousness
 \advance\evensidemargin by -1in % Correct for LaTeX gratuitousness
-\marginparwidth 0pt             % Margin pars are not allowed.
+\marginparwidth 40pt            % Margin pars are not allowed.
 \marginparsep 11pt              % Horizontal space between outer margin and
                                 % marginal note
 
@@ -984,9 +984,9 @@
 \newtoks\confinfo
 \def\conferenceinfo#1#2{\global\conf={#1}\global\confinfo{#2}}
 
-
-\def\marginpar{\@latexerr{The \marginpar command is not allowed in the
-  `acmconf' document style.}\@eha}
+\let\oldmarginpar\marginpar
+\renewcommand{\marginpar}[2][]{\@latex@warning{The marginpar command is not allowed in the `acmconf'
+document style. Remove all occurences before final document submission.}\oldmarginpar[#1]{#2}}
 
 \mark{{}{}}     % Initializes TeX's marks
 
