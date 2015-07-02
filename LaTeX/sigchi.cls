@@ -181,7 +181,7 @@
 \evensidemargin 1.9cm           % [jdf] idem
 \advance\oddsidemargin by -1in  % Correct for LaTeX gratuitousness
 \advance\evensidemargin by -1in % Correct for LaTeX gratuitousness
-\marginparwidth 40pt            % Margin pars are not allowed.
+\marginparwidth 0pt             % Margin pars are not allowed.
 \marginparsep 11pt              % Horizontal space between outer margin and
                                 % marginal note
 
@@ -734,8 +734,6 @@
 \@twosidetrue
 \@mparswitchtrue
 \def\ds@draft{\overfullrule 5\p@}
-%% CHANGE ON NEXT LINE
-\dooptions
 
 \lineskip \p@
 \normallineskip \p@
@@ -984,9 +982,17 @@
 \newtoks\confinfo
 \def\conferenceinfo#1#2{\global\conf={#1}\global\confinfo{#2}}
 
+
+% Introduce a "draft" option which conditionally enables marginpars with a warning.
 \let\oldmarginpar\marginpar
-\renewcommand{\marginpar}[2][]{\@latex@warning{The marginpar command is not allowed in the `acmconf'
-document style. Remove all occurences before final document submission.}\oldmarginpar[#1]{#2}}
+\renewcommand{\marginpar}[2][]{\@latexerr{The marginpar command is not allowed in the
+  `acmconf' document style.}\@eha}
+\DeclareOption{draft}{
+  \marginparwidth 40pt
+  \renewcommand{\marginpar}[2][]{\@latex@warning{The marginpar command is not allowed in the `acmconf'
+  document style. Remove all occurences before final document submission.}\oldmarginpar[#1]{#2}}
+}
+\dooptions % immediately execute the options at this point.
 
 \mark{{}{}}     % Initializes TeX's marks
 
