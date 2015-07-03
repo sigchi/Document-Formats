@@ -702,23 +702,10 @@
                    % which meant that the copyright space wasn't reserved.
                    % I re-enabled it.
 
-%% CHANGES ON NEXT LINES
-\newif\if@ll % to record which version of LaTeX is in use
-
-\expandafter\ifx\csname LaTeXe\endcsname\relax % LaTeX2.09 is used
-\else% LaTeX2e is used, so set ll to true
-\global\@lltrue
-\fi
-
-\if@ll
+% actual class setup happens here:
   \NeedsTeXFormat{LaTeX2e}
   \ProvidesClass{sigchi} [2011/06/06 - V0.16]  % DLC
   \RequirePackage{latexsym}% QUERY: are these two really needed?
-  \let\dooptions\ProcessOptions
-\else
-  \let\dooptions\@options
-\fi
-%% END CHANGES
 
 \def\@height{height}
 \def\@width{width}
@@ -734,16 +721,13 @@
 \@twosidetrue
 \@mparswitchtrue
 \def\ds@draft{\overfullrule 5\p@}
-%% CHANGE ON NEXT LINE
-\dooptions
 
 \lineskip \p@
 \normallineskip \p@
 \def\baselinestretch{1}
 \def\@ptsize{0} %needed for amssymbols.sty
 
-%% CHANGES ON NEXT LINES
-\if@ll% allow use of old-style font change commands in LaTeX2e
+% allow use of old-style font change commands in LaTeX2e
 \@maxdepth\maxdepth
 %
 \DeclareOldFontCommand{\rm}{\ninept\rmfamily}{\mathrm}
@@ -755,9 +739,7 @@
 \DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
 \DeclareRobustCommand*{\cal}{\@fontswitch{\relax}{\mathcal}}
 \DeclareRobustCommand*{\mit}{\@fontswitch{\relax}{\mathnormal}}
-\fi
-%
-\if@ll
+
  \renewcommand{\rmdefault}{cmr}  % was 'ttm'
 % Note! I have also found 'mvr' to work ESPECIALLY well.
 % Gerry - October 1999
@@ -774,18 +756,7 @@
     \belowdisplayshortskip 6\p@ \@minus 3\p@
     \let\@listi\@listI
   }
-\else
-  \def\@normalsize{%changed next to 9 from 10
-%    \@setsize\normalsize{9\p@}\ixpt\@ixpt
-    \@setsize\normalsize{10\p@}\ixpt\@xpt        % from 9 to 10 00-09-07 job
-    \abovedisplayskip 6\p@ \@plus2\p@ \@minus\p@
-    \belowdisplayskip \abovedisplayskip
-    \abovedisplayshortskip 6\p@ \@minus 3\p@
-    \belowdisplayshortskip 6\p@ \@minus 3\p@
-    \let\@listi\@listI
-  }%
-\fi
-\if@ll
+
   \newcommand\scriptsize{\@setfontsize\scriptsize\@viipt{8\p@}}
   \newcommand\tiny{\@setfontsize\tiny\@vpt{6\p@}}
   \newcommand\large{\@setfontsize\large\@xiipt{14\p@}}
@@ -793,15 +764,7 @@
   \newcommand\LARGE{\@setfontsize\LARGE\@xviipt{20\p@}}
   \newcommand\huge{\@setfontsize\huge\@xxpt{25\p@}}
   \newcommand\Huge{\@setfontsize\Huge\@xxvpt{30\p@}}
-\else
-  \def\scriptsize{\@setsize\scriptsize{8\p@}\viipt\@viipt}
-  \def\tiny{\@setsize\tiny{6\p@}\vpt\@vpt}
-  \def\large{\@setsize\large{14\p@}\xiipt\@xiipt}
-  \def\Large{\@setsize\Large{18\p@}\xivpt\@xivpt}
-  \def\LARGE{\@setsize\LARGE{20\p@}\xviipt\@xviipt}
-  \def\huge{\@setsize\huge{25\p@}\xxpt\@xxpt}
-  \def\Huge{\@setsize\Huge{30\p@}\xxvpt\@xxvpt}
-\fi
+
 \normalsize
 
 % make aubox hsize/number of authors up to 3, less gutter
