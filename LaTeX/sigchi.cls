@@ -992,7 +992,9 @@
   \renewcommand{\marginpar}[2][]{\@latex@warning{The marginpar command is not allowed in the `acmconf'
   document style. Remove all occurences before final document submission.}\oldmarginpar[#1]{#2}}
 }
-\dooptions % immediately execute the options at this point.
+% Immediately execute the options at this point. Reason is discussed
+% here: https://tex.stackexchange.com/questions/203387/
+\ProcessOptions
 
 \mark{{}{}}     % Initializes TeX's marks
 
