@@ -177,8 +177,8 @@
 
 \typeout{}
 
-\oddsidemargin 1.9cm            % [jdf] stick to CHI Formating Guidelines
-\evensidemargin 1.9cm           % [jdf] idem
+\oddsidemargin 1.9025cm            % [jdf] stick to CHI Formating Guidelines
+\evensidemargin 1.9025cm           % [jdf] idem
 \advance\oddsidemargin by -1in  % Correct for LaTeX gratuitousness
 \advance\evensidemargin by -1in % Correct for LaTeX gratuitousness
 \marginparwidth 0pt             % Margin pars are not allowed.
