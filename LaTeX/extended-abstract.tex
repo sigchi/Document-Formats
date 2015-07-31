@@ -10,8 +10,11 @@
 \usepackage{ccicons}  % for Creative Commons citation icons
 \usepackage{ragged2e} % for tighter hyphenation
 
-% \usepackage{marginnote} \usepackage[shortlabels]{enumitem}
+% Some optional stuff you might like/need.
+% \usepackage{marginnote} 
+% \usepackage[shortlabels]{enumitem}
 % \usepackage{paralist}
+% \usepackage[utf8]{inputenc} % for a UTF8 editor only
 
 %% EXAMPLE BEGIN -- HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP --
 % \copyrightinfo{Permission to make digital or hard copies of all or
@@ -245,9 +248,15 @@ pay attention to the following:
   necessary, you may be able to use ``he'' and ``she'' in alternating
   sentences, so that the two genders occur equally
   often~\cite{Schwartz:1995:GBF}.
+\item If possible, use the full (extended) alphabetic character set
+  for names of persons, institutions, and places (e.g.,
+  Gr{\o}nb{\ae}k, Lafreni\'ere, S\'anchez, Nguy{\~{\^{e}}}n,
+  Universit{\"a}t, Wei{\ss}enbach, Z{\"u}llighoven, \r{A}rhus, etc.).
+  These characters are already included in most versions and variants
+  of Times, Helvetica, and Arial fonts.
 \end{itemize}
 
-\marginpar{\vspace{5pc}So long as you don't type outside the right
+\marginpar{\vspace{-2pc}So long as you don't type outside the right
   margin or bleed into the gutter, it's okay to put annotations over
   here on the left, too. You'll have to manually align the margin
   paragraphs to your \LaTeX\ floats using the
@@ -267,7 +276,7 @@ pay attention to the following:
     \caption{In this image, the cats are tessellated within a square
       frame. Images should also have captions and be within the
       boundaries of the sidebar on page~\pageref{sec:sidebar}. Photo:
-      \cczero jofish on Flickr.}~\label{fig:marginfig}
+      \cczero~jofish on Flickr.}~\label{fig:marginfig}
   \end{minipage}
 \end{marginfigure}
 
