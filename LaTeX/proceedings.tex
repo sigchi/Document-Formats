@@ -210,7 +210,7 @@ of equal length.
 \centering
   \includegraphics[width=0.9\columnwidth]{figures/sigchi-logo}
   \caption{Insert a caption below each figure. Do not alter the
-    Caption style.  One line captions should be centered, multi-line
+    Caption style.  One-line captions should be centered; multi-line
     should be justified. }~\label{fig:figure1}
 \end{figure}
 
@@ -258,21 +258,24 @@ URLs directly in the text, as above.
 
 \begin{table}
   \centering
-  \begin{tabular}{r c c}
+  \begin{tabular}{l r r r}
     \toprule
-    & \multicolumn{2}{c}{\small{\textbf{Caption}}} \\
-    \cmidrule(r){2-3}
-    {\small\textbf{Objects}}
-    & {\small \textit{Pre-2002}}
-    & {\small \textit{Current}} \\
+    & & \multicolumn{2}{c}{\small{\textbf{Test Conditions}}} \\
+    \cmidrule(r){3-4}
+    {\small\textit{Name}}
+    & {\small \textit{First}}
+      & {\small \textit{Second}}
+    & {\small \textit{Final}} \\
     \midrule
-    Tables & Above & Below \\
-    Figures & Below & Below \\
+    Marsden & 223.0 & 44 & 432,321 \\
+    Nass & 22.2 & 16 & 234,333 \\
+    Borriello & 22.9 & 11 & 93,123 \\
+    Karat & 34.9 & 2200 & 103,322 \\
     \bottomrule
   \end{tabular}
   \caption{Table captions should be placed below the table. We
     recommend table lines be 1 point, 25\% black. Minimize use of
-    unnecessary table lines.}~\label{tab:table1}
+    table grid lines.}~\label{tab:table1}
 \end{table}
 
 \section{Sections}
