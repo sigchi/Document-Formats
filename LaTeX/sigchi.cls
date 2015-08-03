@@ -948,11 +948,11 @@
 \def\conferenceinfo#1#2{\global\conf={#1}\global\confinfo{#2}}
 
 
-% Introduce a "draft" option which conditionally enables marginpars with a warning.
+% Introduce a "chi_draft" option which conditionally enables marginpars with a warning.
 \let\oldmarginpar\marginpar
 \renewcommand{\marginpar}[2][]{\@latexerr{The marginpar command is not allowed in the
   `acmconf' document style.}\@eha}
-\DeclareOption{draft}{
+\DeclareOption{chi_draft}{
   \marginparwidth 40pt
   \renewcommand{\marginpar}[2][]{\@latex@warning{The marginpar command is not allowed in the `acmconf'
   document style. Remove all occurences before final document submission.}\oldmarginpar[#1]{#2}}
