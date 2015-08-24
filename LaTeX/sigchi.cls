@@ -772,8 +772,8 @@
 %\newbox\@acmtitlebox % [jdf] no use of the box
 \def\@maketitle{\newpage
  \null
-% \setbox\@acmtitlebox\vbox{   % [jdf] box not used
-%\baselineskip 20pt            % [jdf] no skip
+%\setbox\@acmtitlebox\vbox{   % [jdf] box not used
+\baselineskip 20pt            % [jdf] no skip
   \vskip 1em                   % [jdf] removed Vertical space above title.
    \begin{center}
     {\ttlfnt \@title\par}       % Title set in 18pt Helvetica (Arial) bold size.
