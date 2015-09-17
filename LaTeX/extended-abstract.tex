@@ -1,4 +1,3 @@
-
 \documentclass{sigchi-ext}
 % Please be sure that you have the dependencies (i.e., additional
 % LaTeX packages) to compile this example.
@@ -200,20 +199,24 @@ pay attention to the following:
 
 \begin{table}
   \centering
-  \begin{tabular}{r c c}
+  \begin{tabular}{l r r r}
     % \toprule
-    & \multicolumn{2}{c}{\small{\textbf{Caption}}} \\
-    \cmidrule(r){2-3}
-    {\small\textbf{Objects}}
-    & {\small \textit{Pre-2002}}
-    & {\small \textit{Current}} \\
+    & & \multicolumn{2}{c}{\small{\textbf{Test Conditions}}} \\
+    \cmidrule(r){3-4}
+    {\small\textit{Name}}
+    & {\small \textit{First}}
+      & {\small \textit{Second}}
+    & {\small \textit{Final}} \\
     \midrule
-    Tables & Above & Below \\
-    Figures & Below & Below \\
+    Marsden & 223.0 & 44 & 432,321 \\
+    Nass & 22.2 & 16 & 234,333 \\
+    Borriello & 22.9 & 11 & 93,123 \\
+    Karat & 34.9 & 2200 & 103,322 \\
     % \bottomrule
   \end{tabular}
-  \caption{Table captions should be placed below the table. Minimize use of
-    unnecessary table lines.}~\label{tab:table1}
+  \caption{Table captions should be placed below the table. We
+    recommend table lines be 1 point, 25\% black. Minimize use of
+    table grid lines.}~\label{tab:table1}
 \end{table}
 
 \begin{itemize}\compresslist%
@@ -264,7 +267,7 @@ pay attention to the following:
 %     it.}\label{fig:bats}
 % \end{figure}
 
-\begin{marginfigure}[-45pc]
+\begin{marginfigure}[-35pc]
   \begin{minipage}{\marginparwidth}
     \centering
     \includegraphics[width=0.9\marginparwidth]{figures/cats}
@@ -335,7 +338,7 @@ before the final deadline. Your PDF file must be ACM DL Compliant and
 meet stated requirements,
 \url{http://www.sheridanprinting.com/typedept/ACM-distilling-settings.htm}.
 
-\marginpar{\vspace{-24pc}So long as you don't type outside the right
+\marginpar{\vspace{-23pc}So long as you don't type outside the right
   margin or bleed into the gutter, it's okay to put annotations over
   here on the left, too; this annotation is near Hawaii. You'll have
   to manually align the margin paragraphs to your \LaTeX\ floats using

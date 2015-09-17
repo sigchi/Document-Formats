@@ -659,7 +659,7 @@
 \def\ext@figure{lof}
 \def\fnum@figure{Figure \thefigure}
 \def\figure{\@float{figure}}
-\let\endfigure\end@float
+\def\endfigure{\end@float}
 \@namedef{figure*}{\@dblfloat{figure}}
 \@namedef{endfigure*}{\end@dblfloat}
 
@@ -670,7 +670,7 @@
 \def\ext@table{lot}
 \def\fnum@table{Table \thetable}
 \def\table{\@float{table}}
-\let\endtable\end@float
+\def\endtable{\end@float}
 \@namedef{table*}{\@dblfloat{table}}
 \@namedef{endtable*}{\end@dblfloat}
 
@@ -772,8 +772,8 @@
 %\newbox\@acmtitlebox % [jdf] no use of the box
 \def\@maketitle{\newpage
  \null
-% \setbox\@acmtitlebox\vbox{   % [jdf] box not used
-%\baselineskip 20pt            % [jdf] no skip
+%\setbox\@acmtitlebox\vbox{   % [jdf] box not used
+\baselineskip 20pt            % [jdf] no skip
   \vskip 1em                   % [jdf] removed Vertical space above title.
    \begin{center}
     {\ttlfnt \@title\par}       % Title set in 18pt Helvetica (Arial) bold size.
@@ -948,11 +948,11 @@
 \def\conferenceinfo#1#2{\global\conf={#1}\global\confinfo{#2}}
 
 
-% Introduce a "draft" option which conditionally enables marginpars with a warning.
+% Introduce a "chi_draft" option which conditionally enables marginpars with a warning.
 \let\oldmarginpar\marginpar
 \renewcommand{\marginpar}[2][]{\@latexerr{The marginpar command is not allowed in the
   `acmconf' document style.}\@eha}
-\DeclareOption{draft}{
+\DeclareOption{chi_draft}{
   \marginparwidth 40pt
   \renewcommand{\marginpar}[2][]{\@latex@warning{The marginpar command is not allowed in the `acmconf'
   document style. Remove all occurences before final document submission.}\oldmarginpar[#1]{#2}}

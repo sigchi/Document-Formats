@@ -27,9 +27,15 @@
 \usepackage{textcomp}
 % Some optional stuff you might like/need.
 \usepackage{microtype} % Improved Tracking and Kerning
-% \usepackage{hypercap}  % Fixes bug in hyperref caption linking
+% \usepackage[all]{hypcap}  % Fixes bug in hyperref caption linking
 \usepackage{ccicons}  % Cite your images correctly!
 % \usepackage[utf8]{inputenc} % for a UTF8 editor only
+
+% If you want to use todo notes, marginpars etc. during creation of your draft document, you
+% have to enable the "chi_draft" option for the document class. To do this, change the very first
+% line to: "\documentclass[chi_draft]{sigchi}". You can then place todo notes by using the "\todo{...}"
+% command. Make sure to disable the draft option again before submitting your final document.
+\usepackage{todonotes}
 
 % Paper metadata (use plain text, for PDF inclusion and later
 % re-using, if desired).  Use \emtpyauthor when submitting for review
@@ -92,16 +98,16 @@
 
 \numberofauthors{3}
 \author{%
-  \alignauthor{1st Author Name\\
-    \affaddr{Affiliation}\\
+  \alignauthor{Leave Authors Anonymous\\
+    \affaddr{for Submission}\\
     \affaddr{City, Country}\\
     \email{e-mail address}}\\
-  \alignauthor{2nd Author Name\\
-    \affaddr{Affiliation}\\
+  \alignauthor{Leave Authors Anonymous\\
+    \affaddr{for Submission}\\
     \affaddr{City, Country}\\
     \email{e-mail address}}\\
-  \alignauthor{3rd Author Name\\
-    \affaddr{Affiliation}\\
+  \alignauthor{Leave Authors Anonymous\\
+    \affaddr{for Submission}\\
     \affaddr{City, Country}\\
     \email{e-mail address}}\\
 }
@@ -198,7 +204,7 @@ publications. They will also be placed in the ACM Digital Library,
 where they will remain accessible to thousands of researchers and
 practitioners worldwide. See
 \url{http://acm.org/publications/policies/copyright_policy} for the
-ACM’s copyright and permissions policy.
+ACM's copyright and permissions policy.
 
 \subsection{Subsequent Pages}
 
@@ -259,7 +265,7 @@ URLs directly in the text, as above.
 \begin{table}
   \centering
   \begin{tabular}{l r r r}
-    \toprule
+    % \toprule
     & & \multicolumn{2}{c}{\small{\textbf{Test Conditions}}} \\
     \cmidrule(r){3-4}
     {\small\textit{Name}}
@@ -271,7 +277,7 @@ URLs directly in the text, as above.
     Nass & 22.2 & 16 & 234,333 \\
     Borriello & 22.9 & 11 & 93,123 \\
     Karat & 34.9 & 2200 & 103,322 \\
-    \bottomrule
+    % \bottomrule
   \end{tabular}
   \caption{Table captions should be placed below the table. We
     recommend table lines be 1 point, 25\% black. Minimize use of
@@ -440,7 +446,7 @@ selecting ``Create PDF'' from the Acrobat ribbon.
 \section{Conclusion}
 
 It is important that you write for the SIGCHI audience. Please read
-previous years’ proceedings to understand the writing style and
+previous years' proceedings to understand the writing style and
 conventions that successful authors have used. It is particularly
 important that you state clearly what you have done, not merely what
 you plan to do, and explain how your work is different from previously

@@ -1,10 +1,14 @@
 # SIGCHI Document Formats #
 
 This repository is the official source for SIGCHI templates for Word
-and LaTeX.  While we encourage people to fix bugs and address issues,
-please note that not all pull requests will be taken for logistic
-reasons.  Please see the open tasks and reference them when making
-or opening such requests.
+and LaTeX.  If you are just looking to
+[download the templates][download], please see
+[the download page][download].
+
+While we encourage people to fix bugs and address issues, please note
+that not all pull requests will be taken for logistic reasons.  Please
+see the open tasks and reference them when making or opening such
+requests.
 
 If you have some supplement for Zotero, End Note, BibDesk, or other
 3rd party software that's not _technically_ part of the template, let
@@ -72,6 +76,7 @@ The SIGCHI and its conferences are asking all authors to work on
 improving the accessibility of their submissions. Please see the
 [Guide to an Accessible Submission][accessible] for more details.
 
+[download]: http://sigchi.github.io/Document-Formats/
 [TeX Live]: http://tug.org/texlive/
 [MacTeX]: http://tug.org/mactex/
 [keywords]: http://www.acm.org/about/class/1998
