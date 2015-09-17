@@ -21,6 +21,9 @@ all: extended-abstract.pdf proceedings.pdf
 	pdflatex $<
 	${VIEWER} $@ &
 
+# do not delete intermediate aux/bbl files
+.PRECIOUS: %.aux %.bbl
+
 clean:
 	-rm *.aux *.log *.bbl *.blg *.out *.synctex.gz
 
