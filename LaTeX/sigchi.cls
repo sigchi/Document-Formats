@@ -1174,6 +1174,7 @@
   \vskip -6pt  % [jdf] less space between section as in the Word template
   \@xsect{#3}\parskip=6pt} % [jdf] paragraph skip shorter
 
+% pre-define the section format for hyperref, to avoid clash with internal section name
 \newcommand{\Sectionformat}[2]{\if@uchead\uppercase{#1}\else#1\fi}
 
 \def\@sect#1#2#3#4#5#6[#7]#8{%
