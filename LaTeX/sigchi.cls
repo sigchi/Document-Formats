@@ -1174,6 +1174,7 @@
   \vskip -6pt  % [jdf] less space between section as in the Word template
   \@xsect{#3}\parskip=6pt} % [jdf] paragraph skip shorter
 
+\newcommand{\Sectionformat}[2]{\if@uchead\uppercase{#1}\else#1\fi}
 
 \def\@sect#1#2#3#4#5#6[#7]#8{%
     \ifnum #2>\c@secnumdepth
@@ -1197,11 +1198,7 @@
             \@hangfrom{\hskip #3\relax\@svsec}%
             \begingroup
                 \interlinepenalty \@M
-                \if@uchead
-                    \uppercase{#8}%
-                \else
                     #8%
-                \fi
                 \par
             \endgroup
         \endgroup
@@ -1219,11 +1216,7 @@
             #6%
             \hskip #3\relax
             \@svsec
-            \if@uchead
-                \uppercase{#8}%
-            \else
                 #8%
-            \fi
             \csname #1mark\endcsname{#7}%
             \addcontentsline{toc}{#1}{%
                 \ifnum #2>\c@secnumdepth \else
