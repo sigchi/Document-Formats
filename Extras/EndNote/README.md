@@ -1,6 +1,6 @@
 # Makefile #
 
-This directory contains an [EndNote Output Style][ENS] for thw Word Template.
+This directory contains an [EndNote Output Style][ENS] for the Word Template.
 
 Written by Cliff Lampe but open for edits and improvements.
 
