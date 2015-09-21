@@ -1,4 +1,4 @@
-# Makefile #
+# EndNote Output Style #
 
 This directory contains an [EndNote Output Style][ENS] for the Word Template.
 
