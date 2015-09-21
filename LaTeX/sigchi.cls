@@ -1088,9 +1088,6 @@
 \def\thesubsubsection{\thesubsection.\arabic{subsubsection}} %removed \subsecfnt 29 July 2002 gkmt
 \def\theparagraph{\thesubsubsection.\arabic{paragraph}} %removed \subsecfnt 29 July 2002 gkmt
 
-\newif\if@uchead
-\@ucheadfalse
-
 %% CHANGES: NEW NOTE
 %% NOTE: OK to use old-style font commands below, since they were
 %% suitably redefined for LaTeX2e
@@ -1098,8 +1095,8 @@
 %\setcounter{secnumdepth}{3}
 \setcounter{secnumdepth}{-2} % DLC
 \def\part{%
-    \@startsection{part}{9}{\z@}{-10\p@ \@plus -4\p@ \@minus -2\p@}
-        {4\p@}{\normalsize\@ucheadtrue}%
+    \@startsection{part}{0}{\z@}{-10\p@ \@plus -4\p@ \@minus -2\p@}
+        {4\p@}{\normalsize}%
 }
 
 % Rationale for changes made in next four definitions:
@@ -1115,7 +1112,7 @@
 % 12 Jan 2000 gkmt
 \def\section{%
     \@startsection{section}{1}{\z@}{8pt plus 3pt minus 3pt}%
-    {0.5pt}{\baselineskip=14pt\secfnt\@ucheadtrue}%
+    {0.5pt}{\baselineskip=14pt\secfnt}%
 }
 
 \def\subsection{%
@@ -1175,7 +1172,7 @@
   \@xsect{#3}\parskip=6pt} % [jdf] paragraph skip shorter
 
 % pre-define the section format for hyperref, to avoid clash with internal section name
-\newcommand{\Sectionformat}[2]{\if@uchead\uppercase{#1}\else#1\fi}
+\newcommand{\Sectionformat}[2]{\ifnum#2<2\uppercase{#1}\else#1\fi}
 
 \def\@sect#1#2#3#4#5#6[#7]#8{%
     \ifnum #2>\c@secnumdepth
