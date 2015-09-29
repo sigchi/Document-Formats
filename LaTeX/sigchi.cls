@@ -455,7 +455,7 @@
 \newcount\sectioncntr
 \global\sectioncntr=1
 
-\setcounter{secnumdepth}{3}
+\setcounter{secnumdepth}{0}
 
 \def\appendix{\par
 \section*{APPENDIX}
@@ -1095,8 +1095,6 @@
 %% NOTE: OK to use old-style font commands below, since they were
 %% suitably redefined for LaTeX2e
 %% END CHANGES
-%\setcounter{secnumdepth}{3}
-\setcounter{secnumdepth}{-2} % DLC
 \def\part{%
     \@startsection{part}{9}{\z@}{-10\p@ \@plus -4\p@ \@minus -2\p@}
         {4\p@}{\normalsize\@ucheadtrue}%
@@ -1177,7 +1175,7 @@
 
 \def\@sect#1#2#3#4#5#6[#7]#8{%
     \ifnum #2>\c@secnumdepth
-        \let\@svsec\@empty
+        \let\@svsec\@\refstepcounter{#1}
     \else
         \refstepcounter{#1}%
         \edef\@svsec{%
@@ -1409,7 +1407,7 @@
 \setcounter{enumi}{1}
 \def\thebibliography#1{%
     \section{%
-       {REFERENCES}
+       {References}
         \@mkboth{{\refname}}{{\refname}}%
     }%
 %    \list{[\arabic{enumi}]}{%
