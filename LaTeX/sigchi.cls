@@ -99,6 +99,8 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\RequirePackage{xparse}
+\RequirePackage{textcase}
 %%% ACM_PROC_ARTICLE-SP is a document style for producing two-column camera-ready pages for
 %%% ACM conferences, according to ACM specifications.  The main features of
 %%% this style are:
@@ -867,58 +869,30 @@
 
 \def\endabstract{\if@twocolumn\else\endquotation\fi}
 
-\def\keywords#1{%\if@twocolumn
-\section*{Author Keywords}
-\begin{flushleft}#1\end{flushleft}
-%\else \small
-%\quotation #1
-%\fi
+\newcommand{\keywords}[1]{
+  \section*{\NoCaseChange{Author Keywords}}
+  \begin{flushleft}#1\end{flushleft}
 }
-
-\def\classification#1{%\if@twocolumn
-\section*{ACM Classification Keywords}
-\begin{flushleft}#1\end{flushleft}
-%\else \small
-%\quotation\the\parskip
-%\fi
+\newcommand{\terms}[1]{
+  \section*{\NoCaseChange{General Terms}}
+  \begin{flushleft}#1\end{flushleft}
 }
-
-% I've pulled the check for 2 cols, since proceedings are _always_
-% two-column  11 Jan 2000 gkmt
-\def\terms#1{%\if@twocolumn
-\section*{General Terms}
-\begin{flushleft}#1\end{flushleft}
-%\else \small
-%\quotation\the\parskip
-%\fi
+\newcommand{\classification}[1]{
+  \section*{\NoCaseChange{ACM Classification Keywords}}
+  \begin{flushleft}#1\end{flushleft}
 }
-
-% -- Classification needs to be a bit smart due to optionals - Gerry/Georgia November 2nd. 1999
-\newcount\catcount
-\global\catcount=1
-
-\def\category#1#2#3{%
-\ifnum\catcount=1
-\section*{ACM Classification Keywords}  % DLC
-\advance\catcount by 1\else{\unskip; }\fi
-    \@ifnextchar [{\@category{#1}{#2}{#3}}{\@category{#1}{#2}{#3}[]}%
+% More complex version for classification keywords
+\DeclareDocumentCommand\category{m m m o}{%
+  \section*{\NoCaseChange{ACM Classification Keywords}}%
+  #1 [#2]: #3%
+  \IfNoValueF{#4}{\kern\z@---\hskip\z@ \textit{#4}}%
+  % now change \category to omit section title next time
+  \RenewDocumentCommand\category{m m m o}{%
+    \unskip ; \hspace{5pt plus 3pt}% 
+    ##1 [##2]: ##3%
+    \IfNoValueF{##4}{\kern\z@---\hskip\z@ \textit{##4}}%
+  }%
 }
-
-\def\@category#1#2#3[#4]{%
-    \begingroup
-        \let\and\relax
-%            #1 [\textbf{#2}]% 
-            #1 #2%   % DLC
-            \if!#4!%
-                \if!#3!\else : #3\fi
-            \else
-                :\space
-                \if!#3!\else #3\kern\z@---\hskip\z@\fi
-                \textit{#4}%
-            \fi
-    \endgroup
-}
-%
 
 %%% This section (written by KBT) handles the 1" box in the lower left
 %%% corner of the left column of the first page by creating a picture,
