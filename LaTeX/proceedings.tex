@@ -4,12 +4,23 @@
 % (e.g. for preprints).  Consult the conference website for the
 % camera-ready copyright statement.
 
-%% EXAMPLE BEGIN -- HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP -- (July 22, 2013 - Paul Baumann)
-% \toappear{Permission to make digital or hard copies of all or part of this work for personal or classroom use is      granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org. \\
-% {\emph{CHI'14}}, April 26--May 1, 2014, Toronto, Canada. \\
-% Copyright \copyright~2014 ACM ISBN/14/04...\$15.00. \\
-% DOI string from ACM form confirmation}
-%% EXAMPLE END -- HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP -- (July 22, 2013 - Paul Baumann)
+%% HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP --
+%% Please note you need to make sure the copy for your specific
+%% license is used here!
+\toappear{
+Permission to make digital or hard copies of all or part of this work
+for personal or classroom use is granted without fee provided that
+copies are not made or distributed for profit or commercial advantage
+and that copies bear this notice and the full citation on the first
+page. Copyrights for components of this work owned by others than ACM
+must be honored. Abstracting with credit is permitted. To copy
+otherwise, or republish, to post on servers or to redistribute to
+lists, requires prior specific permission and/or a fee. Request
+permissions from \href{mailto:Permissions@acm.org}{Permissions@acm.org}. \\
+\emph{CHI '16},  May 07--12, 2016, San Jose, CA, USA \\
+ACM xxx-x-xxxx-xxxx-x/xx/xx\ldots \$15.00 \\
+DOI: \url{http://dx.doi.org/xx.xxxx/xxxxxxx.xxxxxxx}
+}
 
 % Arabic page numbers for submission.  Remove this line to eliminate
 % page numbers for the camera ready copy
@@ -18,10 +29,10 @@
 % Load basic packages
 \usepackage{balance}  % to better equalize the last page
 \usepackage{graphics} % for EPS, load graphicx instead 
-\usepackage[T1]{fontenc}
+%\usepackage[T1]{fontenc}
 \usepackage{txfonts}
 \usepackage{mathptmx}
-\usepackage[pdftex]{hyperref}
+\usepackage[pdflang={en-US},pdftex]{hyperref}
 \usepackage{color}
 \usepackage{booktabs}
 \usepackage{textcomp}
@@ -78,6 +89,7 @@
 %  pdfauthor={\plainauthor},
   pdfauthor={\emptyauthor},
   pdfkeywords={\plainkeywords},
+  pdfdisplaydoctitle=true, % For Accessibility
   bookmarksnumbered,
   pdfstartview={FitH},
   colorlinks,
