@@ -563,6 +563,13 @@
 \bibsep 2pt \@plus 1pt \@minus 1pt % [jdf] initial spacing between ref entries
 \setcounter{enumi}{1}
 \def\thebibliography#1{%
+%% Comment this to have blue DOI links.
+\makeatletter
+\def\url@leostyle{% 
+\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\color{black}\small\bf\ttfamily}}}
+\makeatother
+\urlstyle{leo}
+%%
     \section{%
        {REFERENCES}
         \@mkboth{{\refname}}{{\refname}}%
