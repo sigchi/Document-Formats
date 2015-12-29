@@ -9,6 +9,8 @@
 % 
 % CHANGELOG: 
 %
+% 2015-12-10 Daniel Ashbrook Switch 7-bit fonts to 8-bit
+%
 % 2015-03-21 David A. Shamma Updating for new format and Github
 % repo for CHI 2016.
 %
@@ -423,24 +425,24 @@
 % *** THIS BLOCK FOR THOSE USING METAFONT *****
 % *********************************************
 % notes: 7t fonts are 7-bit latex, 8t fonts are T1 fonts
-\newfont{\secfnt}{phvb7t at 9pt}                    % 05-16-2006 atd
-\newfont{\secit}{phvbo7t at 9pt}                    % 05-16-2006 atd
-\newfont{\subsecfnt}{phvro7t at 9pt}                    % 05-16-2006 atd
-\newfont{\subsecit}{phvr7t at 9pt}                    % 05-16-2006 atd
-\newfont{\ttlfnt}{phvb7t at 18pt}                    % 05-16-2006 atd
-\newfont{\ttlit}{phvbo7t at 18pt}                    % 05-16-2006 atd
-\newfont{\subttlfnt}{phvr7t at 14pt}                    % 05-16-2006 atd
-\newfont{\subttlit}{phvro7t at 14pt}                     % 05-16-2006 atd
-\newfont{\subttlbf}{phvb7t at 14pt}                    % 05-16-2006 atd
-\newfont{\aufnt}{ptmb7t at 12pt}                    % 05-16-2006 atd
-\newfont{\auit}{ptmbo7t at 12pt}                    % 05-16-2006 atd
-\newfont{\affaddr}{ptmr7t at 12pt}                    % 05-16-2006 atd
-\newfont{\affaddrit}{ptmro7t at 12pt}                    % 05-16-2006 atd
-\newfont{\eaddfnt}{ptmr7t at 12pt}                    % 05-16-2006 atd
-\newfont{\ixpt}{ptmr7t at 10pt}                    % 05-16-2006 atd
-\newfont{\confname}{ptmri7t at 8pt}                    % 05-16-2006 atd
-\newfont{\crnotice}{ptmr7t at 8pt}                    % 05-16-2006 atd
-\newfont{\ninept}{ptmr7t at 10pt}                    % 05-16-2006 atd
+\newfont{\secfnt}{phvb8t at 9pt}
+\newfont{\secit}{phvbo8t at 9pt}
+\newfont{\subsecfnt}{phvro8t at 9pt}
+\newfont{\subsecit}{phvr8t at 9pt}
+\newfont{\ttlfnt}{phvb8t at 18pt}
+\newfont{\ttlit}{phvbo8t at 18pt}
+\newfont{\subttlfnt}{phvr8t at 14pt}
+\newfont{\subttlit}{phvro8t at 14pt}
+\newfont{\subttlbf}{phvb8t at 14pt}
+\newfont{\aufnt}{ptmb8t at 12pt}
+\newfont{\auit}{ptmbo8t at 12pt}
+\newfont{\affaddr}{ptmr8t at 12pt}
+\newfont{\affaddrit}{ptmro8t at 12pt}
+\newfont{\eaddfnt}{ptmr8t at 12pt}
+\newfont{\ixpt}{ptmr8t at 10pt}
+\newfont{\confname}{ptmri8t at 8pt}
+\newfont{\crnotice}{ptmr8t at 8pt}
+\newfont{\ninept}{ptmr8t at 10pt}
 % +++++++++++++++++++++++++++++++++++++++++++++
 % -- End of block C --
 
