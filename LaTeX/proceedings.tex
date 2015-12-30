@@ -27,25 +27,28 @@
 % \pagenumbering{arabic}
 
 % Load basic packages
-\usepackage{balance}  % to better equalize the last page
-\usepackage{graphics} % for EPS, load graphicx instead 
-%\usepackage[T1]{fontenc}
+\usepackage{balance}       % to better equalize the last page
+\usepackage{graphics}      % for EPS, load graphicx instead 
+\usepackage[T1]{fontenc}   % for umlauts and other diaeresis
 \usepackage{txfonts}
 \usepackage{mathptmx}
 \usepackage[pdflang={en-US},pdftex]{hyperref}
 \usepackage{color}
 \usepackage{booktabs}
 \usepackage{textcomp}
+
 % Some optional stuff you might like/need.
-\usepackage{microtype} % Improved Tracking and Kerning
-% \usepackage[all]{hypcap}  % Fixes bug in hyperref caption linking
-\usepackage{ccicons}  % Cite your images correctly!
+\usepackage{microtype}        % Improved Tracking and Kerning
+% \usepackage[all]{hypcap}    % Fixes bug in hyperref caption linking
+\usepackage{ccicons}          % Cite your images correctly!
 % \usepackage[utf8]{inputenc} % for a UTF8 editor only
 
-% If you want to use todo notes, marginpars etc. during creation of your draft document, you
-% have to enable the "chi_draft" option for the document class. To do this, change the very first
-% line to: "\documentclass[chi_draft]{sigchi}". You can then place todo notes by using the "\todo{...}"
-% command. Make sure to disable the draft option again before submitting your final document.
+% If you want to use todo notes, marginpars etc. during creation of
+% your draft document, you have to enable the "chi_draft" option for
+% the document class. To do this, change the very first line to:
+% "\documentclass[chi_draft]{sigchi}". You can then place todo notes
+% by using the "\todo{...}"  command. Make sure to disable the draft
+% option again before submitting your final document.
 \usepackage{todonotes}
 
 % Paper metadata (use plain text, for PDF inclusion and later
