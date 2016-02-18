@@ -1,7 +1,8 @@
 #! /bin/sh
 mkdir ../tmp
 mkdir ../tmp/sigchi-word-all
-cp ../../Word/*.docx ../tmp/sigchi-word-all
+cp ../../Word/SIGCHI*Proc*.docx ../tmp/sigchi-word-all
+cp ../../Word/SIGCHI*Abstract*.docx ../tmp/sigchi-word-all
 cp ../../Examples/Word*.pdf ../tmp/sigchi-word-all
 cd ../tmp; zip sigchi-word-all.zip sigchi-word-all/*.*; mv sigchi-word-all.zip ..; cd ../bin
 
