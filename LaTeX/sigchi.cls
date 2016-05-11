@@ -157,7 +157,9 @@
 
 \typeout{}
 
-\typeout{- <March 21, 2105> Updated by David A. Shamma for CHI 2016.}
+\typeout{- <May 11, 2016> Updated by Florian Heller to accept ACM copyright commands.}
+
+\typeout{- <March 21, 2015> Updated by David A. Shamma for CHI 2016.}
 
 \typeout{- <July 30, 2014> Updated for for 2014 by William Hudson and
   Jean-Daniel Fekete.}
@@ -178,6 +180,27 @@
 \typeout{Excerpts were taken from (Journal Style) 'esub2acm.cls'.}
 
 \typeout{}
+
+% Options taken from ACM LaTeX template. FH, May 11 2016
+% New option code by BV
+
+\newcount\ACM@basesize
+\ACM@basesize=9\relax
+\DeclareOption{9pt}{\ACM@basesize=9\relax}
+\DeclareOption{10pt}{\ACM@basesize=10\relax}
+\DeclareOption{11pt}{\ClassError{sig-alternate}{The `11pt' option is
+    not allowed}{sig-alternate now exists in 9pt and 10pt versions only}}
+\DeclareOption{12pt}{\ClassError{sig-alternate}{The `12pt' option is
+    not allowed}{sig-alternate now exists in 9pt and 10pt versions only}}
+
+\ExecuteOptions{9pt}
+\ProcessOptions
+
+\def\doi#1{\def\@doi{#1}}
+\doi{http://dx.doi.org/10.1145/0000000.0000000}
+
+\let\@concepts\@empty
+
 
 \oddsidemargin 1.9025cm            % [jdf] stick to CHI Formating Guidelines
 \evensidemargin 1.9025cm           % [jdf] idem
@@ -929,20 +952,26 @@
 %%% caption).
 %%%
 \newtoks\copyrightnotice
-\newcounter{copyrightbox} % llt: enable compatibility with the caption package
 \def\ftype@copyrightbox{8}
 \def\@copyrightspace{
 \@float{copyrightbox}[b]
 \begin{center}
 \setlength{\unitlength}{1pc}
+\ifnum\ACM@basesize=9
 \begin{picture}(20,6) %Space for copyright notice
 \put(0,-0.95){\crnotice{\@toappear}}
 \end{picture}
+\fi
+\ifnum\ACM@basesize=10
+\begin{picture}(20,7) %Space for copyright notice
+\put(0,-0.95){\crnotice{\@toappear}}
+\end{picture}
+\fi
 \end{center}
 \end@float}
 
 \def\@toappear{} % Default setting blank - commands below change this.
-\long\def\toappear#1{\def\@toappear{\parbox[b]{20pc}{\scriptsize\baselineskip 8pt#1}}}
+\long\def\toappear#1{\def\@toappear{\parbox[b]{20pc}{\baselineskip 9pt#1}}}
 \def\toappearbox#1{\def\@toappear{\raisebox{5pt}{\framebox[20pc]{\parbox[b]{19pc}{#1}}}}}
 
 \newtoks\conf
@@ -1534,22 +1563,65 @@
 \newtoks\copyrtyr
 \newtoks\acmcopyr
 \newtoks\boilerplate
+
+\global\acmcopyr={X-XXXXX-XX-X/XX/XX}  % Default - 5/11/2001 *** Gerry
+\global\copyrtyr={\the\year}                % Default - 3/3/2003 *** Gerry
+\def\acmPrice#1{\gdef\@acmPrice{#1}}
+\acmPrice{} %article price  % Changed to 15 - June 2012 - Gerry
+
+
 \def\CopyrightYear#1{\global\copyrtyr{#1}}
 \def\crdata#1{\global\acmcopyr{#1}}
 \def\permission#1{\global\boilerplate{#1}}
+
+% ISBN
+%
+\def\isbn#1{\global\acmcopyr={#1}}
+\isbn{978-1-4503-2138-9}
+
+\RequirePackage{url}
+\urlstyle{rm}
+\def\doi#1{\def\@doi{#1}}
+\doi{10.1145/1235}
+\def\printdoi#1{\url{#1}}
+
+
+
+% Copyright
+\RequirePackage{acmcopyright}
+\setcopyright{none}
+
+%
+\global\boilerplate={\@copyrightpermission}
 %
 \newtoks\copyrightetc
-\global\copyrightetc{\ } %  Need to have 'something' so that adequate space is left for pasting in a line if "confinfo" is supplied.
+\ifnum\ACM@basesize=9\relax
+\global\copyrightetc{%
+{\noindent\confname\ \the\conf } \the\confinfo \par\smallskip
+  \if@printcopyright
+    \copyright\ \the\copyrtyr\ \@copyrightowner
+  \fi
+  \if@acmowned ISBN \else\ifnum\acm@copyrightmode=2 ISBN \else \par\smallskip ACM ISBN \fi\fi
+ \the\acmcopyr\ifx\@acmPrice\@empty.\else\dots\@acmPrice\fi\par\smallskip
+{DOI: \small\expandafter\printdoi\expandafter{\@doi}}} 
+\toappear{\fontsize{7pt}{8pt}\fontfamily{ptm}\selectfont
+  \the\boilerplate\par\smallskip
+ \the\copyrightetc}
+\fi
+\ifnum\ACM@basesize=10\relax
+\global\copyrightetc{%
+{\noindent\confname\ \the\conf\ \the\confinfo}\par\smallskip
+  \if@printcopyright
+    \copyright\ \the\copyrtyr\ \@copyrightowner
+  \fi
+  \if@acmowned ISBN \else\ifnum\acm@copyrightmode=2 ISBN \else \par\smallskip ACM ISBN \fi\fi
+ \the\acmcopyr\ifx\@acmPrice\@empty.\else\dots\@acmPrice\fi\par\smallskip
+{DOI: \small\expandafter\printdoi\expandafter{\@doi}}} 
+\toappear{\fontsize{7.5pt}{8.5pt}\fontfamily{ptm}\selectfont
+  \the\boilerplate\par\smallskip
+ \the\copyrightetc}
+\fi
 
-\toappear{
-Paste the appropriate copyright statement here. ACM now supports three different copyright statements:\\
-$\bullet$ ACM copyright: ACM holds the copyright on the work. This is the historical approach.\\
-$\bullet$ License: The author(s) retain copyright, but ACM receives an exclusive publication license.\\
-$\bullet$ Open Access: The author(s) wish to pay for the work to be open access. The additional fee must be paid to ACM.\\
-This text field is large enough to hold the appropriate release statement assuming it is single spaced. 
-\newline
-\textcolor{red}{Every submission will be assigned their own unique DOI string to be included here.}
-}
 \clubpenalty=10000 
 \widowpenalty = 10000
 
