@@ -103,7 +103,7 @@
 \newcommand*{\CopyrightYear}[1]{} % Actually not used, but needed for consistency
 \newcommand*{\acmPrice}[1]{}      % Actually not used, but needed for consistency
 \newcommand*{\conferenceinfo}[2]{\gdef\@crconferenceinfo{\emph{#1}, #2}}
-\newcommand*{\isbn}[1]{\gdef\@crisbn{ACM~#1}.}
+\newcommand*{\isbn}[1]{\gdef\@crisbn{ACM~#1.}}
 \newcommand*{\doi}[1]{\gdef\@crdoi{\urlstyle{crc}\url{#1}}}
 % The follwing command typesets the required ACM bibstrip.
 % It must be invoked between \begin{document} and \maketitle, either after or before CCS codes.
