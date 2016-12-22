@@ -1580,10 +1580,9 @@
 \isbn{978-1-4503-2138-9}
 
 \RequirePackage{url}
-\urlstyle{rm}
 \def\doi#1{\def\@doi{#1}}
 \doi{10.1145/1235}
-\def\printdoi#1{\url{#1}}
+\def\printdoi#1{\urlstyle{rm}\url{#1}}
 
 
 
