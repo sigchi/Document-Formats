@@ -97,6 +97,25 @@
 
 \newcommand*{\copyrightinfo}[1]{\gdef\@copyrightinfo{\raggedright#1}}
 
+% Allow to copy-paste the ACM bibstrip in the Permission Release Form.
+\RequirePackage{acmcopyright}
+% Define the required commands.
+\newcommand*{\CopyrightYear}[1]{} % Actually not used, but needed for consistency
+\newcommand*{\acmPrice}[1]{}      % Actually not used, but needed for consistency
+\newcommand*{\conferenceinfo}[2]{\gdef\@crconferenceinfo{\emph{#1}, #2}}
+\newcommand*{\isbn}[1]{\gdef\@crisbn{ACM~#1.}}
+\newcommand*{\doi}[1]{\gdef\@crdoi{\urlstyle{crc}\url{#1}}}
+% The follwing command typesets the required ACM bibstrip.
+% It must be invoked between \begin{document} and \maketitle, either after or before CCS codes.
+% So just use \copyrightinfo{\acmcopyright} to override the manual copyright info.
+\newcommand*{\acmcopyright}{
+  \@copyrightpermission\par\smallskip
+  \@copyrightowner\par
+  \@crconferenceinfo\par
+  \@crisbn\par
+  \@crdoi
+}
+
 \def\keywords{
 \section*{Author Keywords}
 }
@@ -184,6 +203,7 @@
 % Define a (compact) global style for URLs, rather than the default one
 % \def\url@leostyle{\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\bf\ttfamily}}}
 \def\url@leostyle{\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\sffamily}}}
+\def\url@crcstyle{\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\scriptsize\sffamily}}}
 \urlstyle{leo}
 
 %% Fix Hypenation - to restore hyphenation we need this package. 
@@ -563,6 +583,13 @@
 \bibsep 2pt \@plus 1pt \@minus 1pt % [jdf] initial spacing between ref entries
 \setcounter{enumi}{1}
 \def\thebibliography#1{%
+%% Comment this to have blue DOI links.
+\makeatletter
+\def\url@leostyle{% 
+\@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\color{black}\small\bf\ttfamily}}}
+\makeatother
+\urlstyle{leo}
+%%
     \section{%
        {REFERENCES}
         \@mkboth{{\refname}}{{\refname}}%

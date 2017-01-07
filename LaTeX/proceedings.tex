@@ -1,40 +1,76 @@
 \documentclass{sigchi}
 
+% Use this section to set the ACM copyright statement (e.g. for
+% preprints).  Consult the conference website for the camera-ready
+% copyright statement.
+
+% Copyright
+\CopyrightYear{2016}
+%\setcopyright{acmcopyright}
+\setcopyright{acmlicensed}
+%\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+% DOI
+\doi{http://dx.doi.org/10.475/123_4}
+% ISBN
+\isbn{123-4567-24-567/08/06}
+%Conference
+\conferenceinfo{CHI'16,}{May 07--12, 2016, San Jose, CA, USA}
+%Price
+\acmPrice{\$15.00}
+
 % Use this command to override the default ACM copyright statement
 % (e.g. for preprints).  Consult the conference website for the
 % camera-ready copyright statement.
 
-%% EXAMPLE BEGIN -- HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP -- (July 22, 2013 - Paul Baumann)
-% \toappear{Permission to make digital or hard copies of all or part of this work for personal or classroom use is      granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than ACM must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org. \\
-% {\emph{CHI'14}}, April 26--May 1, 2014, Toronto, Canada. \\
-% Copyright \copyright~2014 ACM ISBN/14/04...\$15.00. \\
-% DOI string from ACM form confirmation}
-%% EXAMPLE END -- HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP -- (July 22, 2013 - Paul Baumann)
+%% HOW TO OVERRIDE THE DEFAULT COPYRIGHT STRIP --
+%% Please note you need to make sure the copy for your specific
+%% license is used here!
+% \toappear{
+% Permission to make digital or hard copies of all or part of this work
+% for personal or classroom use is granted without fee provided that
+% copies are not made or distributed for profit or commercial advantage
+% and that copies bear this notice and the full citation on the first
+% page. Copyrights for components of this work owned by others than ACM
+% must be honored. Abstracting with credit is permitted. To copy
+% otherwise, or republish, to post on servers or to redistribute to
+% lists, requires prior specific permission and/or a fee. Request
+% permissions from \href{mailto:Permissions@acm.org}{Permissions@acm.org}. \\
+% \emph{CHI '16},  May 07--12, 2016, San Jose, CA, USA \\
+% ACM xxx-x-xxxx-xxxx-x/xx/xx\ldots \$15.00 \\
+% DOI: \url{http://dx.doi.org/xx.xxxx/xxxxxxx.xxxxxxx}
+% }
 
 % Arabic page numbers for submission.  Remove this line to eliminate
 % page numbers for the camera ready copy
 % \pagenumbering{arabic}
 
 % Load basic packages
-\usepackage{balance}  % to better equalize the last page
-\usepackage{graphics} % for EPS, load graphicx instead 
-\usepackage[T1]{fontenc}
+\usepackage{balance}       % to better equalize the last page
+\usepackage{graphics}      % for EPS, load graphicx instead 
+\usepackage[T1]{fontenc}   % for umlauts and other diaeresis
 \usepackage{txfonts}
 \usepackage{mathptmx}
-\usepackage[pdftex]{hyperref}
+\usepackage[pdflang={en-US},pdftex]{hyperref}
 \usepackage{color}
 \usepackage{booktabs}
 \usepackage{textcomp}
+
 % Some optional stuff you might like/need.
-\usepackage{microtype} % Improved Tracking and Kerning
-% \usepackage[all]{hypcap}  % Fixes bug in hyperref caption linking
-\usepackage{ccicons}  % Cite your images correctly!
+\usepackage{microtype}        % Improved Tracking and Kerning
+% \usepackage[all]{hypcap}    % Fixes bug in hyperref caption linking
+\usepackage{ccicons}          % Cite your images correctly!
 % \usepackage[utf8]{inputenc} % for a UTF8 editor only
 
-% If you want to use todo notes, marginpars etc. during creation of your draft document, you
-% have to enable the "chi_draft" option for the document class. To do this, change the very first
-% line to: "\documentclass[chi_draft]{sigchi}". You can then place todo notes by using the "\todo{...}"
-% command. Make sure to disable the draft option again before submitting your final document.
+% If you want to use todo notes, marginpars etc. during creation of
+% your draft document, you have to enable the "chi_draft" option for
+% the document class. To do this, change the very first line to:
+% "\documentclass[chi_draft]{sigchi}". You can then place todo notes
+% by using the "\todo{...}"  command. Make sure to disable the draft
+% option again before submitting your final document.
 \usepackage{todonotes}
 
 % Paper metadata (use plain text, for PDF inclusion and later
@@ -78,6 +114,7 @@
 %  pdfauthor={\plainauthor},
   pdfauthor={\emptyauthor},
   pdfkeywords={\plainkeywords},
+  pdfdisplaydoctitle=true, % For Accessibility
   bookmarksnumbered,
   pdfstartview={FitH},
   colorlinks,
@@ -86,6 +123,7 @@
   linkcolor=black,
   urlcolor=linkColor,
   breaklinks=true,
+  hypertexnames=false
 }
 
 % create a shortcut to typeset table headings
@@ -513,7 +551,8 @@ books~\cite{Schwartz:1995:GBF}, theses~\cite{sutherland:sketchpad},
 book chapters~\cite{winner:politics}, an entire journal
 issue~\cite{kaye:puc},
 websites~\cite{acm_categories,cavender:writing},
-tweets~\cite{CHINOSAUR:venue}, patents~\cite{heilig:sensorama}, and
+tweets~\cite{CHINOSAUR:venue}, patents~\cite{heilig:sensorama}, 
+games~\cite{supermetroid:snes}, and
 online videos~\cite{psy:gangnam} is given here.  See the examples of
 citations at the end of this document and in the accompanying
 \texttt{BibTeX} document. This formatting is a edited version of the
@@ -523,6 +562,9 @@ optional but encouraged as are full first names. Note that the
 Hyperlink style used throughout this document uses blue links;
 however, URLs in the references section may optionally appear in
 black.
+
+% BALANCE COLUMNS
+\balance{}
 
 % REFERENCES FORMAT
 % References must be the same font size as other body text.
