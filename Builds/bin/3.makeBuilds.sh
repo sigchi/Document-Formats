@@ -37,7 +37,7 @@ mkdir ../tmp/sigchi-latex-proceedings/figures
 cp ../../LaTeX/proceedings.tex ../tmp/sigchi-latex-proceedings
 cp ../../LaTeX/sigchi.cls ../tmp/sigchi-latex-proceedings
 cp ../../LaTeX/sample.bib ../tmp/sigchi-latex-proceedings
-cp ../../LaTeX/acmcopyright.sty ../tmp/sigchi-latex-all
+cp ../../LaTeX/acmcopyright.sty ../tmp/sigchi-latex-proceedings
 cp ../../LaTeX/SIGCHI-Reference-Format.bst ../tmp/sigchi-latex-proceedings
 cp ../../LaTeX/figures/map.png ../tmp/sigchi-latex-proceedings/figures/
 cp ../../LaTeX/figures/sigchi-logo.png ../tmp/sigchi-latex-proceedings/figures/
