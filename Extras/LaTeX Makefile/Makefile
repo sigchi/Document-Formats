@@ -3,6 +3,8 @@
 #
 # To use, copy to top-level LaTeX folder and run 'make'.
 
+VIEWER=$(shell which xdg-open open | head -n 1)
+
 # initial target files
 all: extended-abstract.pdf proceedings.pdf
 
@@ -17,6 +19,10 @@ all: extended-abstract.pdf proceedings.pdf
 # pdf output
 %.pdf: %.tex %.bbl
 	pdflatex $<
+	${VIEWER} $@ &
+
+# do not delete intermediate aux/bbl files
+.PRECIOUS: %.aux %.bbl
 
 clean:
 	-rm *.aux *.log *.bbl *.blg *.out *.synctex.gz
