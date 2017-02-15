@@ -56,6 +56,7 @@
 \usepackage{mathptmx}
 \usepackage[pdflang={en-US},pdftex]{hyperref}
 \usepackage{color}
+\usepackage{colortbl} % color table \hlines
 \usepackage{booktabs}
 \usepackage{textcomp}
 
@@ -94,6 +95,9 @@
   }}
 \makeatother
 \urlstyle{leo}
+
+% Make table \hlines 75% gray
+\arrayrulecolor[gray]{.75}
 
 % To make various LaTeX processors do the right thing with page size.
 \def\pprw{8.5in}
@@ -318,7 +322,7 @@ URLs directly in the text, as above.
     % \bottomrule
   \end{tabular}
   \caption{Table captions should be placed below the table. We
-    recommend table lines be 1 point, 25\% black. Minimize use of
+    recommend table lines be 1 point, 75\% grey. Minimize use of
     table grid lines.}~\label{tab:table1}
 \end{table}
 
