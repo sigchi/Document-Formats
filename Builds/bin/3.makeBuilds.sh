@@ -4,17 +4,17 @@ mkdir ../tmp/sigchi-word-all
 cp ../../Word/SIGCHI*Proc*.docx ../tmp/sigchi-word-all
 cp ../../Word/SIGCHI*Abstract*.docx ../tmp/sigchi-word-all
 cp ../../Examples/Word*.pdf ../tmp/sigchi-word-all
-cd ../tmp; zip sigchi-word-all.zip sigchi-word-all/*.*; mv sigchi-word-all.zip ..; cd ../bin
+cd ../tmp; zip word-all.zip sigchi-word-all/*.*; mv word-all.zip ..; cd ../bin
 
 mkdir ../tmp/sigchi-word-proceedings
 cp ../../Word/SIGCHI*Proc*.docx ../tmp/sigchi-word-proceedings
 cp ../../Examples/Word*Proc*.pdf ../tmp/sigchi-word-proceedings
-cd ../tmp; zip sigchi-word-proceedings.zip sigchi-word-proceedings/*.*; mv sigchi-word-proceedings.zip ..; cd ../bin
+cd ../tmp; zip word-proceedings.zip sigchi-word-proceedings/*.*; mv word-proceedings.zip ..; cd ../bin
 
 mkdir ../tmp/sigchi-word-extended-abstracts
 cp ../../Word/SIGCHI*Abstract*.docx ../tmp/sigchi-word-extended-abstracts
 cp ../../Examples/Word*Abstract*.pdf ../tmp/sigchi-word-extended-abstracts
-cd ../tmp; zip sigchi-word-extended-abstracts.zip sigchi-word-extended-abstracts/*.*; mv sigchi-word-extended-abstracts.zip ..; cd ../bin
+cd ../tmp; zip word-extended-abstracts.zip sigchi-word-extended-abstracts/*.*; mv word-extended-abstracts.zip ..; cd ../bin
 
 mkdir ../tmp/sigchi-latex-all
 mkdir ../tmp/sigchi-latex-all/figures
@@ -30,7 +30,11 @@ cp ../../LaTeX/figures/map.png ../tmp/sigchi-latex-all/figures/
 cp ../../LaTeX/figures/sigchi-logo.png ../tmp/sigchi-latex-all/figures/
 cp ../../Examples/LaTeX*Proceedings*.pdf ../tmp/sigchi-latex-all
 cp ../../Examples/LaTeX*Abstract*.pdf ../tmp/sigchi-latex-all 
-cd ../tmp/; tar -cvzf ../sigchi-latex-all.tar.gz sigchi-latex-all; cd ../bin/
+cd ../tmp/
+tar -cvzf ../latex-all.tar.gz sigchi-latex-all
+cd sigchi-latex-all
+zip latex-all.zip ./*.*; mv latex-all.zip ../..
+cd ../../bin/
 
 mkdir ../tmp/sigchi-latex-proceedings
 mkdir ../tmp/sigchi-latex-proceedings/figures
@@ -42,7 +46,11 @@ cp ../../LaTeX/SIGCHI-Reference-Format.bst ../tmp/sigchi-latex-proceedings
 cp ../../LaTeX/figures/map.png ../tmp/sigchi-latex-proceedings/figures/
 cp ../../LaTeX/figures/sigchi-logo.png ../tmp/sigchi-latex-proceedings/figures/
 cp ../../Examples/LaTeX*Proceedings*.pdf ../tmp/sigchi-latex-proceedings
-cd ../tmp/; tar -cvzf ../sigchi-latex-proceedings.tar.gz sigchi-latex-proceedings; cd ../bin/
+cd ../tmp/
+tar -cvzf ../latex-proceedings.tar.gz sigchi-latex-proceedings
+cd sigchi-latex-proceedings
+zip latex-proceedings.zip ./*.*; mv latex-proceedings.zip ../..
+cd ../../bin/
 
 mkdir ../tmp/sigchi-latex-extended-abstracts
 mkdir ../tmp/sigchi-latex-extended-abstracts/figures
@@ -54,7 +62,11 @@ cp ../../LaTeX/figures/cats.png ../tmp/sigchi-latex-extended-abstracts/figures/
 cp ../../LaTeX/figures/map.png ../tmp/sigchi-latex-extended-abstracts/figures/
 cp ../../LaTeX/figures/sigchi-logo.png ../tmp/sigchi-latex-extended-abstracts/figures/
 cp ../../Examples/LaTeX*Abstract*.pdf ../tmp/sigchi-latex-extended-abstracts 
-cd ../tmp/; tar -cvzf ../sigchi-latex-extended-abstracts.tar.gz sigchi-latex-extended-abstracts; cd ../bin/
+cd ../tmp/
+tar -cvzf ../latex-extended-abstracts.tar.gz sigchi-latex-extended-abstracts
+cd sigchi-latex-extended-abstracts
+zip latex-extended-abstracts.zip ./*.*; mv latex-extended-abstracts.zip ../..
+cd ../../bin/
 
 cd ../; date > last_build_date.txt; cd bin/
 
