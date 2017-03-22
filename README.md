@@ -1,13 +1,13 @@
-# AutoUI Document Formats #
+# AutomotiveUI Document Formats #
 
 This repository is a fork of the official source for [SIGCHI templates for Word and LaTeX](http://github.com/sigchi/Document-Formats). 
-It contains the templates for the Automotive User Interfaces conference ([AutoUI](http://www.auto-ui.org)).
+It contains the templates for the Automotive User Interfaces conference ([AutomotiveUI](http://www.auto-ui.org)).
 If you are just looking to [download the templates][download], please see [the download page][download].
 
 
 ## Paper Formats ##
 
-AutoUI uses two different formats for most submissions: *Proceedings Format* and *Extended Abstract Format*. Please note that changing the leading, changing the tracking, adding small fonts for references, and other sizing tricks are strictly prohibited.
+AutomotiveUI uses two different formats for most submissions: *Proceedings Format* and *Extended Abstract Format*. Please note that changing the leading, changing the tracking, adding small fonts for references, and other sizing tricks are strictly prohibited.
 
 ### Proceedings Format ###
 
