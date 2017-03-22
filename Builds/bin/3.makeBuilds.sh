@@ -33,7 +33,7 @@ cp ../../Examples/LaTeX*Abstract*.pdf ../tmp/sigchi-latex-all
 cd ../tmp/
 tar -cvzf ../latex-all.tar.gz sigchi-latex-all
 cd sigchi-latex-all
-zip latex-all.zip ./*.*; mv latex-all.zip ../..
+zip -r latex-all.zip *; mv latex-all.zip ../..
 cd ../../bin/
 
 mkdir ../tmp/sigchi-latex-proceedings
@@ -49,7 +49,7 @@ cp ../../Examples/LaTeX*Proceedings*.pdf ../tmp/sigchi-latex-proceedings
 cd ../tmp/
 tar -cvzf ../latex-proceedings.tar.gz sigchi-latex-proceedings
 cd sigchi-latex-proceedings
-zip latex-proceedings.zip ./*.*; mv latex-proceedings.zip ../..
+zip -r latex-proceedings.zip *; mv latex-proceedings.zip ../..
 cd ../../bin/
 
 mkdir ../tmp/sigchi-latex-extended-abstracts
@@ -65,7 +65,7 @@ cp ../../Examples/LaTeX*Abstract*.pdf ../tmp/sigchi-latex-extended-abstracts
 cd ../tmp/
 tar -cvzf ../latex-extended-abstracts.tar.gz sigchi-latex-extended-abstracts
 cd sigchi-latex-extended-abstracts
-zip latex-extended-abstracts.zip ./*.*; mv latex-extended-abstracts.zip ../..
+zip -r latex-extended-abstracts.zip *; mv latex-extended-abstracts.zip ../..
 cd ../../bin/
 
 cd ../; date > last_build_date.txt; cd bin/
