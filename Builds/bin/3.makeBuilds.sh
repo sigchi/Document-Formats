@@ -57,6 +57,7 @@ mkdir ../tmp/sigchi-latex-extended-abstracts/figures
 cp ../../LaTeX/extended-abstract.tex ../tmp/sigchi-latex-extended-abstracts
 cp ../../LaTeX/sigchi-ext.cls ../tmp/sigchi-latex-extended-abstracts
 cp ../../LaTeX/sample.bib ../tmp/sigchi-latex-extended-abstracts
+cp ../../LaTeX/acmcopyright.sty ../tmp/sigchi-latex-extended-abstracts
 cp ../../LaTeX/SIGCHI-Reference-Format.bst ../tmp/sigchi-latex-extended-abstracts
 cp ../../LaTeX/figures/cats.png ../tmp/sigchi-latex-extended-abstracts/figures/
 cp ../../LaTeX/figures/map.png ../tmp/sigchi-latex-extended-abstracts/figures/
