@@ -7,7 +7,7 @@ The only limitation is the size of your poster (2017: maximum A0, portrait).
 ## Sources
 The powerpoint template was build from scratch
 
-The latex tempalte uses [tikzposter](https://www.ctan.org/pkg/tikzposter) and is based on
+The latex template uses [tikzposter](https://www.ctan.org/pkg/tikzposter) and is based on
 LianTze Lim's design in [Overleaf](https://www.overleaf.com/latex/templates/sample-tikzposter-poster-portrait/jfffnxhjdpgn#.WU0sbGiLSUk)
 
 ## Where are examples?
