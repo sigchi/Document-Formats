@@ -1,0 +1,91 @@
+\documentclass[a0paper]{tikzposter}
+
+%% Tikzposter is highly customizable: please see
+%% https://bitbucket.org/surmann/tikzposter/downloads/styleguide.pdf
+
+%% Available themes: see also
+%% https://bitbucket.org/surmann/tikzposter/downloads/themes.pdf
+% \usetheme{Default}
+% \usetheme{Rays}
+% \usetheme{Basic}
+% \usetheme{Simple}
+%\usetheme{Envelope}
+% \usetheme{Wave}
+% \usetheme{Board}
+ \usetheme{Autumn}
+% \usetheme{Desert}
+
+%% Further changes to the title etc is possible
+% \usetitlestyle{Default}
+% \usetitlestyle{Basic}
+% \usetitlestyle{Empty}
+% \usetitlestyle{Filled}
+% \usetitlestyle{Envelope}
+% \usetitlestyle{Wave}
+% \usetitlestyle{verticalShading}
+
+\usecolorstyle[colorPalette=BlueGrayOrange]{Germany}
+\usebackgroundstyle{Empty}
+
+
+\usepackage{fontspec}
+\setmainfont{FreeSerif}
+\setsansfont{FreeSans}
+
+% you may or may not choose to remove the advertisement in the lower right corner:
+\tikzposterlatexaffectionproofoff
+
+\author{Me Me Me}
+\title{Title title title}
+\institute{ACME Institute}
+%% Optional title graphic
+\titlegraphic{\includegraphics[width=10cm]{img/Logo_TV}}
+%% Uncomment to switch off tikzposter footer
+% \tikzposterlatexaffectionproofoff
+
+\begin{document}
+\maketitle
+
+\block{\huge A test!}{
+\LARGE
+\begin{itemize}
+\item We try to do this. What?
+\item we try to do that.
+\end{itemize}
+}
+
+\note[rotate=8, connection, width = 14cm,
+% roundedcorners=15, targetoffsetx=2cm
+]{
+\huge Oh wait! A note!}
+
+\begin{columns}
+\column{0.7}
+\block{\huge A test!}{
+\LARGE
+\begin{itemize}
+\item We try to do this. what?
+\item we try to do that.
+\end{itemize}
+}
+
+\column{0.3}
+\block{\huge A test!}{
+\LARGE
+\begin{itemize}
+\item We try to do this. what?
+\item we try to do that.
+\end{itemize}
+}
+
+\end{columns}
+
+\block{\huge Random Picture}{%
+\LARGE
+\begin{tikzfigure}[
+\large By Tobiasvde - Awesome blue flag!, CC BY-SA 2.0, \textit{https://commons.wikimedia.org/w/index.php?curid=42074632}]
+\includegraphics[width=\linewidth]{img/awesome}
+\end{tikzfigure}
+}
+
+\end{document}
