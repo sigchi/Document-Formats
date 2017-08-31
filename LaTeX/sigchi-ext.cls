@@ -16,6 +16,7 @@
 %   - improved PDF bookmarking
 %  
 % CHANGELOG:
+%   2017-08-31   Andreas Loecken    Fixed \acmPrice command based on suggestion of Bastian Pfleging
 %   2015-03-21   David A. Shamma    Removed bibsty dependency.
 %   2015-01-05   David A. Shamma    Updating for new format and Github repo.
 %   2013-07-22   Paul Baumann       Added example copyright to LaTeX file.
@@ -101,7 +102,7 @@
 \RequirePackage{acmcopyright}
 % Define the required commands.
 \newcommand*{\CopyrightYear}[1]{} % Actually not used, but needed for consistency
-\newcommand*{\acmPrice}[1]{}      % Actually not used, but needed for consistency
+\newcommand*{\acmPrice}[1]{\gdef\@crprice{#1.}} 
 \newcommand*{\conferenceinfo}[2]{\gdef\@crconferenceinfo{\emph{#1}, #2}}
 \newcommand*{\isbn}[1]{\gdef\@crisbn{ACM~#1.}}
 \newcommand*{\doi}[1]{\gdef\@crdoi{\urlstyle{crc}\url{#1}}}
@@ -112,7 +113,7 @@
   \@copyrightpermission\par\smallskip
   \@copyrightowner\par
   \@crconferenceinfo\par
-  \@crisbn\par
+  \@crisbn\textellipsis\@crprice\par
   \@crdoi
 }
 
