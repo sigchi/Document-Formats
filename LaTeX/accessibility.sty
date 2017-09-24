@@ -129,7 +129,7 @@
 
 \pdfcompresslevel=0% Damit wird die PDF-Quelldatei lesbar
 \pdfoptionpdfminorversion=6% Bestimmt die PDF - Version der Ausgabe
- %\pdfadjustspacing=0% 0, 1 oder 2 Änderung nicht erkannt
+ %\pdfadjustspacing=0% 0, 1 oder 2 Ã„nderung nicht erkannt
 
 \newcommand{\alt}[1]{\xdef\altAttr{#1}}%
 \newcommand{\newhref}[3]{\xdef\altAttr{#2}\href{#1}{#3}}%
@@ -198,7 +198,7 @@
   \expandafter\xdef\csname PDF@#1@Array\endcsname{}%
   \accessPushStack{#1}{\theObjHelp}{PDF@#1@Array}{#2}%drauftun
 }%
-{%andere Ebenen Schließen
+{%andere Ebenen SchlieÃŸen
   \accessPopStack\StructElem\Objnum\KidsArray\Title %runterholen
   \ifx \StructElem\empty%
     \PackageWarning{accessibility}{empty \string\PopStack ?}%
@@ -403,7 +403,7 @@
    \xdef\InlineObj{#2}%
 }
 
-%%Setzt die Variablen auf die Standardwerte für eine normale Texterkennung.
+%%Setzt die Variablen auf die Standardwerte fÃ¼r eine normale Texterkennung.
 \newcommand{\EveryparReset}{%
    \xdef\everyparStructElem{P}%
    \xdef\InlineObj{false}%
@@ -537,7 +537,7 @@
        >>} \pdfrefobj \pdflastobj%
    %\global\setcounter{ClassMap}{\pdflastobj}%
   \pdfobj {<<%
-            /IndexItem /Span % Indexeinträge
+            /IndexItem /Span % IndexeintrÃ¤ge
             /TOF /TOC % Table of Figures
             /TOFI /TOCI % Table of Figures Eintrag
             /TOT /TOC % Table of Tables
@@ -546,7 +546,7 @@
             /Bibliography /L % Bibligraphy
             /BibItem /LI % BibligraphyItem
             /ParagraphSpan /Span % geteilte Paragraphen am Seitenumbruch
-            /Footnote /Note %  Fußnotentext
+            /Footnote /Note %  FuÃŸnotentext
             /Chapter /Sect%
             /Section /Sect%
             /Subsection /Sect%
@@ -588,7 +588,7 @@
 \newcount\linenopenalty\linenopenalty=-100000%
 \mathchardef\linenopenaltypar=32000%
   %
-  %%%%%%%%%%%%%Verändern der Outputroutine%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%VerÃ¤ndern der Outputroutine%%%%%%%%%%%%%%%%%%%%%%%%
 \ifthenelse{\boolean{@Access@pdf}}{%
   \let\@tempa\output%
   \newtoks\output%
@@ -959,7 +959,7 @@
   \PDFSect{Chapter}{#1} \originaladdchap{#1} \endPDFSect}%
 
 \ifthenelse{\boolean{@Access@pdf}}{%
-  \@ifundefined{set@preamble}{% es gibt keine set@preamble außerhalb des KOMA-Scripts
+  \@ifundefined{set@preamble}{% es gibt keine set@preamble auÃŸerhalb des KOMA-Scripts
     }{%
     \let\originaluse@preamble\use@preamble%
     \renewcommand{\use@preamble}[1]{%
@@ -1056,16 +1056,16 @@
 \newcommand{\originalparagraphWithOption}[1]%
   {\PDFParSect{Paragraph}{#1} \originalparagraph{#1} \endPDFParSect}%
 
-\ifthenelse{\boolean{@Access@pdf}}{%
-  \let\originalsubparagraph\subparagraph%
-  \renewcommand{\subparagraph}{%
-    \@ifstar{\originalsubparagraphWithStar}%
-    {\@ifnextchar[%]
-        {\originalsubparagraphWithTwoOption}%
-        {\originalsubparagraphWithOption}%
-    }%
-  }%
-}{}
+%\ifthenelse{\boolean{@Access@pdf}}{%
+%  \let\originalsubparagraph\subparagraph%
+%  \renewcommand{\subparagraph}{%
+%    \@ifstar{\originalsubparagraphWithStar}%
+%    {\@ifnextchar[%]
+%        {\originalsubparagraphWithTwoOption}%
+%        {\originalsubparagraphWithOption}%
+%    }%
+%  }%
+%}{}
 
 \newcommand{\originalsubparagraphWithStar}[1]%
   {\PDFParSect{Subparagraph}{#1} \originalsubparagraph*{#1} \endPDFParSect}%
@@ -1217,7 +1217,7 @@
   \ifItemActive \closeItem\fi%
   %Liste beginnen
   \addtocounter{ListDepth}{1}%
-  %\PDFStructObj{L}{\empty}% Sonst Fehler bei Zugriffsprüfung AA
+  %\PDFStructObj{L}{\empty}% Sonst Fehler bei ZugriffsprÃ¼fung AA
   \PDFStructObj{L\arabic{ListDepth}}{\empty}%
   %\PDFStructObj{L\romannumeral\theListDepth}{\empty}%
 }{%
@@ -1239,10 +1239,10 @@
   \endPDFSpezialTextObj%
   \PDFSpezialTextObj{LBody}%
   \EveryparConfig{LBody}{false}%
-  %\PDFMarkContent{LBody}% wird über everypar erledigt
+  %\PDFMarkContent{LBody}% wird Ã¼ber everypar erledigt
 }%
 
-\newcommand{\closeItem}{% Altes Item abschließen
+\newcommand{\closeItem}{% Altes Item abschlieÃŸen
   \endPDFMarkContent%
   \endPDFSpezialTextObj%{LBody}
   \endPDFStructObj%
@@ -1512,7 +1512,7 @@
     %\renewcommand{\hyper@anchorstart}{\pdfliteral{/Span <</E (anchorstart)>> BDC EMC}\originalhyper@anchorstart}%
     %\let\originalhyper@anchorend\hyper@anchorend%
     %\renewcommand{\hyper@anchorend}{\originalhyper@anchorend\pdfliteral{/Span <</E (anchorend)>> BDC EMC}}%
-    % Einträge im TOC, LOF, LOT
+    % EintrÃ¤ge im TOC, LOF, LOT
     %\let\originalhyper@linkstart\hyper@linkstart%
     %\renewcommand{\hyper@linkstart}{%
     %    \begin{PDFInlineObjInText}{Reference}%
@@ -1521,7 +1521,7 @@
     %\renewcommand{\hyper@linkend}{%
     %     \originalhyper@linkend%
     %    \end{PDFInlineObjInText}}%
-    %\useacronym --> Kurzform, Glossarseitezahlen, indexseitenzahlen, Glossareinträge, Hyperlink
+    %\useacronym --> Kurzform, Glossarseitezahlen, indexseitenzahlen, GlossareintrÃ¤ge, Hyperlink
     \let\originalhyperlink\hyperlink%
     \renewcommand*{\hyperlink}[2]{%
         \ifIndexItemActive\else\begin{PDFInlineObjInText}{Reference}\fi%
@@ -1543,8 +1543,8 @@
         \begin{PDFInlineObjInText}{Link}%
         \originalhyper@linkfile{#1}{#2}{#3}%
         \end{PDFInlineObjInText}}%
-    %Seitenzahlen in Index, anders da anschließend keine Texterkennung nötig.
-    %eigentlich über hyperlink möglich
+    %Seitenzahlen in Index, anders da anschlieÃŸend keine Texterkennung nÃ¶tig.
+    %eigentlich Ã¼ber hyperlink mÃ¶glich
     \let\originalhyperpage\hyperpage%
     \renewcommand{\hyperpage}[1]{%
         \EveryparConfig{Reference}{true}%
@@ -1650,14 +1650,14 @@
 
 \ifthenelse{\boolean{@Access@pdf}}{%
   \let\original@footnotemark\@footnotemark%
-  %Fußnotenreferenz im Text
+  %FuÃŸnotenreferenz im Text
   \renewcommand{\@footnotemark}{%
     \begin{PDFFootnoteReference}%
     \original@footnotemark%
     \end{PDFFootnoteReference}%
   }%
   \let\original@makefntext\@makefntext%
-  %Fußnotentext am Seitenende
+  %FuÃŸnotentext am Seitenende
   \renewcommand{\@makefntext}[1]{%
     \begin{PDFFootnoteText}%
     \original@makefntext{#1}%
@@ -1747,11 +1747,11 @@
     \ifthenelse{\equal{#1}{__empty__}}%
         {\originalbibitem{#2}}%
         {\originalbibitem[#1]{#2}}%
-    %\endPDFMarkContent% Zu früh, Text wird erst mit everypar gestetzt
+    %\endPDFMarkContent% Zu frÃ¼h, Text wird erst mit everypar gestetzt
     \endPDFSpezialTextObj%
     \PDFSpezialTextObj{LBody}%
     \EveryparConfig{LBody}{false}%
-   %\PDFMarkContent{LBody}% wird über everypar erledigt
+   %\PDFMarkContent{LBody}% wird Ã¼ber everypar erledigt
   }%
 }{}
 \newif\ifIndexItemActive \IndexItemActivefalse%
@@ -1840,7 +1840,7 @@
    %\hrule height1ex depth0pt width1ex
    %
    %hrulefill, hline cline, toprule, midrule, bottomrule, cmidrule? greifen auf hrule zu
-  %Klappt nicht immer mit Argumentübergabe
+  %Klappt nicht immer mit ArgumentÃ¼bergabe
   \let\originalhrule\hrule%
   \def\hrule#1#2{%
     \ifthenelse{\equal{#2}{\z@}}{}{\begin{PDFLayoutArtefakt}}%
@@ -1849,7 +1849,7 @@
   }%
 
   %vline (2), @arrayrule(2?) greift auf vrule zu
-  %Klappt nicht mit Argumentübergabe
+  %Klappt nicht mit ArgumentÃ¼bergabe
   %\let\originalvrule\vrule%
   %\def\vrule#1#2{%
   %  \begin{PDFLayoutArtefakt}%
@@ -1930,7 +1930,7 @@
 
 \newcommand{\convertLanguageInCode}[1]{%
   \gdef\LanguageCode{}%
-  %Dänisch
+  %DÃ¤nisch
   \ifthenelse{\equal{#1}{\string danish}}{\gdef\LanguageCode{/Lang(DA)}}{}%
   %Deutsch
   \ifthenelse{\equal{#1}{\string german}}{\gdef\LanguageCode{/Lang(DE)}}{}%
@@ -1949,7 +1949,7 @@
   \ifthenelse{\equal{#1}{\string newzealand}}{\gdef\LanguageCode{/Lang(EN)}}{}%
   %Finnisch
   \ifthenelse{\equal{#1}{\string finnish}}{\gdef\LanguageCode{/Lang(FI)}}{}%
-  %Französisch
+  %FranzÃ¶sisch
   \ifthenelse{\equal{#1}{\string french}}{\gdef\LanguageCode{/Lang(FR)}}{}%
   \ifthenelse{\equal{#1}{\string francais}}{\gdef\LanguageCode{/Lang(FR)}}{}%
   \ifthenelse{\equal{#1}{\string canadien}}{\gdef\LanguageCode{/Lang(FR)}}{}%
@@ -1971,10 +1971,10 @@
   %Chinesisch %\ifthenelse{\equal{#1}{}{\gdef\LanguageCode{/Lang(ZH)}}{}%
   %Japanisch %\ifthenelse{\equal{#1}{}{\gdef\LanguageCode{/Lang (JA)}}{}%
   %Koreanisch %\ifthenelse{\equal{#1}{}{\gdef\LanguageCode{/Lang (KO)}}{}%
-  %Niederländisch %\ifthenelse{\equal{#1}{}{\gdef\LanguageCode{/Lang(NL)}}{}%
+  %NiederlÃ¤ndisch %\ifthenelse{\equal{#1}{}{\gdef\LanguageCode{/Lang(NL)}}{}%
   \ifthenelse{\equal{\LanguageCode}{}}{%
-      \PackageWarning{accessibility}{Die gewählte Sprache (#1) wird vom %
-                             Adobe Acrobat Reader 6.0 nicht unterstützt.}%
+      \PackageWarning{accessibility}{Die gewÃ¤hlte Sprache (#1) wird vom %
+                             Adobe Acrobat Reader 6.0 nicht unterstÃ¼tzt.}%
   }{}%
 }
 
@@ -1991,7 +1991,7 @@
 
 \newcommand{\recognizeLanguageChange}[1]{%
   \ifthenelse{\equal{#1}{\ActualLanguage}}{%
-     %keine Änderung zu vorher
+     %keine Ã„nderung zu vorher
   }{%
      \gdef\ActualLanguage{#1}%
      \convertLanguageInCode{\languagename}}%
