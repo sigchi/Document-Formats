@@ -683,10 +683,9 @@
 \def\ftype@figure{1}
 \def\ext@figure{lof}
 \def\fnum@figure{Figure \thefigure}
-\def\figure{\@float{figure}}
-\def\endfigure{\end@float}
-\@namedef{figure*}{\@dblfloat{figure}}
-\@namedef{endfigure*}{\end@dblfloat}
+\newcommand\figurename{Figure}
+\newenvironment{figure}{\@float{figure}}{\end@float}
+\newenvironment{figure*}{\@dblfloat{figure}}{\end@dblfloat}
 
 \@ifundefined{table}{\newcounter {table}} % this is for LaTeX2e
 
@@ -694,10 +693,9 @@
 \def\ftype@table{2}
 \def\ext@table{lot}
 \def\fnum@table{Table \thetable}
-\def\table{\@float{table}}
-\def\endtable{\end@float}
-\@namedef{table*}{\@dblfloat{table}}
-\@namedef{endtable*}{\end@dblfloat}
+\newcommand\tablename{Table}
+\newenvironment{table}{\@float{table}}{\end@float}
+\newenvironment{table*}{\@dblfloat{table}}{\end@dblfloat}
 
 % [jdf] create a \teaser command for adding a figure in title page
 \newcommand{\chi@empty}{}
@@ -1441,7 +1439,8 @@
 \newskip\bibsep % [jdf] allow bib space tweaking
 \bibsep 2pt \@plus 1pt \@minus 1pt % [jdf] initial spacing between ref entries
 \setcounter{enumi}{1}
-\def\thebibliography#1{%
+
+\newenvironment{thebibliography}[1]{%
 %% Comment this to have blue DOI links.
 \makeatletter
 \def\url@leostyle{% 
