@@ -1674,3 +1674,5 @@
 %% http://www.economics.utoronto.ca/osborne/latex/PMAKEUP.HTM
 
 \sloppy
+
+\RequirePackage{accessibility}
