@@ -59,6 +59,7 @@
 \usepackage{booktabs}
 \usepackage{textcomp}
 \usepackage[linewidth = 1]{pdfcomment}
+\usepackage{accsupp}
 
 % Some optional stuff you might like/need.
 \usepackage{microtype}        % Improved Tracking and Kerning
@@ -254,7 +255,9 @@ of equal length.
 \begin{figure}
 \centering
   \alt{SIGCHI logo}
+\BeginAccSupp{method=pdfstringdef,Alt={SIGCHI logo}}
   {\pdftooltip{\includegraphics[width=0.9\columnwidth]{figures/sigchi-logo}}{SIGCHI logo}}
+\EndAccSupp{}
   \caption{Insert a caption below each figure. Do not alter the
     Caption style.  One-line captions should be centered; multi-line
     should be justified. }~\label{fig:figure1}
@@ -353,8 +356,10 @@ columns to a maximum width of 17.78 cm (7 in.).
 
 \begin{figure*}
   \centering
+\BeginAccSupp{method=pdfstringdef,Alt={Map of the world by ayman, available on Flickr.}}
   \alt{Map of the world by ayman, available on Flickr.}
   {\pdftooltip{\includegraphics[width=1.75\columnwidth]{figures/map}}{Map of the world by ayman, available on Flickr.}}
+\EndAccSupp{}
   \caption{In this image, the map maximizes use of space. You can make
     figures as wide as you need, up to a maximum of the full width of
     both columns. Note that \LaTeX\ tends to render large figures on a
