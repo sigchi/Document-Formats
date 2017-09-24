@@ -1756,21 +1756,21 @@
 }{}
 \newif\ifIndexItemActive \IndexItemActivefalse%
 
-\ifthenelse{\boolean{@Access@pdf}}{%
-  \let\originaltheindex\theindex%
-  \let\originalendtheindex\endtheindex%
-  \renewenvironment{theindex}{%
-    \expandafter\originaltheindex\relax%
-  }{%
-      \endPDFMarkContent%
-    \originalendtheindex%
-    \ifIndexItemActive%
-      \endPDFSpezialTextObj%
-      \global\IndexItemActivefalse%
-    \fi
-    \endPDFStructObj%{Index}%
-  }%
-}{}
+%\ifthenelse{\boolean{@Access@pdf}}{%
+%  \let\originaltheindex\theindex%
+%  \let\originalendtheindex\endtheindex%
+%  \renewenvironment{theindex}{%
+%    \expandafter\originaltheindex\relax%
+%  }{%
+%      \endPDFMarkContent%
+%    \originalendtheindex%
+%    \ifIndexItemActive%
+%      \endPDFSpezialTextObj%
+%      \global\IndexItemActivefalse%
+%    \fi
+%    \endPDFStructObj%{Index}%
+%  }%
+%}{}
 
 \ifthenelse{\boolean{@Access@pdf}}{%
   \let\original@idxitem\@idxitem%
