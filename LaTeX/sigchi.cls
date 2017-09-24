@@ -1113,6 +1113,7 @@
 \newcounter{subsection}[section]
 \newcounter{subsubsection}[subsection]
 \newcounter{paragraph}[subsubsection]
+\newcounter{subparagraph}[subsubsection]
 \def\thepart{\Roman{part}}
 \def\thesection{\arabic{section}}
 \def\thesubsection{\thesection.\arabic{subsection}}
