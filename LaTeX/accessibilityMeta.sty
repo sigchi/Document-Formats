@@ -1021,16 +1021,16 @@
 \newcommand{\originalparagraphWithOption}[1]%
   {\PDFParSect{Paragraph}{#1} \originalparagraph{#1} \endPDFParSect}%
 
-\ifthenelse{\boolean{@Access@pdf}}{%
-  \let\originalsubparagraph\subparagraph%
-  \renewcommand{\subparagraph}{%
-    \@ifstar{\originalsubparagraphWithStar}%
-    {\@ifnextchar[%]
-        {\originalsubparagraphWithTwoOption}%
-        {\originalsubparagraphWithOption}%
-    }%
-  }%
-}{}
+%\ifthenelse{\boolean{@Access@pdf}}{%
+%  \let\originalsubparagraph\subparagraph%
+%  \renewcommand{\subparagraph}{%
+%    \@ifstar{\originalsubparagraphWithStar}%
+%    {\@ifnextchar[%]
+%        {\originalsubparagraphWithTwoOption}%
+%        {\originalsubparagraphWithOption}%
+%    }%
+%  }%
+%}{}
 
 \newcommand{\originalsubparagraphWithStar}[1]%
   {\PDFParSect{Subparagraph}{#1} \originalsubparagraph*{#1} \endPDFParSect}%
