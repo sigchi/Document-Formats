@@ -1,0 +1,2133 @@
+%%
+%% This is file `accessibility.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% access.tex  (with options: `package')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from accessibility.sty.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file access.tex.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+\iffalse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% accessibility.sty
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Copyright 2007 Babett Schalitz
+%%
+%% This material is subject to the LaTeX Project Public License. See
+%% http://www.ctan.org/tex-archive/help/Catalogue/licenses.lppl.html
+%% for the details of that license.
+%%
+%% This package allows to produce tagged PDF output following Adobe's
+%% PDF-1.5 and 1.6 specifications.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \CheckSum{2882}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fi
+
+\ProvidesPackage{accessibility}[2007/03/13 v. 1.0]
+\NeedsTeXFormat{LaTeX2e}
+
+\RequirePackage{xkeyval}
+\RequirePackage{ifthen}
+
+\newcounter{StructTree}%
+\pdfobj reserveobjnum%
+\setcounter{StructTree}{\pdflastobj}%
+\xdef\Karray{}%
+
+\newcounter{ObjHelp}%
+
+\newcounter{TaggedObj}%[page]
+
+\newboolean{ACCESSProblems} \setboolean{ACCESSProblems}{false}%
+\gdef\DocumentLanguage{}%
+\gdef\ActualLanguage{}%
+\newif\ifLanguageDiff \global\LanguageDifffalse%
+\gdef\LanguageCode{}%
+\newboolean{@tagged@pdf} \setboolean{@tagged@pdf}{false}%
+\newboolean{@right@pdfversion} \setboolean{@tagged@pdf}{false}%
+\newboolean{@Access@pdf} \setboolean{@Access@pdf}{false}%
+\newif\ifPDFDetailedStructure \global\PDFDetailedStructuretrue%
+\DeclareOption{flatstructure}{\global\PDFDetailedStructurefalse}%
+\DeclareOption{highstructure}{\global\PDFDetailedStructuretrue}%
+\DeclareOption{tagged}{\setboolean{@tagged@pdf}{true}}%
+\DeclareOption{untagged}{\setboolean{@tagged@pdf}{false}}%
+\DeclareOption*{%
+   \PackageWarning{accessibility}{Unknown Option \CurrentOption}}%
+\ProcessOptions\relax%
+
+
+\ifthenelse{\isundefined{\pdfoutput}}{%
+  %latex with dvips
+  \setboolean{@right@pdfversion}{false}%
+  }{\ifthenelse{\number\pdfoutput<1}{%
+      %pdflatex in DVI mode
+      \setboolean{@right@pdfversion}{false}%
+      }{%pdflatex in PDF mode
+      \ifthenelse{\pdftexversion<120}{%
+          \PackageError{accessibility}%
+          {pdfTeX/pdfLaTeX version >= 1.20 required for direct PDF outut}%
+          {Try to install a more recent version!}%
+      }{%
+      %It is the right version
+      \setboolean{@right@pdfversion}{true}%
+    }%
+  }%
+}
+
+\ifthenelse{\boolean{@right@pdfversion} \and \boolean{@tagged@pdf}}{%
+      \setboolean{@Access@pdf}{true}%
+}{%
+      \setboolean{@Access@pdf}{false}%
+}
+
+\newboolean{@KOMAScriptClass} \setboolean{@KOMAScriptClass}{false}%
+
+\@ifclassloaded{scrreprt} {\setboolean{@KOMAScriptClass}{true}}{}%
+\@ifclassloaded{scrbook}  {\setboolean{@KOMAScriptClass}{true}}{}%
+\@ifclassloaded{scrartcl} {\setboolean{@KOMAScriptClass}{true}}{}%
+\ifthenelse{\boolean{@KOMAScriptClass}}{%
+                \PackageInfo{accessibility}{KOMAscript Klasse}}{}%
+
+\newboolean{@StandardClass} \setboolean{@StandardClass}{false}%
+
+\@ifclassloaded{report} {\setboolean{@StandardClass}{true}}{}%
+\@ifclassloaded{book}   {\setboolean{@StandardClass}{true}}{}%
+\@ifclassloaded{article}{\setboolean{@StandardClass}{true}}{}%
+
+\ifthenelse{\boolean{@StandardClass}}{%
+               \PackageInfo{accessibility}{Standardklasse}}{}%
+
+\pdfcompresslevel=0% Damit wird die PDF-Quelldatei lesbar
+\pdfoptionpdfminorversion=6% Bestimmt die PDF - Version der Ausgabe
+ %\pdfadjustspacing=0% 0, 1 oder 2 Änderung nicht erkannt
+
+\newcommand{\alt}[1]{\xdef\altAttr{#1}}%
+\newcommand{\newhref}[3]{\xdef\altAttr{#2}\href{#1}{#3}}%
+  %
+\@ifundefined{thead}{%
+  \newcommand{\thead}[1]{%
+    \global\TableHeadCelltrue%
+    \textbf{#1}}%
+}{%
+  \let\originalthead\thead
+  \renewcommand{\thead}{%
+    \global\TableHeadCelltrue%
+    \originalthead}%
+}
+
+\newcount\@stackdepth \@stackdepth=0%
+\def\accessPushStack#1#2#3#4{%
+   \ifnum \@stackdepth >15\relax%
+        \PackageWarning{accessibility}{too deep}%
+   \else%
+        \global\advance\@stackdepth\@ne%
+   \fi%
+    {\expandafter\xdef\csname StackA\romannumeral\the\@stackdepth\endcsname{#1}}%
+   {\expandafter\xdef\csname StackB\romannumeral\the\@stackdepth\endcsname{#2}}%
+   {\expandafter\xdef\csname StackC\romannumeral\the\@stackdepth\endcsname{#3}}%
+   {\expandafter\xdef\csname StackD\romannumeral\the\@stackdepth\endcsname{#4}}%
+}%
+
+\def\accessPopStack#1#2#3#4{%
+  \ifnum \the\@stackdepth <1\relax%
+     \global\let#1\empty%
+     \global\let#2\empty%
+     \global\let#3\empty%
+     \global\let#4\empty%
+  \else%
+     \xdef#1{\csname StackA\romannumeral\the\@stackdepth\endcsname}%
+     \xdef#2{\csname StackB\romannumeral\the\@stackdepth\endcsname}%
+     \xdef#3{\csname StackC\romannumeral\the\@stackdepth\endcsname}%
+     \xdef#4{\csname StackD\romannumeral\the\@stackdepth\endcsname}%
+   %Variablen wieder leeren
+   {\expandafter\xdef\csname StackA\romannumeral\the\@stackdepth\endcsname{}}%
+   {\expandafter\xdef\csname StackB\romannumeral\the\@stackdepth\endcsname{}}%
+   {\expandafter\xdef\csname StackC\romannumeral\the\@stackdepth\endcsname{}}%
+   {\expandafter\xdef\csname StackD\romannumeral\the\@stackdepth\endcsname{}}%
+     \global\advance\@stackdepth\m@ne%
+  \fi%
+}%
+
+\def\accessReadTopStack#1#2#3{%
+  \ifnum \the\@stackdepth <1\relax%
+     \global\let#1\empty%
+     \global\let#2\empty%
+     \global\let#3\empty%
+  \else%
+     \xdef#1{\csname StackA\romannumeral\the\@stackdepth\endcsname}%
+     \xdef#2{\csname StackB\romannumeral\the\@stackdepth\endcsname}%
+     \xdef#3{\csname StackC\romannumeral\the\@stackdepth\endcsname}%
+  \fi%
+}%
+
+
+\newenvironment{PDFStructObj}[2]{% #1 StructType #2 Title
+  \ifTextActive{\endPDFMarkContent\endPDFTextObj}\fi%
+  \pdfobj reserveobjnum% Objektnummer reservieren
+  \setcounter{ObjHelp}{\pdflastobj}%
+  \expandafter\xdef\csname PDF@#1@Array\endcsname{}%
+  \accessPushStack{#1}{\theObjHelp}{PDF@#1@Array}{#2}%drauftun
+}%
+{%andere Ebenen Schließen
+  \accessPopStack\StructElem\Objnum\KidsArray\Title %runterholen
+  \ifx \StructElem\empty%
+    \PackageWarning{accessibility}{empty \string\PopStack ?}%
+  \else%
+    %\convertLanguageInCode{\languagename}%
+    \gdef\TitleHelp{}%
+    \if \Title\empty \else%
+        \gdef\TitleHelp{/T (\Title)}%
+    \fi%
+     \ifnum \@stackdepth <1\relax%
+          \xdef\ParentElem{\theStructTree}%
+          \xdef\ParentArray{Karray}%
+     \else%
+          \accessReadTopStack\ParentStructElem\ParentElem\ParentArray%
+     \fi%
+    \immediate \pdfobj useobjnum\number\Objnum{<</Type /StructElem %
+        /P \ParentElem\space 0 R %
+        \TitleHelp %
+        /C /Normal %
+        \space\LanguageCode %
+        /K [\csname \KidsArray\endcsname] %
+        /S /\StructElem>>}%
+    \pdfrefobj\Objnum%
+    \expandafter\xdef\csname \ParentArray\endcsname{%
+         \csname \ParentArray\endcsname \space \Objnum\space 0 R}%
+  \fi%
+}
+
+\newcommand{\sectionInDepth}[2]{%
+   \csname #2\endcsname=100%
+   \ifthenelse{\equal{#1}{Document}}{\csname #2\endcsname=\m@ne}{}%
+   \ifthenelse{\equal{#1}{Part}}{\csname #2\endcsname=0}{}%
+   \ifthenelse{\equal{#1}{Chapter}}{\csname #2\endcsname=1}{}%
+   \ifthenelse{\equal{#1}{Section}}{\csname #2\endcsname=2}{}%
+   \ifthenelse{\equal{#1}{Subsection}}{\csname #2\endcsname=3}{}%
+   \ifthenelse{\equal{#1}{Subsubsection}}{\csname #2\endcsname=4}{}%
+   \ifthenelse{\equal{#1}{Paragraph}}{\csname #2\endcsname=5}{}%
+   \ifthenelse{\equal{#1}{Subparagraph}}{\csname #2\endcsname=6}{}%
+   \ifthenelse{\equal{#1}{Div}}{\csname #2\endcsname=7}{}%
+}
+
+
+\newcount\@bool%
+\newcount\@elem%
+\newcount\@elemi%
+\newcommand{\closeUntilPDFStruct}[1]{%
+      \ifTextActive%
+          \endPDFMarkContent%
+          \endPDFTextObj%
+      \fi%
+     %Schleife
+     \@bool=0%
+        \sectionInDepth{#1}{@elemi}%
+        \ifnum \@elemi=100 \@bool=1 \fi%
+        \global\advance\@elemi\m@ne%
+     \@whilenum \@bool =0\do{%
+        \accessReadTopStack\StructElem\Objnum\KidsArray%
+        \sectionInDepth{\StructElem}{@elem}%
+        \ifthenelse{\@elem >\@elemi}{%
+             \endPDFStructObj%
+        }{%
+             \@bool=1%
+        }%
+        \if #1\empty \@bool=1 \fi%
+        \ifthenelse{\equal{#1}{\StructElem}}{\@bool=1}{}%
+     }%
+}
+
+\xdef\TextType{}%
+\newcounter{TextObjNum}%
+\xdef\TextArray{}%
+\newif\ifTextActive \TextActivefalse%
+\newif\ifSpezialTextActive \SpezialTextActivefalse%
+
+\newenvironment*{PDFTextObj}{%
+  %altes Textobj beenden, immer max. ein Textobj aktiv
+  \ifTextActive \endPDFMarkContent\endPDFTextObj\fi%
+  %neues anfangen
+  \global\TextActivetrue%
+  \pdfobj reserveobjnum% Objektnummer reservieren
+  \setcounter{TextObjNum}{\pdflastobj}%
+  \xdef\TextArray{}%
+  \xdef\TextType{P}% kein TextTxp --> P
+}%
+{%
+ \ifTextActive%
+  \ifnum \@stackdepth <1\relax%
+       \xdef\ParentElem{\theStructTree}%
+       \xdef\ParentArray{Karray}%
+       %\PackageWarning{accessibility}{stackdepth<1}%
+  \else%
+       \accessReadTopStack\ParentStructElem\ParentElem\ParentArray%
+  \fi%
+  %\convertLanguageInCode{\languagename}%
+  \immediate \pdfobj useobjnum\theTextObjNum{<</Type /StructElem %
+     /P \ParentElem \space 0 R %
+     /C /Normal %
+     /K [\TextArray] %
+     /S /\TextType %
+    \space\LanguageCode>>}%
+  \pdfrefobj \theTextObjNum%
+  \expandafter\xdef\csname \ParentArray\endcsname{%
+       \csname \ParentArray\endcsname \space \theTextObjNum\space 0 R}%
+  \global\TextActivefalse%
+ \fi%
+}
+
+
+\xdef\altAttr{}%
+\xdef\titleAttr{}%
+\newenvironment*{PDFSpezialTextObj}[1]{%
+  \ifTextActive \endPDFMarkContent\endPDFTextObj\fi%
+  %neues anfangen
+  \global\SpezialTextActivetrue%
+  \pdfobj reserveobjnum% Objektnummer reservieren
+  \setcounter{TextObjNum}{\pdflastobj}%
+  \xdef\TextArray{}%
+  \xdef\TextType{#1}%
+}%
+{%
+  %\gdef\LanguageHelp{}%
+  %\ifLanguageDiff%
+  %    \gdef\LanguageHelp{\LanguageCode}%
+  %\fi%
+  %  \convertLanguageInCode{\languagename}%
+    \gdef\AltHelp{}%
+  \ifthenelse{\equal{\altAttr}{}}{}{%
+     \gdef\AltHelp{/Alt(\altAttr)}%
+  }%
+  \gdef\TitleHelp{}%
+  \ifthenelse{\equal{\titleAttr}{}}{}{%
+     \gdef\TitleHelp{/T(\titleAttr)}%
+  }%
+  \ifnum \@stackdepth <1\relax%
+       \xdef\ParentElem{\theStructTree}%
+       \xdef\ParentArray{Karray}%
+  \else%
+       \accessReadTopStack\ParentStructElem\ParentElem\ParentArray%
+  \fi%
+  \immediate \pdfobj useobjnum\theTextObjNum{<</Type /StructElem %
+     /P \ParentElem \space 0 R %
+     /C /Normal %
+     /K [\TextArray] %
+     /S /\TextType %
+    \space\LanguageCode %
+    \space\TitleHelp %
+    \space\AltHelp>>}%
+  \pdfrefobj \theTextObjNum%
+  \expandafter\xdef\csname \ParentArray\endcsname{%
+      \csname \ParentArray\endcsname \space \theTextObjNum\space 0 R}%
+  \global\SpezialTextActivefalse%
+  \xdef\TextType{}%
+  \EveryparReset%
+  \xdef\altAttr{}% wieder leeren
+  \xdef\titleAttr{}% wieder leeren
+}
+
+\xdef\lastEveryparType{}%
+\xdef\HelpBool{}%
+\xdef\Type{}%
+\newcounter{PDFReferenceObjNum}%
+\xdef\ReferenceArray{}%
+\newenvironment*{PDFInlineObjInText}[1]{%
+  %alte einstellung merken
+  \xdef\lastEveryparType{\everyparStructElem}%
+  \xdef\HelpBool{\InlineObj}%
+  \xdef\Type{#1}%
+  \ifthenelse{\equal{\Type}{Reference} \or \equal{\Type}{Link}}{%
+    \pdfobj reserveobjnum%
+    \setcounter{PDFReferenceObjNum}{\pdflastobj}%
+     \setcounter{ObjNum}{\theTaggedObj}%
+     \EveryparConfig{#1}{obj}%
+  }{%
+     \EveryparConfig{#1}{true}%
+  }%
+  \PDFMarkContent% kein everypar
+}%
+{%
+  \endPDFMarkContent%
+  \ifthenelse{\equal{\Type}{Reference} \or \equal{\Type}{Link}}{%
+    \xdef\ReferenceArray{<</Type /MCR /Pg \pdfpageref\thepage \space \space 0 R /MCID \theObjNum>>}%
+    \ifthenelse{\pdftexversion>139}{%
+      \setcounter{ObjHelp}{\pdflastlink}%     %<< /Type /OBJR /Obj 600 0 R >>
+      %\PackageWarning{accessibility}{Objektnummer vom letzten Link: \theObjHelp}%
+      \ifthenelse{\theObjHelp>0}{%
+        \xdef\ReferenceArray{\ReferenceArray\space <</Type /OBJR /Obj \theObjHelp\space 0 R>>}%
+      }{}%
+   }{}%
+   \writeComplexTextObj{\thePDFReferenceObjNum}%
+         {\ReferenceArray}%
+         {/Reference}{\theTextObjNum}{NoPage}%
+   \xdef\TextArray{\TextArray \theObjHelp\space 0 R \space}%
+  }{}%
+  % alte einstellung wiederherstellen
+  \EveryparConfig{\lastEveryparType}{\HelpBool}%
+  \PDFMarkContent%
+}
+
+
+\newcommand{\EveryparConfig}[2]{%
+   \xdef\everyparStructElem{#1}%
+   \xdef\InlineObj{#2}%
+}
+
+%%Setzt die Variablen auf die Standardwerte für eine normale Texterkennung.
+\newcommand{\EveryparReset}{%
+   \xdef\everyparStructElem{P}%
+   \xdef\InlineObj{false}%
+}
+
+\newif\ifMarkContentOpen \MarkContentOpenfalse%
+\xdef\everyparStructElem{P}%
+\xdef\InlineObj{false}%
+\newenvironment{PDFMarkContent}{%
+  \ifMarkContentOpen \endPDFMarkContent\fi%
+  \global\MarkContentOpentrue%
+  \ifthenelse{\equal{\everyparStructElem}{}}{\EveryparReset}{}%
+  \pdfliteral{/\everyparStructElem\space <</MCID \theTaggedObj>> BDC}%
+  \ifthenelse{\equal{\InlineObj}{false}}{% Text
+    %\ifthenelse{\equal{\themypage}{\thepage}}{}{%
+       %\PackageWarning{accessibility}{unterschiedlich \thepage<>\themypage; MCID \theTaggedObj}
+    %}%
+    \xdef\TextArray{\TextArray \space <</Type /MCR %
+        %/Pg \pdfpageref\thepage \space \space 0 R %
+        /Pg \pdfpageref\themypage \space \space 0 R %
+        /MCID \theTaggedObj>>}%
+  }{}%
+  \ifthenelse{\equal{\InlineObj}{true}}{%  inline-Objekt
+    \writePDFLeafObj{\theTaggedObj}{\everyparStructElem}%
+  }{}%
+  \stepcounter{TaggedObj}%
+}%
+{%
+ \ifMarkContentOpen%
+    \pdfliteral{EMC}%
+    \global\MarkContentOpenfalse%
+ \fi%
+}
+
+\newcommand*{\writePDFLeafObj}[2]{%
+  %\gdef\LanguageHelp{}%
+  %\ifLanguageDiff%
+  %    \gdef\LanguageHelp{\LanguageCode}%
+  %\fi%
+  %  \convertLanguageInCode{\languagename}%
+  \gdef\AltHelp{}%
+  \ifthenelse{\equal{\altAttr}{}}{}{%
+     \gdef\AltHelp{/Alt(\altAttr)}%
+  }%
+  \gdef\TitleHelp{}%
+  \ifthenelse{\equal{\titleAttr}{}}{}{%
+     \gdef\TitleHelp{/T(\titleAttr)}%
+  }%
+  \immediate \pdfobj {<</Type /StructElem %
+    /P \theTextObjNum \space 0 R %
+    /C /Normal %
+    /K <</Type /MCR %
+         /Pg \pdfpageref\thepage \space \space 0 R %
+         /MCID #1>> %
+    /S /#2 %
+    \space\LanguageCode %
+    \space\TitleHelp %
+    \space\AltHelp>>}%
+  \setcounter{ObjHelp}{\pdflastobj}%
+  \pdfrefobj \pdflastobj%
+  \xdef\TextArray{\TextArray \space \theObjHelp\space 0 R}%
+  \xdef\altAttr{}%
+  \xdef\titleAttr{}%
+}
+
+
+\newcommand*{\writeComplexTextObj}[5]{%
+  \ifthenelse{\equal{#5}{Page}}{% Seitenreferenz angeben
+    \immediate \pdfobj useobjnum#1{<</Type /StructElem %
+      /P #4\space 0 R %
+      /Pg \pdfpageref\thepage \space \space 0 R %
+      /C /Normal %
+      /K [#2] %
+      /S #3 \space\LanguageCode>>}%
+    }{%keine Seitenreferenz angeben
+    \immediate \pdfobj useobjnum#1{<</Type /StructElem %
+      /P #4\space 0 R %
+      /C /Normal %
+      /K [#2] %
+      /S #3>>}%
+  }%
+  \setcounter{ObjHelp}{\pdflastobj}%
+  \pdfrefobj \pdflastobj%
+}
+
+  %\newcounter{ParCounter}[page]%
+\newcounter{ParCounter}%
+\newif\ifnumberingpars \numberingparstrue%
+\newif\ifnpar \npartrue%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originaleverypar\everypar%
+  \newtoks\npeverypar%
+  \npeverypar{}%
+  % Call everypar with the argument extended with the toks
+  \def\everypar#1{%
+    \originaleverypar{#1\ifnumberingpars\the\npeverypar\fi}}%
+  \npeverypar{%
+    \ifnpar{%
+      \stepcounter{ParCounter}%
+     %\pdfliteral{/Artifact BMC}%
+     % \llap{\small\arabic{ParCounter}\qquad}%
+     %\pdfliteral{EMC}%
+      \ifSpezialTextActive\else \PDFTextObj \fi%
+      \PDFMarkContent%
+    }\fi%
+  }%
+}{}
+\AtBeginDocument{%
+\PDFStructObj{Document}{\empty}%
+\everypar{}%
+}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \AtEndDocument{%
+  \closeUntilPDFStruct{Document}%
+  \newcounter{ClassMap}%
+  \pdfobj reserveobjnum% neues Objekt Reservieren
+  \setcounter{ClassMap}{\pdflastobj}%
+  \immediate \pdfobj useobjnum \theClassMap{<<%
+      /Normal <</O /Layout /EndIndent 0.0 %
+                /SpaceAfter 0.0 /SpaceBefore 0.0 %
+                /StartIndent 0.0 /WritingMode %
+                /LrTb /TextAlign /Start>> %
+      /CM1 <</O /Layout /TextAlign /Justify>> %
+      /CM2 <</O /Layout /TextAlign /Center>> %
+      /CM3 <</O /Layout /TextAlign /Start>> %
+      /CM4 <</O /Layout /InlineAlign /Center %
+                /Placement /Block /SpaceAfter 12.125 %
+                /BBox [266 314 329 336]>> %
+       >>} \pdfrefobj \pdflastobj%
+   %\global\setcounter{ClassMap}{\pdflastobj}%
+  \pdfobj {<<%
+            /IndexItem /Span % Indexeinträge
+            /TOF /TOC % Table of Figures
+            /TOFI /TOCI % Table of Figures Eintrag
+            /TOT /TOC % Table of Tables
+            /TOTI /TOCI % Table of Tables Eintrag++
+            /Titlepage /Sect % Titlepage
+            /Bibliography /L % Bibligraphy
+            /BibItem /LI % BibligraphyItem
+            /ParagraphSpan /Span % geteilte Paragraphen am Seitenumbruch
+            /Footnote /Note %  Fußnotentext
+            /Chapter /Sect%
+            /Section /Sect%
+            /Subsection /Sect%
+            /Subsubsection /Sect%
+            /Float /Div%
+            /L1 /L%
+            /L2 /L%
+            /L3 /L%
+            /L4 /L%
+            /L5 /L%
+          >>} \pdfrefobj \pdflastobj%
+  \setcounter{ObjHelp}{\pdflastobj}%
+  \immediate \pdfobj useobjnum \theStructTree{%
+     <</Type /StructTreeRoot %
+       /RoleMap \theObjHelp \space 0 R %
+       /ClassMap \theClassMap \space 0 R %
+       /ParentTree <</Nums [0 [\Karray]]>> % TODO Viel komplizierter
+       /ParentTreeNextKey 1 % berechnen
+       /K [\Karray] %
+     >>}\pdfrefobj\pdflastobj%
+  \pdfcatalog{%
+      /StructTreeRoot \theStructTree\space 0 R%
+      /MarkInfo <</Marked true /LetterspaceFlags 0>>%
+      %/PieceInfo<</MarkedPDF>>%
+      %/MarkInfo <</Marked true>>%
+      %/Metadata \theStructTree\space 0 R%
+      }%
+  \ifthenelse{\boolean{ACCESSProblems}}{%
+     \PackageWarningNoLine{accessibility}{%
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\MessageBreak
+        @@ There were non-defined Figure Alt-Tags! @@\MessageBreak
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@}%
+  }{}%
+  }%
+}{}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcount\linenopenalty\linenopenalty=-100000%
+\mathchardef\linenopenaltypar=32000%
+  %
+  %%%%%%%%%%%%%Verändern der Outputroutine%%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\@tempa\output%
+  \newtoks\output%
+  \let\@AC@output\output%
+  \output=\expandafter{\the\@tempa}%
+  %
+  \@tempa={%
+    % LineNoTest
+    \let\@@par\@@@par%
+    \ifnum\interlinepenalty<-\linenopenaltypar%
+       \advance\interlinepenalty-\linenopenalty%
+       \@AC@nobreaktrue%
+    \fi%
+    \@tempswatrue%
+    \ifnum\outputpenalty>-\linenopenaltypar\else%
+       \ifnum\outputpenalty>-188000\relax%
+         \@tempswafalse%
+         \fi%
+       \fi%
+    \if@tempswa%
+         % LineNoLaTeXOutput
+         \ifnum \holdinginserts=\thr@@ %
+           \global\holdinginserts-\thr@@ %
+           \unvbox\@cclv %
+           \ifnum \outputpenalty=\@M \else \penalty\outputpenalty \fi %
+         \else%
+           \if@twocolumn \let\@makecol\@AC@makecol \fi%
+           \the\@AC@output %
+           \ifnum \holdinginserts=-\thr@@ %
+             \global\holdinginserts\thr@@ \fi %
+         \fi%
+    \else  %
+       %MakeLineNo
+       \boxmaxdepth\maxdimen\setbox\z@\vbox{\unvbox\@cclv}%
+       \@tempdima\dp\z@ \unvbox\z@%
+       \sbox\@tempboxa{\hb@xt@\z@{\makeLineNumber}}%
+       \stepcounter{linenumber}%
+       \stepcounter{abslinenumber}%
+       \ht\@tempboxa\z@ \@AC@depthbox %
+       \count@\lastpenalty %
+       \ifnum\outputpenalty=-\linenopenaltypar %
+         \ifnum\count@=\z@ \else %
+           \xdef\@AC@parpgbrk{%
+             \penalty\the\count@%
+             \global\let\noexpand\@AC@parpgbrk%
+                        \noexpand\@AC@screenoff@pen}%
+         \fi%
+       \else%
+         \@tempcnta\outputpenalty%
+         \advance\@tempcnta -\linenopenalty%
+         \penalty \ifnum\count@<\@tempcnta \@tempcnta \else \count@ \fi %
+       \fi%
+    \fi%
+  }%
+  \def\@AC@nobreaktrue{\let\if@nobreak\iftrue} %
+  %
+  \def\@AC@depthbox{%
+    \dp\@tempboxa=\@tempdima%
+    \nointerlineskip \kern-\@tempdima \box\@tempboxa} %
+  %
+  \def\@AC@screenoff@pen{%
+    \ifdim\lastskip=\z@ %
+      \@tempdima\prevdepth \setbox\@tempboxa\null %
+      \@AC@depthbox                           \fi}%
+  %
+  \global\let\@AC@parpgbrk\@AC@screenoff@pen %
+}{}%
+  %
+  %%%%%%%%%%%%%Initializieren der Variablen%%%%%%%%%%%%%%%%%%%%%%%
+  %
+  %Zeilennummer
+  \newcounter{linenumber}%
+  \newcounter{abslinenumber}%
+  %Seitennummer
+  \newcount\c@AC@truepage %
+  \global\advance\c@AC@truepage\@ne %mit eins beginnen
+  %\g@addto@macro\cl@page{\global\c@AC@truepage\c@page}%
+  \g@addto@macro\cl@page{\global\advance\c@AC@truepage\@ne}%
+  \@addtoreset{AC@truepage}{@ckpt}%
+  %
+  \newcounter{mypage}%
+  \setcounter{mypage}{\@ne}%
+  \g@addto@macro\cl@page{\global\c@mypage\c@page}%
+  \@addtoreset{mypage}{@ckpt}%
+  %
+  %%%%%%%%%%%%%Schreiben der Zeilennummmern%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \def\makeLineNumber{%
+    \protected@write\@auxout{}{\string\@AC{\the\c@linenumber}{\noexpand\the\c@AC@truepage}}%
+    \testNumberedPage%
+    %Schreibt die Zeilennummern
+    %\hss{\normalfont\tiny\sffamily\thelinenumber\quad}%
+  }%
+}{}%
+  %
+  %%%%%%%%%%%%%%Absatz
+\newif\ifLastLineStop \LastLineStopfalse%
+\newcounter{LastPar}%
+
+\newcommand{\EndPage}[1]{%
+    \ifMarkContentOpen%
+       \endPDFMarkContent%
+       \global\LastLineStoptrue%
+       \setcounter{LastPar}{\noexpand\theParCounter}%
+    \else%
+       \global\LastLineStopfalse%
+    \fi%
+    \if@twocolumn \else%
+       \stepcounter{mypage}%
+    \fi%
+}%
+
+\newcommand{\BeginPage}{%
+   \ifLastLineStop%
+     \ifnum \theParCounter=\theLastPar%
+        \pdfliteral{/P <</MCID \theTaggedObj>> BDC}%
+        \global\MarkContentOpentrue%
+         \xdef\TextArray{\TextArray \space <</Type /MCR %
+                /Pg \pdfpageref\the\c@AC@truepage \space \space 0 R %
+                /MCID \theTaggedObj>>}%
+        \stepcounter{TaggedObj}%
+     \fi%
+   \fi%
+}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\original@startcolumn\@startcolumn%
+  \renewcommand{\@startcolumn}{%
+    \BeginPage%
+    \original@startcolumn%
+  }%
+}{}%
+
+  %%%%%%%%%%%%%%Berichtigung der Seitennummer%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \def\LastNumberedPage{first}%
+  \def\AC@Pfirst{\nextAC\relax}%
+  %
+  \let\lastAC\relax  % compare to last line on this page
+  \let\firstAC\relax % compare to first line on this page
+  \let\pageAC\relax  % get the page number, compute the linenumber
+  \let\nextAC\relax  % move to the next page
+  %
+  \AtEndDocument{\let\@AC\@gobbletwo} %
+  %
+  \def\@AC#1#2{{\expandafter\@@AC%
+                   \csname AC@P#2C\@AC@column\expandafter\endcsname%
+                   \csname AC@PO#2\endcsname%
+                   {#1}{#2}}}%
+  %
+  \def\@@AC#1#2#3#4{\ifx#1\relax%
+    \ifx#2\relax\gdef#2{#3}\fi%
+      \expandafter\@@@AC\csname AC@P\LastNumberedPage\endcsname#1%
+      \xdef#1{\lastAC{#3}\firstAC{#3}%
+              \pageAC{#4}{\@AC@column}{#2}\nextAC\relax}%
+    \else%
+      \def\lastAC##1{\noexpand\lastAC{#3}}%
+      \xdef#1{#1}%
+    \fi%
+    \xdef\LastNumberedPage{#4C\@AC@column}%
+  }%
+  %
+  \def\@@@AC#1#2{{\def\nextAC##1{\noexpand\nextAC\noexpand#2}%
+                  \xdef#1{#1}}}%
+  %
+  \def\NumberedPageCache{\AC@Pfirst}%
+  %
+  \def\testLastNumberedPage#1{%
+    \ifnum#1<\c@linenumber%
+      \let\firstAC\@gobble%
+    \fi%
+    \ifnum#1=\c@linenumber%
+      \EndPage{#1}%
+    \fi%
+  }%
+  %
+  \def\testFirstNumberedPage#1{%
+    \ifnum#1>\c@linenumber%
+       \def\nextAC##1{\testNextNumberedPage\AC@Pfirst}%
+    \else%
+      \let\nextAC\@gobble%
+      \def\pageAC{\gotNumberedPage{#1}}%
+    \fi%
+  }%
+  %
+  \long\def \@gobblethree #1#2#3{}%
+  %
+  \def\testNumberedPage{%
+    \let\lastAC\testLastNumberedPage%
+    \let\firstAC\testFirstNumberedPage%
+    \let\pageAC\@gobblethree%
+    \let\nextAC\testNextNumberedPage%
+    \NumberedPageCache%
+  }%
+  %
+  \def\testNextNumberedPage#1{%
+   \ifx#1\relax%
+     \global\def\NumberedPageCache{\gotNumberedPage0000}%
+     %\PackageWarning{accessibility}{Changed paragraphs, rerun to get it right}%
+     \PackageError{accessibility}{Changed paragraphs, rerun to get it right}%
+                                 {Changed paragraphs, rerun to get it right}%
+   \else%
+     \global\let\NumberedPageCache#1%
+   \fi%
+   \testNumberedPage%
+  }%
+  %
+  \def\gotNumberedPage#1#2#3#4{%
+    \ifodd \if@twocolumn #3\else #2\fi\relax\fi%
+    \advance\c@linenumber\@ne % Nummerierung ab 1 sonst ab 0
+    \advance\c@linenumber-#4\relax%
+  }%
+}{}%
+  %
+  %%%%%%%%%%%%%%Spaltenerkennung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \def\@AC@col{\def\@AC@column} %
+  \@AC@col{1}%
+  %
+  \AtBeginDocument{\let\@AC@orig@makecol\@makecol} %
+  %
+  \def\@AC@makecol{%
+     \@AC@orig@makecol
+     \setbox\@outputbox \vbox{%
+        \boxmaxdepth \@maxdepth%
+        \protected@write\@auxout{}{%
+            \string\@AC@col{\if@firstcolumn1\else2\fi}%
+        }%
+        \box\@outputbox %
+  }}%
+}{}%
+  %
+  %%%%%%%%%%%%%%Absatzerkennung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\@@@par\@@par%
+  \newcount\linenoprevgraf%
+  %
+  \def\linenumberpar{%
+    \ifvmode \@@@par \else %
+      \ifinner \@@@par \else%
+        \xdef\@AC@outer@holdins{\the\holdinginserts}%
+        \advance \interlinepenalty \linenopenalty%
+        \linenoprevgraf \prevgraf%
+        \global \holdinginserts \thr@@ %
+        \@@@par%
+        \ifnum\prevgraf>\linenoprevgraf%
+          \penalty-\linenopenaltypar%
+        \fi%
+        \@AC@parpgbrk %
+        \global\holdinginserts\@AC@outer@holdins%
+        \advance\interlinepenalty -\linenopenalty%
+      \fi%
+    \fi}%
+  %
+  \AtEndOfPackage{%
+    \xdef\@AC@outer@holdins{\the\holdinginserts}%
+    \let\@@par\linenumberpar%
+    \ifx\@par\@@@par\let\@par\linenumberpar\fi%
+    \ifx\par\@@@par\let\par\linenumberpar\fi%
+  }%
+}{}%
+  %
+  %%%%%%%%%%%%%%Formelbehandlung%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\linenomath{%
+  \ifnum\interlinepenalty>-\linenopenaltypar
+    \global\holdinginserts\thr@@
+    \advance\interlinepenalty \linenopenalty
+   \ifhmode                                   %
+    \advance\predisplaypenalty \linenopenalty
+   \fi
+    \advance\postdisplaypenalty \linenopenalty
+    \advance\interdisplaylinepenalty \linenopenalty
+  \fi
+  \ignorespaces
+}%
+
+\def\endlinenomath{%
+    \global\holdinginserts\@AC@outer@holdins %
+    \global\@ignoretrue
+}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifundefined{mathindent}{%
+    \let\AC@displaymath\[%
+    \let\AC@enddisplaymath\]%
+    \renewcommand\[{\begin{linenomath}\AC@displaymath}%
+    \renewcommand\]{\AC@enddisplaymath\end{linenomath}}%
+    %
+    \let\AC@equation\equation%
+    \let\AC@endequation\endequation%
+    \renewenvironment{equation}%
+       {\linenomath\AC@equation}%
+       {\AC@endequation\endlinenomath}%
+  }{}%
+  %
+  \let\AC@eqnarray\eqnarray%
+  \let\AC@endeqnarray\endeqnarray%
+  \renewenvironment{eqnarray}%
+     {\linenomath\AC@eqnarray}%
+     {\AC@endeqnarray\endlinenomath}%
+  %
+  \advance\maxdeadcycles 100%
+}{}%
+  %
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalnewpage\newpage%
+  \renewcommand{\newpage}{%
+    \endPDFMarkContent%
+    \originalnewpage%
+  }%
+}{}%
+
+\newenvironment{PDFSect}[2]{%
+  \ifPDFDetailedStructure%
+      \closeUntilPDFStruct{#1}%
+      \PDFStructObj{#1}{#2}%
+  \fi%
+  \PDFSpezialTextObj{H}%
+  \EveryparConfig{H}{false}%
+}%
+{%
+  \endPDFMarkContent%
+  \endPDFSpezialTextObj%
+}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifundefined{chapter}{% es gibt keine Chapter z.B. in Article-Klassen
+    }{%
+    \let\originalchapter\chapter%
+    \renewcommand{\chapter}{%Sortiert die verschiedenen Aufrufe
+      \@ifstar{\originalchapterWithStar}%\chapter*{Beispielkapitel}
+      {\@ifnextchar[%]
+          {\originalchapterWithTwoOption}%\chapter[BspKap]{Beispielkapitel}
+          {\originalchapterWithOption}%\chapter{Beispielkapitel}
+      }%
+    }%
+  }%
+}{}
+
+\newcommand{\originalchapterWithStar}[1]{%
+  \PDFSect{Chapter}{#1}\originalchapter*{#1}\endPDFSect}%
+\newcommand{\originalchapterWithTwoOption}[2]{%
+  \PDFSect{Chapter}{#1}\originalchapter[#1]{#2}\endPDFSect}%
+\newcommand{\originalchapterWithOption}[1]{%
+  \PDFSect{Chapter}{#1}\originalchapter{#1}\endPDFSect}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifundefined{addchap}{% es gibt keine Chapter z.B. in Article-Klassen
+  }{%
+    \let\originaladdchap\addchap%
+    \renewcommand{\addchap}{%
+      \@ifstar{\originaladdchapWithStar}%
+      {\@ifnextchar[%]
+          {\originaladdchapWithTwoOption}%
+          {\originaladdchapWithOption}%
+      }%
+    }%
+  }%
+}{}
+
+\newcommand{\originaladdchapWithStar}[1]{%
+  \PDFSect{Chapter}{#1} \originaladdchap*{#1} \endPDFSect}%
+\newcommand{\originaladdchapWithTwoOption}[2]{%
+  \PDFSect{Chapter}{#1} \originaladdchap[#1]{#2} \endPDFSect}%
+\newcommand{\originaladdchapWithOption}[1]{%
+  \PDFSect{Chapter}{#1} \originaladdchap{#1} \endPDFSect}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifundefined{set@preamble}{% es gibt keine set@preamble außerhalb des KOMA-Scripts
+    }{%
+    \let\originaluse@preamble\use@preamble%
+    \renewcommand{\use@preamble}[1]{%
+        \EveryparConfig{P}{true}%
+        \originaluse@preamble{#1}%
+        \EveryparConfig{H}{false}%
+    }%
+  }%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalsection\section%
+  \renewcommand{\section}{%
+    \@ifstar{\originalsectionWithStar}%
+    {\@ifnextchar[%]
+        {\originalsectionWithTwoOption}%
+        {\originalsectionWithOption}%
+    }%
+  }%
+}{}
+
+\newcommand{\originalsectionWithStar}[1]%
+  {\PDFSect{Section}{#1} \originalsection*{#1} \endPDFSect}%
+\newcommand{\originalsectionWithTwoOption}[2]%
+  {\PDFSect{Section}{#1} \originalsection[#1]{#2} \endPDFSect}%
+\newcommand{\originalsectionWithOption}[1]%
+  {\PDFSect{Section}{#1} \originalsection{#1} \endPDFSect}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalsubsection\subsection%
+  \renewcommand{\subsection}{%
+    \@ifstar{\originalsubsectionWithStar}%
+    {\@ifnextchar[%]
+        {\originalsubsectionWithTwoOption}%
+        {\originalsubsectionWithOption}%
+    }%
+  }%
+}{}
+
+\newcommand{\originalsubsectionWithStar}[1]%
+  {\PDFSect{Subsection}{#1} \originalsubsection*{#1} \endPDFSect}%
+\newcommand{\originalsubsectionWithTwoOption}[2]%
+  {\PDFSect{Subsection}{#1} \originalsubsection[#1]{#2} \endPDFSect}%
+\newcommand{\originalsubsectionWithOption}[1]%
+  {\PDFSect{Subsection}{#1} \originalsubsection{#1} \endPDFSect}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalsubsubsection\subsubsection%
+  \renewcommand{\subsubsection}{%
+    \@ifstar{\originalsubsubsectionWithStar}%
+      {\@ifnextchar[%]
+        {\originalsubsubsectionWithTwoOption}%
+        {\originalsubsubsectionWithOption}%
+    }%
+  }%
+}{}
+
+\newcommand{\originalsubsubsectionWithStar}[1]%
+  {\PDFSect{Subsubsection}{#1} \originalsubsubsection*{#1} \endPDFSect}%
+\newcommand{\originalsubsubsectionWithTwoOption}[2]%
+  {\PDFSect{Subsubsection}{#1} \originalsubsubsection[#1]{#2} \endPDFSect}%
+\newcommand{\originalsubsubsectionWithOption}[1]%
+  {\PDFSect{Subsubsection}{#1} \originalsubsubsection{#1} \endPDFSect}%
+
+\newenvironment{PDFParSect}[2]{%
+  %\ifPDFDetailedStructure%
+  %    \closeUntilPDFStruct{#1}%
+  %    \PDFStructObj{#1}{#2}%
+  %\fi%
+  \PDFTextObj%
+  \EveryparConfig{P}{false}%
+  \PDFMarkContent%
+}%
+{%
+  %\endPDFMarkContent% erst durch everypar
+  %\endPDFTextObj%
+}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalparagraph\paragraph%
+  \renewcommand{\paragraph}{%
+    \@ifstar{\originalparagraphWithStar}%
+    {\@ifnextchar[%]
+        {\originalparagraphWithTwoOption}%
+        {\originalparagraphWithOption}%
+    }%
+  }%
+}{}
+
+\newcommand{\originalparagraphWithStar}[1]%
+  {\PDFParSect{Paragraph}{#1} \originalparagraph*{#1} \endPDFParSect}%
+\newcommand{\originalparagraphWithTwoOption}[2]%
+  {\PDFParSect{Paragraph}{#1} \originalparagraph[#1]{#2} \endPDFParSect}%
+\newcommand{\originalparagraphWithOption}[1]%
+  {\PDFParSect{Paragraph}{#1} \originalparagraph{#1} \endPDFParSect}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalsubparagraph\subparagraph%
+  \renewcommand{\subparagraph}{%
+    \@ifstar{\originalsubparagraphWithStar}%
+    {\@ifnextchar[%]
+        {\originalsubparagraphWithTwoOption}%
+        {\originalsubparagraphWithOption}%
+    }%
+  }%
+}{}
+
+\newcommand{\originalsubparagraphWithStar}[1]%
+  {\PDFParSect{Subparagraph}{#1} \originalsubparagraph*{#1} \endPDFParSect}%
+\newcommand{\originalsubparagraphWithTwoOption}[2]%
+  {\PDFParSect{Subparagraph}{#1} \originalsubparagraph[#1]{#2} \endPDFParSect}%
+\newcommand{\originalsubparagraphWithOption}[1]%
+  {\PDFParSect{Subparagraph}{#1} \originalsubparagraph{#1} \endPDFParSect}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifundefined{minisec}{}{%
+   \let\originalminisec\minisec%
+   \renewcommand{\minisec}{%
+     \@ifstar{\originalminisecWithStar}%
+     {\@ifnextchar[%]
+         {\originalminisecWithTwoOption}%
+         {\originalminisecWithOption}%
+     }%
+   }%
+  }%
+}{}
+
+\newcommand{\originalminisecWithStar}[1]%
+  {\PDFSpezialTextObj{H}\EveryparConfig{H}{false}%
+        \originalminisec*{#1} \endPDFSpezialTextObj}%
+\newcommand{\originalminisecWithTwoOption}[2]%
+  {\PDFSpezialTextObj{H}\EveryparConfig{H}{false}%
+        \originalminisec[#1]{#2} \endPDFSpezialTextObj}%
+\newcommand{\originalminisecWithOption}[1]%
+  {\PDFSpezialTextObj{H}\EveryparConfig{H}{false}%
+        \originalminisec{#1} \endPDFSpezialTextObj}%
+
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalquote\quote%
+  \let\originalendquote\endquote%
+  \renewenvironment*{quote}%
+    {\PDFSpezialTextObj{Quote}\EveryparConfig{Quote}{false}\originalquote}%
+    {\endPDFMarkContent\originalendquote\endPDFSpezialTextObj}%
+  %
+  \let\originalquotation\quotation%
+  \let\originalendquotation\endquotation%
+  \renewenvironment*{quotation}%
+    {\PDFSpezialTextObj{Quote}\EveryparConfig{Quote}{false}\originalquotation}%
+    {\endPDFMarkContent\originalendquotation\endPDFSpezialTextObj}%
+  %
+  \let\originalverse\verse%
+  \let\originalendverse\endverse%
+  \renewenvironment*{verse}%
+    {\PDFSpezialTextObj{Quote}\EveryparConfig{Quote}{false}\originalverse}%
+    {\endPDFMarkContent\originalendverse\endPDFSpezialTextObj}%
+}{}
+
+%%begin{verbatim}
+%%end{verbatim}
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalverbatim\@verbatim%
+  \renewcommand{\@verbatim}{%
+  %\PDFStructObj{Div}{\empty}%
+  \PDFSpezialTextObj{Code}%
+    \originalverbatim%
+  }%
+  \let\originalendverbatim\endverbatim%
+  \renewcommand{\endverbatim}{%
+    \endPDFMarkContent%
+    \originalendverbatim%
+    \endPDFSpezialTextObj%
+    %\endPDFStructObj%
+  }%
+  \expandafter\let\csname endverbatim*\endcsname =\endverbatim%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifpackageloaded{listings}{%
+    \let\originallstinputlisting\lstinputlisting%
+    \renewcommand{\lstinputlisting}[2][]{%
+      \PDFSpezialTextObj{Code}%
+      \PackageWarning{accessibility}{Codeinput}%
+      \originallstinputlisting[#1]{#2}%
+      \PackageWarning{accessibility}{codeinput}%
+      \endPDFMarkContent%
+      \endPDFSpezialTextObj%
+    }%
+    %lst@EndProcessListing
+    \let\originallstenv@Process\lstenv@Process%
+    \renewcommand{\lstenv@Process}{%
+      \PDFSpezialTextObj{Code}%
+      \PackageWarning{accessibility}{begin code}%
+      \originallstenv@Process%
+    }%
+    \let\originallstenv@End\lstenv@End%
+    \renewcommand{\lstenv@End}{%
+      \originallstenv@End%
+      \endPDFMarkContent%
+      \endPDFSpezialTextObj%
+      \PackageWarning{accessibility}{end code}%
+    }%
+    %lstinline!var i:integer;!
+  }{}%
+}{}
+
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifpackageloaded{thmbox}{%
+    \PackageWarning{accessibility}%
+        {The thmbox-package isn't yet supported.}%
+  }{}%
+  \@ifpackageloaded{theorem}{%
+    \newcommand{\@myendtheorem}{%
+      \@endtheorem%
+      \endPDFSpezialTextObj%
+    }%TODO ungetestet
+    \let\original@thm\@thm%
+    \gdef\@thm#1#2{%
+      \PDFSpezialTextObj{Div}%
+      \EveryparConfig{H}{true}%
+      \PDFMarkContent%
+      \global \expandafter \let \csname end#1\endcsname \@myendtheorem%
+      \original@thm{#1}{#2}%
+    }%
+  }{%without theorem-package
+    \let\original@begintheorem\@begintheorem%
+    \renewcommand{\@begintheorem}{%
+      \PDFSpezialTextObj{Div}%
+      \EveryparConfig{H}{true}%
+      \PDFMarkContent%
+      \EveryparConfig{P}{true}%
+      \original@begintheorem%
+    }%
+    \let\original@opargbegintheorem\@opargbegintheorem%
+    \renewcommand{\@opargbegintheorem}{%
+      \PDFSpezialTextObj{Div}%
+      \EveryparConfig{H}{true}%
+      \PDFMarkContent%
+      \EveryparConfig{P}{true}%
+      \original@opargbegintheorem%
+    }%
+    \let\original@endtheorem\@endtheorem%
+    \renewcommand{\@endtheorem}{%
+      \original@endtheorem%
+      \endPDFSpezialTextObj%
+    }%
+  }%
+}{}
+
+\newif\ifItemActive \ItemActivefalse%
+\newcounter{ListDepth}%
+
+\newenvironment{PDFList}{%
+  \ifItemActive \closeItem\fi%
+  %Liste beginnen
+  \addtocounter{ListDepth}{1}%
+  %\PDFStructObj{L}{\empty}% Sonst Fehler bei Zugriffsprüfung AA
+  \PDFStructObj{L\arabic{ListDepth}}{\empty}%
+  %\PDFStructObj{L\romannumeral\theListDepth}{\empty}%
+}{%
+  \ifItemActive \closeItem\fi%
+  %Liste beenden
+  \endPDFStructObj%
+  \addtocounter{ListDepth}{-1}%
+}
+
+\newenvironment{PDFListLabel}{%
+  \ifItemActive \closeItem\fi%
+  \PDFStructObj{LI}{\empty}%
+  \global\ItemActivetrue%
+  \PDFSpezialTextObj{Lbl}%
+  \EveryparConfig{Lbl}{false}%
+  \PDFMarkContent%
+}{%
+  \endPDFMarkContent%
+  \endPDFSpezialTextObj%
+  \PDFSpezialTextObj{LBody}%
+  \EveryparConfig{LBody}{false}%
+  %\PDFMarkContent{LBody}% wird über everypar erledigt
+}%
+
+\newcommand{\closeItem}{% Altes Item abschließen
+  \endPDFMarkContent%
+  \endPDFSpezialTextObj%{LBody}
+  \endPDFStructObj%
+  \global\ItemActivefalse%
+}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalitemize\itemize%
+  \let\originalenditemize\enditemize%
+  \renewenvironment{itemize}%
+    {\begin{PDFList}\originalitemize}%
+    {%\ifItemActive \closeItem\fi%
+     \originalenditemize\end{PDFList}}%
+  %
+  \let\originallabelitemi\labelitemi%
+  \renewcommand{\labelitemi}{%
+     \begin{PDFListLabel} \originallabelitemi \end{PDFListLabel}}%
+  \let\originallabelitemii\labelitemii%
+  \renewcommand{\labelitemii}{%
+     \begin{PDFListLabel} \originallabelitemii \end{PDFListLabel}}%
+  \let\originallabelitemiii\labelitemiii%
+  \renewcommand{\labelitemiii}{%
+     \begin{PDFListLabel} \originallabelitemiii \end{PDFListLabel}}%
+  \let\originallabelitemiv\labelitemiv%
+  \renewcommand{\labelitemiv}{%
+     \begin{PDFListLabel} \originallabelitemiv \end{PDFListLabel}}%
+  %
+  \let\originalenumerate\enumerate%
+  \let\originalendenumerate\endenumerate%
+  \renewenvironment{enumerate}%
+    {\begin{PDFList}\originalenumerate}%
+    {%\ifItemActive \closeItem\fi%
+     \originalendenumerate\end{PDFList}}%
+  %
+  \let\originallabelenumi\labelenumi%
+  \renewcommand{\labelenumi}{%
+    \begin{PDFListLabel} \originallabelenumi \end{PDFListLabel}}%
+  \let\originallabelenumii\labelenumii%
+  \renewcommand{\labelenumii}{%
+    \begin{PDFListLabel} \originallabelenumii \end{PDFListLabel}}%
+  \let\originallabelenumiii\labelenumiii%
+  \renewcommand{\labelenumiii}{%
+    \begin{PDFListLabel} \originallabelenumiii \end{PDFListLabel}}%
+  \let\originallabelenumiv\labelenumiv%
+  \renewcommand{\labelenumiv}{%
+    \begin{PDFListLabel} \originallabelenumiv \end{PDFListLabel}}%
+  %
+  \let\originaldescription\description%
+  \let\originalenddescription\enddescription%
+  \renewenvironment{description}%
+    {\begin{PDFList}\originaldescription}%
+    {%\ifItemActive \closeItem\fi%
+     \originalenddescription\end{PDFList}}%
+  %
+  \let\originaldescriptionlabel\descriptionlabel% aus scrrept
+  \renewcommand{\descriptionlabel}[1]{%
+     \begin{PDFListLabel} \originaldescriptionlabel{#1} \end{PDFListLabel}}%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalFormulaBegin\[%
+  \renewcommand*{\[}{%
+      \PDFSpezialTextObj{Formula}
+      \EveryparConfig{Formula}{false}%%
+      \originalFormulaBegin%
+  }%
+  \let\originalFormulaEnd\]%
+  \renewcommand*{\]}{%
+      \endPDFMarkContent
+      \originalFormulaEnd%
+      \endPDFSpezialTextObj%
+  }%
+  \let\originalequation\equation%
+  \let\originalendequation\endequation%
+  \renewenvironment{equation}%
+    {\PDFSpezialTextObj{Formula}\EveryparConfig{Formula}{false}\originalequation}%
+    {\endPDFMarkContent\originalendequation\endPDFSpezialTextObj}%
+    %
+  \let\originaleqnarray\eqnarray%
+  \let\originalendeqnarray\endeqnarray%
+  \renewenvironment{eqnarray}%
+    {%\def&{\originalamp}%  --> das bringt den Fehler inaccessibile
+    \PackageWarning{accessibilty}{Die eqnarray-Umgebung sollte nicht mehr %
+        verwendet werden, sie gilt als veraltet. (vgl. Autorenanleitung).}%
+     \PDFSpezialTextObj{Formula}\EveryparConfig{Formula}{false}\originaleqnarray}%
+    {\endPDFMarkContent\originalendeqnarray\endPDFSpezialTextObj}%
+}{}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\original@float\@float%
+  \let\originalend@float\end@float%
+  \renewenvironment*{@float}[1]{%
+    \PDFStructObj{Float}{\csname #1name\endcsname}%
+    %\global\numberingparsfalse%
+    \original@float{#1}%
+  }{%
+    \originalend@float%
+    \endPDFMarkContent%
+    %\global\numberingparstrue%
+    \endPDFStructObj%
+  }%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\original@@makecaption\@makecaption%
+%  \renewcommand{\@makecaption}[3]{% Wieso Definition mit drei Argumenten???? nur zwei geht mit listings
+  \renewcommand{\@makecaption}[2]{%
+    \global\numberingparsfalse%
+    \PDFSpezialTextObj{Caption}%
+    \EveryparConfig{Caption}{false}%
+    \PDFMarkContent%
+    \PackageWarning{accessibility}{begin makecaption}%
+%        \original@@makecaption{#1}{#2}{#3}%
+        \original@@makecaption{#1}{#2}%{#3}%
+    \PackageWarning{accessibility}{end makecaption}%
+    \endPDFMarkContent%
+    \endPDFSpezialTextObj%{Caption}%
+    \global\numberingparstrue%
+  }%
+}{}
+
+\newif\ifTableHeadCell \global\TableHeadCellfalse%
+\newif\ifTableLineActive \global\TableLineActivefalse%
+\newif\ifTableCellActive \global\TableCellActivefalse%
+\newif\ifAfterKill \global\AfterKillfalse%
+
+\newenvironment{PDFTable}{%
+  \global\numberingparsfalse%
+  \PDFStructObj{Table}{\empty}%
+  \PDFStructObj{TBody}{\empty}%
+  \global\TableLineActivefalse%
+  \global\TableCellActivefalse%
+}{%
+  \ifTableLineActive\endPDFTableLine\fi%
+  \endPDFStructObj%{TBody}{\empty}%
+  \endPDFStructObj%{Table}{\empty}%
+  \global\numberingparstrue%
+}%
+
+\newenvironment{PDFTableLine}{%
+  \ifTableCellActive\endPDFTableCell\fi%
+  \ifTableLineActive\endPDFTableLine\fi%
+  \global\TableLineActivetrue%
+  \PDFStructObj{TR}{\empty}%
+}{%
+  \ifTableLineActive%
+    \endPDFStructObj%
+    \global\TableLineActivefalse%
+  \fi%
+}%
+
+\newenvironment{PDFTableCell}{%
+  \ifTableCellActive\endPDFTableCell\fi%
+  \global\TableCellActivetrue%
+  \PDFSpezialTextObj{TD}%
+  \EveryparConfig{TD}{false}%
+  \PDFMarkContent%
+}{%
+  \ifTableCellActive%
+    \endPDFMarkContent%
+    \ifTableHeadCell%
+       \xdef\TextType{TH}%
+       \global\TableHeadCellfalse%
+    \fi%
+    \endPDFSpezialTextObj%{TD}%
+    \global\TableCellActivefalse%
+  \fi%
+}%
+
+\def\originalamp{&}%
+\catcode`\&=\active%
+\def&{\originalamp}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originaltabular\tabular%
+  \let\originalendtabular\endtabular%
+  \renewenvironment*{tabular}{%
+    \def&{\endPDFTableCell\originalamp\PDFTableCell}%
+    \PDFTable%
+    \PDFTableLine%
+    \PDFTableCell%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \originaltabular%
+  }{%
+    %\pdfliteral{EMC}%
+    \def&{\originalamp}%
+    \originalendtabular%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \ifTableCellActive\endPDFTableCell\fi%
+    \ifTableLineActive\endPDFTableLine\fi%
+    \endPDFTable%
+  }%
+  \@ifpackageloaded{array}{%
+    \let\originalaryend\@arraycr%
+    \renewcommand*{\@arraycr}{\endPDFTableCell%
+       \endPDFTableLine\PDFTableLine\PDFTableCell\originalaryend}%
+  }{% wenn kein anderes Tabellen-Package
+    \let\originaltabend\@tabularcr%
+    \renewcommand*{\@tabularcr}{\endPDFTableCell%
+       \endPDFTableLine\PDFTableLine\PDFTableCell\originaltabend}%
+  }%
+ % \@ifpackageloaded{tabularx}{%
+ %   \PackageWarning{accessibity}%
+ %       {The tabularx-package isn't yet fully supported.%
+ %        You can use the tabular-environemt but not the tabularx.}
+ % }{}%
+ % \@ifpackageloaded{longtable}{%
+ %   \PackageWarning{accessibity}%
+ %        {The longtable-package isn't yet supported.}
+ %   %\tabularnewline  \endhead\endfirsthead\endfoot\endlastfoor
+ % }{}%
+}{}%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originaltabbing\tabbing%
+  \let\originalendtabbing\endtabbing%
+  \renewenvironment*{tabbing}{%
+    \PDFTable%
+    \let\originalkill\kill%
+    \renewcommand{\kill}{\global\AfterKilltrue%
+      \originalkill%%
+    }%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \originaltabbing%
+  }{%
+    \originalendtabbing%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \endPDFTable%
+  }%
+  \let\original@startfield\@startfield%
+  \renewcommand{\@startfield}{%
+    \original@startfield \ifAfterKill\PDFTableCell\fi%
+  }%
+  \let\original@stopfield\@stopfield%
+  \renewcommand{\@stopfield}{%
+    \ifAfterKill\endPDFTableCell\fi \original@stopfield%
+  }%
+  \let\original@startline\@startline%
+  \renewcommand{\@startline}{%
+    \ifAfterKill\PDFTableLine\fi \original@startline%
+  }%
+  \let\original@stopline\@stopline%
+  \renewcommand{\@stopline}{%
+    \original@stopline \ifAfterKill\endPDFTableLine\fi%
+  }%
+}{}
+
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalemph\emph%
+  \renewcommand{\emph}[1]{%
+    \begin{PDFInlineObjInText}{Span}%
+    \originalemph{#1}%
+    \end{PDFInlineObjInText}%
+  }%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifpackageloaded{hyperref}{%
+    \let\original@setref\@setref%
+    \renewcommand{\@setref}[3]{%
+        \begin{PDFInlineObjInText}{Reference}%
+        \original@setref{#1}{#2}{#3}%
+        \end{PDFInlineObjInText}}%
+    %Linkziele%
+    %\let\originalhyper@anchorstart\hyper@anchorstart%
+    %\renewcommand{\hyper@anchorstart}{\pdfliteral{/Span <</E (anchorstart)>> BDC EMC}\originalhyper@anchorstart}%
+    %\let\originalhyper@anchorend\hyper@anchorend%
+    %\renewcommand{\hyper@anchorend}{\originalhyper@anchorend\pdfliteral{/Span <</E (anchorend)>> BDC EMC}}%
+    % Einträge im TOC, LOF, LOT
+    %\let\originalhyper@linkstart\hyper@linkstart%
+    %\renewcommand{\hyper@linkstart}{%
+    %    \begin{PDFInlineObjInText}{Reference}%
+    %     \originalhyper@linkstart}%
+    %\let\originalhyper@linkend\hyper@linkend%
+    %\renewcommand{\hyper@linkend}{%
+    %     \originalhyper@linkend%
+    %    \end{PDFInlineObjInText}}%
+    %\useacronym --> Kurzform, Glossarseitezahlen, indexseitenzahlen, Glossareinträge, Hyperlink
+    \let\originalhyperlink\hyperlink%
+    \renewcommand*{\hyperlink}[2]{%
+        \ifIndexItemActive\else\begin{PDFInlineObjInText}{Reference}\fi%
+        %Wenn Index -- folgender Aufruf
+        % hyperlink{page.\the\toks@}{\the\toks@}%
+        %Bringt Fehler
+        \originalhyperlink{#1}{#2}%\relax%
+        \ifIndexItemActive\else\end{PDFInlineObjInText}\fi%
+    }%
+    %href  pdfobleme mit pdf 1.3 \@urlbordercolor nicht definiert
+    \let\originalhyper@linkurl\hyper@linkurl%
+    \renewcommand{\hyper@linkurl}[2]{%
+        \begin{PDFInlineObjInText}{Link}%
+        \originalhyper@linkurl{#1}{#2}%
+        \end{PDFInlineObjInText}}%
+    %
+    \let\originalhyper@linkfile\hyper@linkfile%
+    \renewcommand{\hyper@linkfile}[3]{%
+        \begin{PDFInlineObjInText}{Link}%
+        \originalhyper@linkfile{#1}{#2}{#3}%
+        \end{PDFInlineObjInText}}%
+    %Seitenzahlen in Index, anders da anschließend keine Texterkennung nötig.
+    %eigentlich über hyperlink möglich
+    \let\originalhyperpage\hyperpage%
+    \renewcommand{\hyperpage}[1]{%
+        \EveryparConfig{Reference}{true}%
+        \PDFMarkContent% kein everypar
+        \originalhyperpage{#1}%
+        \endPDFMarkContent}%
+    % URL
+    \let\originalnolinkurl\nolinkurl%
+    \renewcommand{\nolinkurl}[1]{%
+        \begin{PDFInlineObjInText}{Link}%
+        \originalnolinkurl{#1}%
+        \end{PDFInlineObjInText}}%
+  }{% ohne hyperref
+      \let\originalref\ref%
+      \renewcommand{\ref}[1]{%
+        \begin{PDFInlineObjInText}{Reference}%
+        \originalref{#1}%
+        \end{PDFInlineObjInText}}%
+      %
+      \let\originalpageref\pageref%
+      \renewcommand{\pageref}[1]{%
+        \begin{PDFInlineObjInText}{Reference}%
+        \originalpageref{#1}%
+        \end{PDFInlineObjInText}}%
+  }%
+}{}
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalcite\cite%
+  \renewcommand{\cite}[2][__empty__]{% #1 Name des Eintages
+    \begin{PDFInlineObjInText}{Reference}%
+    \ifthenelse{\equal{#1}{__empty__}}%
+        {\originalcite{#2}}%
+        {\originalcite[#1]{#2}}%
+    \end{PDFInlineObjInText}%
+  }%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalverb\verb%
+  \renewcommand{\verb}{%
+    \begin{PDFInlineObjInText}{Code}%
+    \originalverb%
+  }%
+  \let\originalverb@egroup\verb@egroup%
+  \renewcommand{\verb@egroup}{%
+   \originalverb@egroup%
+    \end{PDFInlineObjInText}%
+  }%
+}{}
+
+  \let\originalFormulaTextBegin\(%
+  \renewcommand*{\(}{%
+      \PDFInlineObjInText{Formula}%
+      \originalFormulaTextBegin%
+  }%
+  \let\originalFormulaTextEnd\)%
+  \renewcommand*{\)}{%
+      \originalFormulaTextEnd%
+      \endPDFInlineObjInText%
+  }%
+
+
+\newcounter{PDFFootnotemark}%
+\newcounter{PDFFootnotetext}%
+\newcounter{ObjNum}
+
+\newenvironment{PDFFootnote}{%
+  \global\numberingparsfalse%
+  \pdfobj reserveobjnum%
+  \setcounter{PDFFootnotemark}{\pdflastobj}%
+  \pdfobj reserveobjnum%
+  \setcounter{PDFFootnotetext}{\pdflastobj}%
+}{%
+  %\EveryparConfig{\lastEveryparType}{\HelpBool}%
+  \global\numberingparstrue%
+  \EveryparConfig{\lastEveryparType}{false}%
+  \PDFMarkContent%
+}
+
+\newenvironment{PDFFootnoteReference}{%
+    \xdef\HelpBool{\InlineObj}%
+    \EveryparConfig{Reference}{obj}%
+    \setcounter{ObjNum}{\theTaggedObj}%
+    \PDFMarkContent%
+}{%
+    \endPDFMarkContent%
+    \writeComplexTextObj{\thePDFFootnotemark}%
+        {\theObjNum \space \thePDFFootnotetext \space 0 R}%
+        {/Reference}{\theTextObjNum}{Page}%
+    \xdef\TextArray{\TextArray \theObjHelp\space 0 R \space}%
+}
+
+\newenvironment{PDFFootnoteText}{%
+   \EveryparConfig{Note}{obj}%
+   \setcounter{ObjNum}{\theTaggedObj}%
+   \PDFMarkContent%
+}{%
+   \endPDFMarkContent%
+   \writeComplexTextObj%
+          {\thePDFFootnotetext}{\theObjNum}%
+          {/Footnote}{\thePDFFootnotemark}{Page}%
+}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\original@footnotemark\@footnotemark%
+  %Fußnotenreferenz im Text
+  \renewcommand{\@footnotemark}{%
+    \begin{PDFFootnoteReference}%
+    \original@footnotemark%
+    \end{PDFFootnoteReference}%
+  }%
+  \let\original@makefntext\@makefntext%
+  %Fußnotentext am Seitenende
+  \renewcommand{\@makefntext}[1]{%
+    \begin{PDFFootnoteText}%
+    \original@makefntext{#1}%
+    \end{PDFFootnoteText}%
+  }%
+  \let\originalfootnote\footnote%
+  \def\footnote{\@ifnextchar[{\@@xxfootnote}{\@@xfootnote}}%
+  \def\@@xxfootnote[#1]#2{%
+    \begin{PDFFootnote}%
+    \originalfootnote[#1]{#2}%
+    \end{PDFFootnote}%
+  }%
+  \def\@@xfootnote#1{%
+    \begin{PDFFootnote}%
+    \originalfootnote{#1}%
+    \end{PDFFootnote}%
+  }%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\original@starttoc\@starttoc%
+  \renewcommand{\@starttoc}[1]{%
+    \ifthenelse{\equal{#1}{toc}}{% Table of content
+        \PDFSpezialTextObj{TOC}\EveryparConfig{TOCI}{true}%
+    }{}%
+    \ifthenelse{\equal{#1}{lot}}{% List of Tables
+        \PDFSpezialTextObj{TOT}\EveryparConfig{TOTI}{true}%
+    }{}%
+    \ifthenelse{\equal{#1}{lof}}{% List of figures
+        \PDFSpezialTextObj{TOF}\EveryparConfig{TOFI}{true}%
+    }{}%
+    %\ifthenelse{\equal{#1}{brf}}{}}{}% Bibliography
+    \original@starttoc{#1}%
+    \ifthenelse{\equal{#1}{toc} \or \equal{#1}{lot} \or \equal{#1}{lof}}{%
+      \endPDFMarkContent%
+      \endPDFSpezialTextObj%
+    }{}%
+  }%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalcontentsline\contentsline
+  \@ifpackageloaded{hyperref}{%then: Mit hyperref
+    \renewcommand{\contentsline}[4]{%
+        \originalcontentsline{#1}{#2}{#3\protect\endPDFMarkContent}{#4}%
+    }%
+  }{%else: ohne Hyperref
+    \renewcommand{\contentsline}[3]{%
+        \originalcontentsline{#1}{#2}{#3\protect\endPDFMarkContent}%
+   }%
+  }%
+}{}
+
+\newif\ifBibItemActive \BibItemActivefalse%
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalthebibliography\thebibliography%
+  \let\originalendthebibliography\endthebibliography%
+  \renewenvironment{thebibliography}{%
+      \originalthebibliography%
+      %\PDFStructObj{Bibliography}% geht hier nicht in bibitem realisiert
+  }{%
+      \originalendthebibliography%
+      \endPDFMarkContent%
+      \endPDFSpezialTextObj%{\LBody}
+      \endPDFStructObj%{\BibItem}
+      \global\BibItemActivefalse%
+      \endPDFStructObj%{Bibliography}
+  }%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalbibitem\bibitem%
+  \renewcommand{\bibitem}[2][__empty__]{% #1 [Label] #2 Eintrag
+    \ifBibItemActive% schon welche
+      \endPDFMarkContent%
+      \endPDFSpezialTextObj%{\LBody}
+      \endPDFStructObj%{\BibItem}
+      \global\BibItemActivefalse%
+    \else% erstes Item
+      \PDFStructObj{Bibliography}{\empty}%
+    \fi%
+    \global\BibItemActivetrue%
+    \PDFStructObj{BibItem}{\empty}%
+    \PDFSpezialTextObj{Lbl}%
+    \EveryparConfig{Lbl}{false}%
+    \PDFMarkContent%
+    \ifthenelse{\equal{#1}{__empty__}}%
+        {\originalbibitem{#2}}%
+        {\originalbibitem[#1]{#2}}%
+    %\endPDFMarkContent% Zu früh, Text wird erst mit everypar gestetzt
+    \endPDFSpezialTextObj%
+    \PDFSpezialTextObj{LBody}%
+    \EveryparConfig{LBody}{false}%
+   %\PDFMarkContent{LBody}% wird über everypar erledigt
+  }%
+}{}
+\newif\ifIndexItemActive \IndexItemActivefalse%
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originaltheindex\theindex%
+  \let\originalendtheindex\endtheindex%
+  \renewenvironment{theindex}{%
+    \expandafter\originaltheindex\relax%
+  }{%
+      \endPDFMarkContent%
+    \originalendtheindex%
+    \ifIndexItemActive%
+      \endPDFSpezialTextObj%
+      \global\IndexItemActivefalse%
+    \fi
+    \endPDFStructObj%{Index}%
+  }%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\original@idxitem\@idxitem%
+  \renewcommand*\@idxitem{%
+    \ifIndexItemActive% schon welche
+      \endPDFMarkContent%
+      \endPDFSpezialTextObj%
+      \global\IndexItemActivefalse%
+    \else% erstes Item
+      \PDFStructObj{Index}%
+    \fi%
+    \global\IndexItemActivetrue%
+    \PDFSpezialTextObj{IndexEntry}%
+    \EveryparConfig{IndexEntry}{false}%
+    \original@idxitem%
+  }%
+}{}
+
+\newenvironment*{PDFPageArtefakt}{%
+  \pdfliteral{/Artifact <</Type /Pagination>> BDC}%
+}{%
+  \pdfliteral{EMC}%
+}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+   \let\original@thehead\@thehead%
+   \renewcommand*{\@thehead}{%
+      \ifthenelse{\equal{\original@thehead}{\empty}}{}{%
+          \begin{PDFPageArtefakt}%
+          \original@thehead%
+          \end{PDFPageArtefakt}%
+      }%
+   }%
+   \let\original@thefoot\@thefoot%
+   \renewcommand*{\@thefoot}{%
+      \ifthenelse{\equal{\original@thefoot}{\empty}}{}{%
+          \begin{PDFPageArtefakt}%
+          \original@thefoot%
+          \end{PDFPageArtefakt}%
+       }%
+   }%
+}{}
+\newenvironment*{PDFLayoutArtefakt}{%
+  \numberingparsfalse%
+  \pdfliteral{/Artifact <</Type /Layout>> BDC}%
+}{%
+  \pdfliteral{EMC}%
+  \numberingparstrue%
+}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originaldotfill\dotfill%
+  \renewcommand*{\dotfill}{%
+    \begin{PDFLayoutArtefakt}%
+    \originaldotfill%
+    \end{PDFLayoutArtefakt}%
+  }%
+  \let\originalfootnoterule\footnoterule%
+  \renewcommand*\footnoterule{%
+    \let\hrule\originalhrule%
+    \begin{PDFLayoutArtefakt}%
+    \originalfootnoterule%
+    \end{PDFLayoutArtefakt}%
+    \let\originalhrule\hrule%
+  }%
+   %\vrule height1ex depth0pt width1ex
+   %\hrule height1ex depth0pt width1ex
+   %
+   %hrulefill, hline cline, toprule, midrule, bottomrule, cmidrule? greifen auf hrule zu
+  %Klappt nicht immer mit Argumentübergabe
+  \let\originalhrule\hrule%
+  \def\hrule#1#2{%
+    \ifthenelse{\equal{#2}{\z@}}{}{\begin{PDFLayoutArtefakt}}%
+    \originalhrule#1#2%
+    \ifthenelse{\equal{#2}{\z@}}{}{\end{PDFLayoutArtefakt}}%
+  }%
+
+  %vline (2), @arrayrule(2?) greift auf vrule zu
+  %Klappt nicht mit Argumentübergabe
+  %\let\originalvrule\vrule%
+  %\def\vrule#1#2{%
+  %  \begin{PDFLayoutArtefakt}%
+  %  \originalvrule#1#2%
+  %  \end{PDFLayoutArtefakt}%
+}{}
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \def\@dottedtocline#1#2#3#4#5{%
+    \ifnum #1>\c@tocdepth \else%
+      \vskip \z@ \@plus.2\p@%
+      {\leftskip #2\relax \rightskip \@tocrmarg %
+      \parfillskip -\rightskip%
+      \parindent #2\relax\@afterindenttrue%
+      \interlinepenalty\@M%
+      \leavevmode%
+      \@tempdima #3\relax%
+      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip%
+      {#4}\nobreak%
+      \begin{PDFLayoutArtefakt}%
+      \leaders\hbox{$\m@th \mkern %
+        \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill%
+      \end{PDFLayoutArtefakt}%
+      \nobreak%
+      \hb@xt@\@pnumwidth{\hfil\normalfont \normalcolor #5}%
+      \par}%
+    \fi%
+  }%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \let\originalmaketitle\maketitle%
+  \renewcommand{\maketitle}{%
+    \PDFStructObj{Div}{Titlepage}%
+    \EveryparConfig{P}{false}%
+    %
+    \originalmaketitle%
+    \endPDFMarkContent%
+    \endPDFStructObj%
+  }%
+}{}%
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifpackageloaded{graphicx}{%
+    \let\originalincludegraphics\includegraphics%
+    \renewcommand{\includegraphics}[2][__empty__]{%
+    \global\numberingparsfalse%
+     % \PDFInlineObjInText{Figure}%
+    \PDFSpezialTextObj{Figure}%
+    \EveryparConfig{Figure}{false}%
+    \PDFMarkContent%
+      \ifthenelse{\equal{#1}{__empty__}}%
+          {\originalincludegraphics{#2}}%
+          {\originalincludegraphics[#1]{#2}}%
+    %  \endPDFInlineObjInText%
+    \endPDFMarkContent%
+    \endPDFSpezialTextObj%{Figure}%
+    \global\numberingparstrue%
+    }%
+  }{}%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+    \let\originalpicture\picture%
+    \let\originalendpicture\endpicture%
+    \renewenvironment{picture}{%
+    \global\numberingparsfalse%
+    \PDFSpezialTextObj{Figure}%
+    \EveryparConfig{Figure}{false}%
+    \PDFMarkContent%
+    \originalpicture%
+ }{%
+    \originalendpicture%
+    \endPDFMarkContent%
+    \endPDFSpezialTextObj%{Figure}%
+    \global\numberingparstrue%
+    }%
+}{}
+
+
+\newcommand{\convertLanguageInCode}[1]{%
+  \gdef\LanguageCode{}%
+  %Dänisch
+  \ifthenelse{\equal{#1}{\string danish}}{\gdef\LanguageCode{/Lang(DA)}}{}%
+  %Deutsch
+  \ifthenelse{\equal{#1}{\string german}}{\gdef\LanguageCode{/Lang(DE)}}{}%
+  \ifthenelse{\equal{#1}{\string ngerman}}{\gdef\LanguageCode{/Lang(DE)}}{}%
+  \ifthenelse{\equal{#1}{\string germanb}}{\gdef\LanguageCode{/Lang(DE)}}{}%
+  \ifthenelse{\equal{#1}{\string austrian}}{\gdef\LanguageCode{/Lang(DE)}}{}%
+  \ifthenelse{\equal{#1}{\string naustrian}}{\gdef\LanguageCode{/Lang(DE)}}{}%
+  %Englisch
+  \ifthenelse{\equal{#1}{\string english}}{\gdef\LanguageCode{/Lang(EN)}}{}%
+  \ifthenelse{\equal{#1}{\string USenglish}}{\gdef\LanguageCode{/Lang(EN-US)}}{}%
+  \ifthenelse{\equal{#1}{\string american}}{\gdef\LanguageCode{/Lang(EN-US)}}{}%
+  \ifthenelse{\equal{#1}{\string UKenglish}}{\gdef\LanguageCode{/Lang(EN-GB)}}{}%
+  \ifthenelse{\equal{#1}{\string british}}{\gdef\LanguageCode{/Lang(EN-GB)}}{}%
+  \ifthenelse{\equal{#1}{\string canadian}}{\gdef\LanguageCode{/Lang(EN)}}{}%
+  \ifthenelse{\equal{#1}{\string australian}}{\gdef\LanguageCode{/Lang(EN)}}{}%
+  \ifthenelse{\equal{#1}{\string newzealand}}{\gdef\LanguageCode{/Lang(EN)}}{}%
+  %Finnisch
+  \ifthenelse{\equal{#1}{\string finnish}}{\gdef\LanguageCode{/Lang(FI)}}{}%
+  %Französisch
+  \ifthenelse{\equal{#1}{\string french}}{\gdef\LanguageCode{/Lang(FR)}}{}%
+  \ifthenelse{\equal{#1}{\string francais}}{\gdef\LanguageCode{/Lang(FR)}}{}%
+  \ifthenelse{\equal{#1}{\string canadien}}{\gdef\LanguageCode{/Lang(FR)}}{}%
+  \ifthenelse{\equal{#1}{\string acadian}}{\gdef\LanguageCode{/Lang(FR)}}{}%
+  %Italienisch
+  \ifthenelse{\equal{#1}{\string italian}}{\gdef\LanguageCode{/Lang(IT)}}{}%
+  %Norwegisch
+  \ifthenelse{\equal{#1}{\string norsk}}{\gdef\LanguageCode{/Lang(NO)}}{}%
+  \ifthenelse{\equal{#1}{\string nynorsk}}{\gdef\LanguageCode{/Lang(NO)}}{}%
+  %Portugiesisch %(Brasilien)
+  \ifthenelse{\equal{#1}{\string portuges}}{\gdef\LanguageCode{/Lang(PT)}}{}%
+  \ifthenelse{\equal{#1}{\string portuguese}}{\gdef\LanguageCode{/Lang(PT)}}{}%
+  \ifthenelse{\equal{#1}{\string brazilian}}{\gdef\LanguageCode{/Lang(PT-BR)}}{}%
+  \ifthenelse{\equal{#1}{\string brazil}}{\gdef\LanguageCode{/Lang(PT-BR)}}{}%
+  %Schwedisch
+  \ifthenelse{\equal{#1}{\string swedish}}{\gdef\LanguageCode{/Lang(SV)}}{}%
+  %Spanisch
+  \ifthenelse{\equal{#1}{\string spanish}}{\gdef\LanguageCode{/Lang(ES)}}{}%
+  %Chinesisch %\ifthenelse{\equal{#1}{}{\gdef\LanguageCode{/Lang(ZH)}}{}%
+  %Japanisch %\ifthenelse{\equal{#1}{}{\gdef\LanguageCode{/Lang (JA)}}{}%
+  %Koreanisch %\ifthenelse{\equal{#1}{}{\gdef\LanguageCode{/Lang (KO)}}{}%
+  %Niederländisch %\ifthenelse{\equal{#1}{}{\gdef\LanguageCode{/Lang(NL)}}{}%
+  \ifthenelse{\equal{\LanguageCode}{}}{%
+      \PackageWarning{accessibility}{Die gewählte Sprache (#1) wird vom %
+                             Adobe Acrobat Reader 6.0 nicht unterstützt.}%
+  }{}%
+}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \AtBeginDocument{%
+    \gdef\DocumentLanguage{\languagename}%
+    \gdef\ActualLanguage{\languagename}%
+    \convertLanguageInCode{\languagename}%
+    \pdfcatalog{% Catalog dictionary of PDF output.
+      \LanguageCode% Setzt die Sprache
+    }%
+  }%
+}{}
+
+\newcommand{\recognizeLanguageChange}[1]{%
+  \ifthenelse{\equal{#1}{\ActualLanguage}}{%
+     %keine Änderung zu vorher
+  }{%
+     \gdef\ActualLanguage{#1}%
+     \convertLanguageInCode{\languagename}}%
+  \ifthenelse{\equal{#1}{\DocumentLanguage}}{%
+     \global\LanguageDifffalse%
+  }{%
+     \global\LanguageDifftrue%
+  }%
+}
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifpackageloaded{babel}{%
+    \let\originalselectlanguage\selectlanguage%
+    \renewcommand{\selectlanguage}[1]{%
+      \originalselectlanguage{#1}%
+      \recognizeLanguageChange{#1}%
+    }%
+    \let\originalotherlanguage\otherlanguage%
+    \let\originalendotherlanguage\otherlanguage%
+    \long\def\otherlanguage#1{%
+      \csname selectlanguage \endcsname{#1}%
+      \ignorespaces%
+      \recognizeLanguageChange{#1}%
+    }%
+      \long\def\endotherlanguage{%
+      \originalTeX%
+      \global\@ignoretrue\ignorespaces%
+      \recognizeLanguageChange{\languagename}%
+    }%
+    \let\originalforeignlanguage\foreignlanguage%
+    \renewcommand{\foreignlanguage}[2]{%
+      \convertLanguageInCode{\string #1}%
+      \pdfliteral{/Span <<\LanguageCode>> BDC}%
+      \originalforeignlanguage{#1}{#2}%
+      \pdfliteral{EMC}%
+      \convertLanguageInCode{\languagename}%
+    }%
+  }{}%
+}{}
+
+\ifthenelse{\boolean{@Access@pdf}}{%
+  \@ifpackageloaded{glossary}{%
+    \let\originalnewacronym\newacronym%
+    \renewcommand{\newacronym}[4][]{%
+  %%%%% Originaldefinition
+\ifthenelse{\equal{#1}{}}{\renewcommand\@acrnmcmd{#2}}{%
+\renewcommand\@acrnmcmd{#1}}%
+    \xdef\expansion{#3}%
+\@ifundefined{\@acrnmcmd}{%
+\expandafter\newcommand\csname\@acrnmcmd short\endcsname{%
+\protect\pdfliteral{/Span <</E (\expansion)>> BDC}%
+#2%
+\protect\pdfliteral{EMC}%
+\protect\glsxspace}%
+\expandafter\newcommand\csname\@acrnmcmd @nx@short\endcsname{%
+\protect\pdfliteral{/Span <</E (\expansion)>> BDC}%
+#2%
+\protect\pdfliteral{EMC}}%
+\expandafter\newcommand\csname\@acrnmcmd long\endcsname{%
+#3\protect\glsxspace}
+\expandafter\newcommand\csname\@acrnmcmd @nx@long\endcsname{#3}
+\def\@acrn@entry{#4}%
+{%
+\expandafter\@gls@getdescr\expandafter{\@acrn@entry}%
+\let\glodesc\@glo@desc%
+\def\glolong{#3}%
+\@onelevel@sanitize\glolong
+\def\gloshort{\noexpand\acronymfont{#2}}%
+\@onelevel@sanitize\gloshort
+\expandafter\protected@xdef\expandafter\@acrnamefmt{\@acronymnamefmt}
+\expandafter\protected@xdef\expandafter\@acrdesc{\@acronymdescfmt}
+}%
+\@acr@addtolist{\@acrnmcmd}
+\@glo@tb=\expandafter{\@acrn@entry}%
+\protected@edef\@acr@glsentry{name={\@acrnamefmt},%
+format=glsnumformat,sort={\@acrnmcmd},\the\@glo@tb,%
+description={\@acrdesc}}%
+\@glo@tb=\expandafter{\@acr@glsentry}%
+\newboolean{\@acrnmcmd first}\setboolean{\@acrnmcmd first}{true}
+\expandafter\protected@edef\csname \@acrnmcmd\endcsname{%
+\noexpand\@ifstar{\csname @s@\@acrnmcmd\endcsname}{%
+\csname @\@acrnmcmd\endcsname}}
+\ifglshyperacronym % hyperlinks
+\expandafter\protected@edef\csname @\@acrnmcmd\endcsname{%
+\noexpand\ifthenelse{\noexpand\boolean{\@acrnmcmd first}}{%
+\csname\@acrnmcmd @nx@long\endcsname\noexpand\@acrnmins\
+(\noexpand\xacronym{\the\@glo@tb}{%
+\noexpand\acronymfont{\csname\@acrnmcmd @nx@short\endcsname}%
+})\noexpand\unsetacronym{\@acrnmcmd}%
+}{\noexpand\xacronym{\the\@glo@tb}{%
+\noexpand\acronymfont{\csname\@acrnmcmd @nx@short\endcsname}%
+\noexpand\@acrnmins}}\noexpand\glsxspace}
+\expandafter\protected@edef\csname @s@\@acrnmcmd\endcsname{%
+\noexpand\ifthenelse{\noexpand\boolean{\@acrnmcmd first}}{%
+\noexpand\expandafter\noexpand\MakeUppercase
+\csname\@acrnmcmd @nx@long\endcsname\noexpand\@acrnmins\
+(\noexpand\xacronym{\the\@glo@tb}{%
+\noexpand\acronymfont{\csname\@acrnmcmd @nx@short\endcsname}%
+})%
+\noexpand\unsetacronym{\@acrnmcmd}}{%
+\noexpand\xacronym{\the\@glo@tb}{%
+\noexpand\acronymfont{\noexpand\expandafter\noexpand\MakeUppercase
+\csname\@acrnmcmd @nx@short\endcsname}%
+\noexpand\@acrnmins}}\noexpand\glsxspace}
+\else % no hyperlinks
+\expandafter\protected@edef\csname @\@acrnmcmd\endcsname{%
+\noexpand\ifthenelse{\noexpand\boolean{\@acrnmcmd first}}{%
+\csname\@acrnmcmd @nx@long\endcsname\noexpand\@acrnmins\
+(\noexpand\acronym{\the\@glo@tb}{%
+\noexpand\acronymfont{\csname\@acrnmcmd @nx@short\endcsname}%
+})\noexpand\unsetacronym{\@acrnmcmd}%
+}{\noexpand\acronym{\the\@glo@tb}{%
+\noexpand\acronymfont{\csname\@acrnmcmd @nx@short\endcsname}%
+\noexpand\@acrnmins}}%
+\noexpand\glsxspace}
+\expandafter\protected@edef\csname @s@\@acrnmcmd\endcsname{%
+\noexpand\ifthenelse{\noexpand\boolean{\@acrnmcmd first}}{%
+\noexpand\expandafter
+\noexpand\MakeUppercase
+\csname\@acrnmcmd @nx@long\endcsname\noexpand\@acrnmins\
+(\noexpand\acronym{\the\@glo@tb}{%
+\noexpand\acronymfont{\csname\@acrnmcmd @nx@short\endcsname}%
+})%
+\noexpand\unsetacronym{\@acrnmcmd}}{%
+\noexpand\acronym{\the\@glo@tb}{%
+\noexpand\acronymfont{\noexpand\expandafter\noexpand\MakeUppercase
+\csname\@acrnmcmd @nx@short\endcsname}%
+\noexpand\@acrnmins}}\noexpand\glsxspace}
+\fi
+}{%
+\PackageError{glossary}{Command '\expandafter\string
+\csname\@acrnmcmd\endcsname' already defined}{%
+The command name specified by \string\newacronym already exists.}}}
+  %%%%% Originaldefinition
+  }{}%
+}{}
+
+\endinput
+%%
+%% End of file `accessibility.sty'.
