@@ -726,6 +726,7 @@
  \@copyrightspace} % JRB 2008-08-13 this line was commented out for some reason
                    % which meant that the copyright space wasn't reserved.
                    % I re-enabled it.
+                   % CF 2017-09-24 replaced by copyrightfloat
 
 % actual class setup happens here:
   \NeedsTeXFormat{LaTeX2e}
@@ -951,10 +952,12 @@
 %%% displacement to offset the space allocated for a non-existent
 %%% caption).
 %%%
+\RequirePackage{newfloat}
+\DeclareFloatingEnvironment[placement=b]{copyrightfloat}
 \newtoks\copyrightnotice
 \def\ftype@copyrightbox{8}
 \def\@copyrightspace{
-\@float{copyrightbox}[b]
+\begin{copyrightfloat}
 \begin{center}
 \setlength{\unitlength}{1pc}
 \ifnum\ACM@basesize=9
@@ -968,7 +971,8 @@
 \end{picture}
 \fi
 \end{center}
-\end@float}
+\end{copyrightfloat}
+}
 
 \def\@toappear{} % Default setting blank - commands below change this.
 \long\def\toappear#1{\def\@toappear{\parbox[b]{20pc}{\baselineskip 9pt#1}}}
