@@ -1675,4 +1675,4 @@
 
 \sloppy
 
-\RequirePackage{accessibility}
+\RequirePackage[tagged]{accessibility}
