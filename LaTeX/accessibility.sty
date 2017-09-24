@@ -1772,22 +1772,22 @@
 %  }%
 %}{}
 
-\ifthenelse{\boolean{@Access@pdf}}{%
-  \let\original@idxitem\@idxitem%
-  \renewcommand*\@idxitem{%
-    \ifIndexItemActive% schon welche
-      \endPDFMarkContent%
-      \endPDFSpezialTextObj%
-      \global\IndexItemActivefalse%
-    \else% erstes Item
-      \PDFStructObj{Index}%
-    \fi%
-    \global\IndexItemActivetrue%
-    \PDFSpezialTextObj{IndexEntry}%
-    \EveryparConfig{IndexEntry}{false}%
-    \original@idxitem%
-  }%
-}{}
+%\ifthenelse{\boolean{@Access@pdf}}{%
+%  \let\original@idxitem\@idxitem%
+%  \renewcommand*\@idxitem{%
+%    \ifIndexItemActive% schon welche
+%      \endPDFMarkContent%
+%      \endPDFSpezialTextObj%
+%      \global\IndexItemActivefalse%
+%    \else% erstes Item
+%      \PDFStructObj{Index}%
+%    \fi%
+%    \global\IndexItemActivetrue%
+%    \PDFSpezialTextObj{IndexEntry}%
+%    \EveryparConfig{IndexEntry}{false}%
+%    \original@idxitem%
+%  }%
+%}{}
 
 \newenvironment*{PDFPageArtefakt}{%
   \pdfliteral{/Artifact <</Type /Pagination>> BDC}%
