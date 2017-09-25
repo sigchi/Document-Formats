@@ -252,15 +252,31 @@ On pages beyond the first, start at the top of the page and continue
 in double-column format.  The two columns on the last page should be
 of equal length.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-  \alt{SIGCHI logo}
-\BeginAccSupp{method=pdfstringdef,Alt={SIGCHI logo}}
-  {\pdftooltip{\includegraphics[width=0.9\columnwidth]{figures/sigchi-logo}}{SIGCHI logo}}
+  \alt{SIGCHI logo (using accessibility.sty alt command)}
+  \includegraphics[width=0.9\columnwidth]{figures/sigchi-logo}
+  \caption{Insert a caption below each figure. Do not alter the
+    Caption style.  One-line captions should be centered; multi-line
+    should be justified. (using accessibility.sty alt command)}~\label{fig:figure1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+  {\pdftooltip{\includegraphics[width=0.9\columnwidth]{figures/sigchi-logo}}{SIGCHI logo (using accessibilityMeta.sty pdftooltip solution)}}
+  \caption{Insert a caption below each figure. Do not alter the
+    Caption style.  One-line captions should be centered; multi-line
+    should be justified. (using accessibilityMeta.sty pdftooltip solution)}~\label{fig:figure1}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\BeginAccSupp{method=pdfstringdef,Alt={SIGCHI logo (using accsupp.sty environment)}}
+\includegraphics[width=0.9\columnwidth]{figures/sigchi-logo}
 \EndAccSupp{}
   \caption{Insert a caption below each figure. Do not alter the
     Caption style.  One-line captions should be centered; multi-line
-    should be justified. }~\label{fig:figure1}
+    should be justified. (using accsupp.sty environment)}~\label{fig:figure1}
 \end{figure}
 
 \subsection{References and Citations}
