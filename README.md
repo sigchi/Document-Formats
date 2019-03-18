@@ -1,4 +1,4 @@
-# AutomotiveUI Document Formats #
+# 2017 AutomotiveUI Document Formats #
 
 This repository is a fork of the official source for [SIGCHI templates for Word and LaTeX](http://github.com/sigchi/Document-Formats). 
 It contains the templates for the Automotive User Interfaces conference ([AutomotiveUI](http://www.auto-ui.org)).
