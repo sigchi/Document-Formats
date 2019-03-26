@@ -19,7 +19,7 @@ These template should be used for submitting workshops, doctoral consortium, wor
 
 ## LaTeX Notes ##
 
-Note, there is one directory for *both* the Proceedings format and the Extended Abstract format.  Some files, mostly ```acm-sigchi.bst```, is shared between both templates.  Please note to use ```proceedings.tex``` or ```extended-abstract.tex``` depending on which one you need. Alternatively, you can just grab a `tar.gz` build for the specific template that you want.
+Note, there is one directory for *both* the Proceedings format and the Extended Abstract format.  Some files, mostly ```acm-sigchi.bst```, are shared between both templates.  Please note to use ```proceedings.tex``` or ```extended-abstract.tex``` depending on which one you need. Alternatively, you can just grab a `tar.gz` build for the specific template that you want.
 
 ### LaTeX Dependencies ###
 
