@@ -1,0 +1,232 @@
+\documentclass{sigchi-ext}
+% Please be sure that you have the dependencies (i.e., additional LaTeX packages) to compile this example.
+% See http://personales.upv.es/luileito/chiext/
+
+\copyrightinfo{
+  Copyright is held by the author/owner(s).\\
+  \emph{CHI'12}, May 5--10, 2012, Austin, Texas, USA.\\
+  ACM 978-1-4503-1016-1/12/05.\\
+}
+
+\title{CHI \LaTeX\ Ext. Abstracts Template}
+
+\numberofauthors{2}
+% Notice how author names are alternately typesetted to appear ordered in 2-column format;
+% i.e., the first 4 autors on the first column and the other 4 auhors on the second column.
+% Actually, it's up to you to strictly adhere to this author notation.
+\author{
+  \alignauthor{
+  	\textbf{First Author}\\
+  	\affaddr{AuthorCo, Inc.}\\
+  	\affaddr{Authortown, PA 54321 USA}\\
+  	\email{author1@anotherco.com}
+  }\alignauthor{
+  	\textbf{Second Author}\\
+  	\affaddr{AuthorCo, Inc.}\\
+  	\affaddr{123 Author Ave.}\\
+  	\email{author2@anotherco.com}
+  }
+}
+
+\teaser{
+  \includegraphics[width=\columnwidth]{sample.jpg}
+  \caption{A teaser image.}
+  \label{fig:teaser}
+}
+
+% Paper metadata (use plain text, for PDF inclusion and later re-using, if desired)
+\def\plaintitle{CHI LaTeX Extended Abstracts Template}
+\def\plainauthor{Luis A. Leiva}
+\def\plainkeywords{Guides, instructions, author's kit, conference publications}
+\def\plaingeneralterms{Documentation, Standardization}
+
+\hypersetup{
+  % Your metadata go here
+  pdftitle={\plaintitle},
+  pdfauthor={\plainauthor},  
+  pdfkeywords={\plainkeywords},
+  pdfsubject={\plaingeneralterms},
+  % Quick access to color overriding:
+  citecolor=black,
+  linkcolor=blue,
+  menucolor=black,
+  urlcolor=blue,
+}
+
+\usepackage{graphicx}   % for EPS use the graphics package instead
+\usepackage{balance}    % useful for balancing the last columns
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+In this sample we describe the formatting requirements for various SIGCHI related submissions 
+and offer recommendations on writing for the worldwide SIGCHI readership. 
+%Do not change the page size or page settings.
+Please review this document even if you have submitted to SIGCHI conferences before, 
+some format details have changed relative to previous years.
+\end{abstract}
+
+\keywords{\plainkeywords}
+\textcolor{red}{Mandatory section to be included in your final version.}
+
+\category{H.5.m}{Information interfaces and presentation (e.g., HCI)}{Miscellaneous}. 
+%See \cite{ACMCCS} 
+See: \url{http://www.acm.org/about/class/1998/} 
+\textcolor{red}{Mandatory section to be included in your final version.}
+
+\terms{\plaingeneralterms}
+\textcolor{red}{Optional section to be included in your final version.}
+
+
+% =============================================================================
+\section{Introduction}
+% =============================================================================
+This format is to be used for submissions that are published in the conference extended abstracts.  
+We wish to give this volume a consistent, high-quality appearance. 
+We therefore ask that authors follow some simple guidelines. 
+In essence, you should format your paper exactly like this document. 
+The easiest way to do this is simply to download a template from the conference website and replace the content with your own material.
+
+
+\begin{figure}
+\hspace*{-0.4\columnwidth}% displace figure
+\parbox{1.4\columnwidth}{
+  \centering
+  \includegraphics[width=1.4\columnwidth]{sample.jpg}
+  \caption{Insert a caption below each figure. Images can "float" around body text, like this example.}
+  \label{fig:sample}
+}
+\end{figure}
+
+% =============================================================================
+\section{Copyright}
+% =============================================================================
+For publications in the CHI Extended Abstracts, copyright remains with the author.  
+The publication is not considered an archival publication; however, it does go into the ACM Digital Library. 
+Because you retain copyright, as the author you are free to use this material as you like, including submitting a paper based on this work to other conferences or journals.  
+Authors grant unrestricted permission for ACM to publish the accepted submission in the CHI Extended Abstracts without additional consideration or remuneration.
+
+
+% =============================================================================
+\section{Text formatting}
+% =============================================================================
+Please use an 8.5-point Verdana font, or other sans serifs font as close as possible in appearance to Verdana in which these guidelines have been set. 
+Arial 9-point font is a reasonable substitute for Verdana as it has a similar x-height. 
+Please use serif or non-proportional fonts only for special purposes, such as distinguishing source code text.
+Additionally, here is an example of footnoted text.\footnote{Use footnotes sparingly, if at all.}
+As stated in the footnote, footnotes should rarely be used.
+
+\subsection{Language, style, and content}
+% -----------------------------------------------------------------------------
+The written and spoken language of SIGCHI is English. 
+Spelling and punctuation may use any dialect of English (e.g., British, Canadian, US, etc.) provided this is done consistently. 
+Hyphenation is optional. 
+To ensure suitability for an international audience, please pay attention to the following:
+
+\begin{itemize}\compresslist
+\item 	
+Write in a straightforward style. 
+Use simple sentence structure. 
+Try to avoid long sentences and complex sentence structures. 
+Use semicolons carefully.
+\item 	
+Use common and basic vocabulary (e.g., use the word ``unusual" rather than the word ``arcane").
+\item 	
+Briefly define or explain all technical terms. 
+The terminology common to your practice/discipline may be different in other design practices/disciplines.
+\item 	
+Spell out all acronyms the first time they are used in your text. 
+For example, ``World Wide Web (WWW)".
+\item 	
+Explain local references (e.g., not everyone knows all city names in a particular country).
+\item 	
+Explain ``insider" comments. 
+Ensure that your whole audience understands any reference whose meaning you do not describe (e.g., do not assume that everyone has used a Macintosh or a particular application).
+\item 	
+Explain colloquial language and puns. 
+Understanding phrases like ``red herring" requires a cultural knowledge of English. 
+Humor and irony are difficult to translate.
+\item 	
+Use unambiguous forms for culturally localized concepts, such as times, dates, currencies and numbers (e.g., ``1-5-97" or ``5/1/97" may mean 5 January or 1 May, and ``seven o'clock" may mean 7:00 am or 19:00).
+\item 	
+Be careful with the use of gender-specific pronouns (he, she) and other gender-specific words (chairman, manpower, man-months). 
+Use inclusive language (e.g., she or he, they, chair, staff, staff-hours, person-years) that is gender-neutral. 
+If necessary, you may be able to use ``he" and ``she" in alternating sentences, so that the two genders occur equally often~\cite{Schwartz95}. 
+\end{itemize}
+
+
+% =============================================================================
+\section{Figures}
+% =============================================================================
+The examples on this and following pages should help you get a feel for how screen-shots and other figures should be placed in the template. 
+Be sure to make images large enough so the important details are legible and clear.
+
+Your document may use color figures, which are included in the page limit; the figures must be usable when printed in black and white.
+You can use the \LaTeX's \texttt{marginpar} command to insert figures in the (right) margin side of the document (see \autoref{fig:marginparsample}).
+
+As shown in \autoref{fig:sample}, the width of figures can be bigger than the width of text columns.
+\autoref{fig:bigsample} is an example of how much space can be reserved for images.
+
+
+% =============================================================================
+\section{References and Citations}
+% =============================================================================
+Use a numbered list of references at the end of the article, ordered alphabetically by first author, and referenced by numbers in brackets \cite{Anderson92,Klemmer02,Mather00,Zellweger01}
+For papers from conference proceedings, include the title of the paper and an abbreviated name of the conference (e.g., for Interact 2003 proceedings, use Proc. Interact 2003). 
+Do not include the location of the conference or the exact date; do include the page numbers if available. 
+See the examples of citations at the end of this document. 
+
+Your references should be published materials accessible to the public.  
+Internal technical reports may be cited only if they are easily accessible (i.e., you provide the address for obtaining the report within your citation) and may be obtained by any reader for a nominal fee.  
+Proprietary information may not be cited. 
+Private communications should be acknowledged in the main text, not referenced  (e.g., [Robertson, personal communication]).
+
+
+\clearpage
+\marginpar{
+You may want to place some marginal notes in this page to display more information.
+\\[0.5\textheight]
+Note that marginal notes must appear in the (left) outer margin, due to the template design.
+}
+\begin{figure}
+\hspace*{-0.5\textwidth}% displace figure
+\parbox{\textwidth}{
+  \begin{center}
+  \frame{\includegraphics[width=\textwidth]{sample.jpg}}
+  \caption{A big figure. You may want to place some marginal notes in this page, as shown above. Notice also that this image resolution is quite low, as it is just an example of formatting.}
+  \label{fig:bigsample}
+  \end{center}  
+}
+\end{figure}
+
+
+% =============================================================================
+\section{Producing and testing PDF files}
+% =============================================================================
+\marginpar{
+\begin{figure}
+  \begin{center}
+  \includegraphics[width=\marginparwidth]{sample.jpg}
+  \caption{A marginal figure.}
+  \label{fig:marginparsample}
+  \end{center}  
+\end{figure}
+}
+We recommend that you produce a PDF version of your submission well before the final deadline. 
+Besides making sure that you are able to produce a PDF, you will need to check that (a) the length of the file remains within the submission category's page limit, (b) the PDF file size is 4 megabytes or less, and (c) the file can be read and printed using Adobe Acrobat Reader. 
+Test your PDF file by viewing or printing it with the same software we will use when we receive it, Adobe Acrobat Reader Version 7. 
+This is widely available at no cost from~\cite{Acrobat7}.  
+Note that most reviewers will use a North American/European version of Acrobat reader, which cannot handle documents containing non-North American or non-European fonts (e.g. Asian fonts).  
+Please therefore do not use Asian fonts, and verify this by testing with a North American/European Acrobat reader (obtainable as above). Something as minor as including a space or punctuation character in a two-byte font can render a file unreadable.
+
+\section{Acknowledgements}
+We thank all DUX 2003 publications support and staff who wrote this document originally and allowed us to modify it for this conference.
+This template was based on Manas Tungare's \texttt{chi.cls}, and rewritten by Luis A. Leiva.
+
+\balance
+\bibliographystyle{acm-sigchi}
+\bibliography{sample}
+
+\end{document}
