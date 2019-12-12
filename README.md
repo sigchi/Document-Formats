@@ -1,4 +1,8 @@
-# SIGCHI Document Formats #
+# ACM SIGCHI Document Formats #
+
+This repository was a storage point for older SIGCHI templates which
+have long since been deprecated.
+
 
 This repository is the official source for SIGCHI templates for Word
 and LaTeX.  If you are just looking to
